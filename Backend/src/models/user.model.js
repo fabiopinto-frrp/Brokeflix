@@ -10,9 +10,18 @@ const userSchema = new Schema({
     required: true,
     unique: true,
   },
+  passwordHash: { type: String, required: true },
+  avatar: { type: String, required: false },
+  isAdmin: { type: Boolean, default: false },
+  watchList: [
+    {
+      itemId: { type: Number, required: true }, // Unique identifier for the item (film, anime, series)
+      mediaType: { type: String, required: true }, // (film, anime, series)
+      status: { type: String, required: true }, // (watching, plan to watch, on hold, completed)
+      progress: { type: Number, required: true }, // Episode progress)
+    },
+  ],
 });
-
-// Use the AutoIncrement utility for the "userId" field
 
 const UserModel = db.model("user", userSchema);
 

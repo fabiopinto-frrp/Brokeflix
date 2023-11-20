@@ -6,6 +6,10 @@ const SerieModel = require("./src/models/serie.model");
 const FilmModel = require("./src/models/film.model");
 const port = process.env.PORT || 3000;
 
+app.listen(port, () => {
+  console.log(`App running on port http://localhost:${port} ...`);
+});
+
 // app.get("/", (req, res) => {
 //   res.send("Hello from the server side!!");
 // });
@@ -21,7 +25,3 @@ const port = process.env.PORT || 3000;
 // app.get("/films", (req, res) => {
 //   res.send("Films is cool!");
 // });
-
-app.listen(port, () => {
-  console.log(`App running on port http://localhost:${port} ...`);
-});
