@@ -1,4 +1,5 @@
-const AnimeModel = require("../models/anime.model"); // Assuming 'Anime' is your mongoose model
+const AnimeModel = require("../models/anime.model");
+const express = require("express");
 const router = express.Router();
 
 router.get("/", async (req, res) => {
@@ -34,7 +35,7 @@ router.get("/:title", async (req, res) => {
 
   try {
     const animes = await AnimeModel.find({
-      title: { $regex: new RegExp(title, "i") },
+      title: { $regex: new RegExp(title, "i*") },
     }); // Case-insensitive search
     res.json(animes);
   } catch (err) {

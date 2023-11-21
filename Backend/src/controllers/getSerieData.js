@@ -1,4 +1,5 @@
 const SerieModel = require("../models/serie.model");
+const express = require("express");
 const router = express.Router();
 
 router.get("/", async (req, res) => {
