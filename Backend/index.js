@@ -1,21 +1,17 @@
 const app = require("./app");
 const db = require("./src/configs/db.config");
-const UserModel = require("./src/models/user.model");
-const AnimeModel = require("./src/models/anime.model");
-const SerieModel = require("./src/models/serie.model");
-const FilmModel = require("./src/models/film.model");
-const getAnimeData = require("./src/controllers/getAnimeData");
-const getSerieData = require("./src/controllers/getSerieData");
-const getFilmData = require("./src/controllers/getFilmData");
+const animesRoutes = require("./src/routes/animesRoutes");
+// const seriesRoutes = require("./src/controllers/seriesRoutes");
+// const filmsRoutes = require("./src/controllers/filmRoutes");
 const port = process.env.PORT || 3000;
 
 app.listen(port, () => {
   console.log(`App running on port http://localhost:${port} ...`);
 });
 
-app.use("/api/animes", getAnimeData);
-app.use("/api/series", getSerieData);
-app.use("/api/films", getFilmData);
+app.use("/api/animes", animesRoutes);
+// app.use("/api/series", seriesRoutes);
+// app.use("/api/films", filmsRoutes);
 
 // app.get("/", (req, res) => {
 //   res.send("Hello from the server side!!");
