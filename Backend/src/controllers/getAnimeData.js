@@ -3,44 +3,44 @@ const express = require("express");
 const router = express.Router();
 
 router.get("/", async (req, res) => {
-  try {
-    const animes = await AnimeModel.find({});
-    res.json(animes);
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("An error occurred");
-  }
-});
+  if (req.query.id) {
+    const animeId = req.query.id;
 
-// Route to search anime by ID
-router.get("/:id", async (req, res) => {
-  const animeId = req.params.id; // Accesses anime ID from URL parameter
+    try {
+      const anime = await AnimeModel.findById(animeId);
 
-  try {
-    const anime = await AnimeModel.findById(animeId); // Fetches anime by ID
-    if (!anime) {
-      res.status(404).send("Anime not found");
-      return;
+      if (!anime) {
+        res.status(404).send("Anime not found");
+        return;
+      }
+
+      res.json(anime);
+    } catch (err) {
+      console.error(err);
+      res.status(500).send("An error occurred in Anime by id");
     }
-    res.json(anime);
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("An error occurred");
-  }
-});
+  } else if (req.query.title) {
+    const title = req.query.title;
 
-// Route to search anime by title
-router.get("/:title", async (req, res) => {
-  const title = req.params.title; // Accesses anime title from URL parameter
+    try {
+      const animes = await AnimeModel.find({
+        title: { $regex: new RegExp(title, "i") },
+      });
 
-  try {
-    const animes = await AnimeModel.find({
-      title: { $regex: new RegExp(title, "i*") },
-    }); // Case-insensitive search
-    res.json(animes);
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("An error occurred");
+      res.json(animes);
+    } catch (err) {
+      console.error(err);
+      res.status(500).send("An error occurred in anime by title");
+    }
+  } else {
+    try {
+      const animes = await AnimeModel.find({});
+
+      res.json(animes);
+    } catch (err) {
+      console.error(err);
+      res.status(500).send("An error occurred in getting All Animes");
+    }
   }
 });
 

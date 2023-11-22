@@ -3,42 +3,44 @@ const express = require("express");
 const router = express.Router();
 
 router.get("/", async (req, res) => {
-  try {
-    const films = await FilmModel.find({});
-    res.json(films);
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("An error occurred");
-  }
-});
+  if (req.query.id) {
+    const filmId = req.query.id;
 
-router.get("/:id", async (req, res) => {
-  const filmId = req.params.id;
+    try {
+      const film = await FilmModel.findById(filmId);
 
-  try {
-    const film = await FilmModel.findById(filmId);
-    if (!film) {
-      res.status(404).send("film not found");
-      return;
+      if (!film) {
+        res.status(404).send("film not found");
+        return;
+      }
+
+      res.json(film);
+    } catch (err) {
+      console.error(err);
+      res.status(500).send("An error occurred in Film by id");
     }
-    res.json(film);
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("An error occurred");
-  }
-});
+  } else if (req.query.title) {
+    const title = req.query.title;
 
-router.get("/:title", async (req, res) => {
-  const title = req.params.title;
+    try {
+      const films = await FilmModel.find({
+        title: { $regex: new RegExp(title, "i") },
+      });
 
-  try {
-    const films = await FilmModel.find({
-      title: { $regex: new RegExp(title, "i") }, // Case-insensitive search
-    });
-    res.json(films);
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("An error occurred");
+      res.json(films);
+    } catch (err) {
+      console.error(err);
+      res.status(500).send("An error occurred in Film by title");
+    }
+  } else {
+    try {
+      const films = await FilmModel.find({});
+
+      res.json(films);
+    } catch (err) {
+      console.error(err);
+      res.status(500).send("An error occurred in getting All Films");
+    }
   }
 });
 
