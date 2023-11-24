@@ -51,8 +51,8 @@ exports.postAnime = async (req, res) => {
     description: req.body.description,
     status: req.body.status,
     genres: req.body.genres,
-    backgroundImgUrl: req.body.backgroundImgUrl,
     imageUrl: req.body.imageUrl,
+    backgroundImgUrl: req.body.backgroundImgUrl,
     videosUrl: req.body.videosUrl ? req.body.videosUrl : [],
   };
 
