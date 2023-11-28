@@ -1,26 +1,38 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
+
 
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({super.key});
+  const SplashScreen({Key? key}) : super(key: key);
 
   @override
-  State<SplashScreen> createState() => _SplashScreenState();
+  State<SplashScreen> createState() => SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class SplashScreenState extends State<SplashScreen> {
+  @override
+  void initState() {
+    super.initState();
+
+    Timer(
+      const Duration(seconds: 2),
+      () {
+        Navigator.pushReplacementNamed(context, '/login');
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
       body: Center(
         child: Image.asset(
-          'assets/your_image.png', // Replace 'your_image.png' with your actual image asset path
-          width: 200.0, // Adjust the width as needed
-          height: 200.0, // Adjust the height as needed
+          'assets/BrokeFlix.png', 
+          width: 200.0, 
+          height: 200.0, 
         ),
       ),
     );
   }
 }
-
-
