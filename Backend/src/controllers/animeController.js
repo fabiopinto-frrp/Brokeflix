@@ -1,6 +1,4 @@
 const AnimeModel = require("../models/anime.model");
-const express = require("express");
-const router = express.Router();
 
 exports.getAnimes = async (req, res) => {
   if (req.query.id) {

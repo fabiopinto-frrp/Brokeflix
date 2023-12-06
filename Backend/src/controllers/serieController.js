@@ -1,5 +1,4 @@
 const SerieModel = require("../models/serie.model");
-const express = require("express");
 
 exports.getSeries = async (req, res) => {
   if (req.query.id) {

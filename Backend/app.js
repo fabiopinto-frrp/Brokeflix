@@ -1,6 +1,6 @@
+require("dotenv/config");
 const express = require("express");
 const app = express();
-require("dotenv/config");
 const jwt = require("jsonwebtoken");
 const bodyParser = require("body-parser");
 const cors = require("cors");

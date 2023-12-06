@@ -1,5 +1,4 @@
 const FilmModel = require("../models/film.model");
-const express = require("express");
 
 exports.getFilms = async (req, res) => {
   if (req.query.id) {
