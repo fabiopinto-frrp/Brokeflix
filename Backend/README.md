@@ -40,21 +40,3 @@ it will have userList function that will have the animes films or series that th
 | profile function that will have the user's profile information in the profile settings.
 | updateProfile function that will update the user's profile information in the profile settings (avatar).
 |
-
-/_ /_ AnimeModel.updateOne(
-{ \_id: animeId },
-{
-$push: {
-episode: {
-title: "Episode 2",
-duration: 30,
-minutesWatched: 0,
-epUrl: "https://example.com/episode2.mp4",
-},
-},
-},
-function (err, result) {
-// handle error and result
-}
-);
-\*/
