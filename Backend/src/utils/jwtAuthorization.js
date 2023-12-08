@@ -9,7 +9,7 @@ exports.generateToken = (user_info, callback) => {
       data: user_info,
     },
     secret,
-    { expiresIn: "24h" }
+    { expiresIn: "31d" }
   );
   return callback(token);
 };

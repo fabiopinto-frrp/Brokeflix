@@ -13,11 +13,16 @@ router
 
 router
   .route("/:title")
+  .post(async (req, res) => {
+    animeController.addEpisode(req, res);
+  })
   .put(async (req, res) => {
     animeController.putAnime(req, res);
   })
   .delete(async (req, res) => {
     animeController.deleteAnime(req, res);
   });
+
+router.route("/episode/:title");
 
 module.exports = router;

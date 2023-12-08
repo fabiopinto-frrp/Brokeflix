@@ -11,7 +11,8 @@ const filmSchema = new Schema({
   genres: { type: [String], required: true },
   imageUrl: { type: String, required: true },
   backgroundImgUrl: { type: String, required: true },
-  videosUrl: { type: [String], required: true },
+  videosUrl: { type: String, required: true },
+  minutesWatched: { type: Number, required: true, default: 0 },
 });
 
 const FilmModel = db.model("films", filmSchema);

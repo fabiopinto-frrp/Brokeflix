@@ -51,12 +51,6 @@ userSchema.post("save", function (doc, next) {
   next();
 });
 
-userSchema.pre("save", function (next) {
-  console.log("User near creation", this);
-
-  next();
-});
-
 const UserModel = db.model("user", userSchema);
 
 module.exports = UserModel;

@@ -19,12 +19,12 @@ fix anime , series, films models - with the object size array so when i add one 
 WHEN ALL IS WORKING:
 
 - making the video player saving the value of the time 1 minute by 1 minute or 10 second by 10 second
-  so when the user goes back to the ep it will continue where he stopped.
+  so when the user goes back to the ep it will continue where he stopped. to do this the value is going to be saved in the db
 
 ---
 
 jwtAuth:
--try making an access token and a refresh one with cookies (so if the person doesnt logout dont need to login again)
+WHEN ALL IS WORKING:
 
 - implement admin role - if the user is admin or user , if its admin it goes somewhere else than the user home page (LAST THING TO DO IN THE PROJECT)
 
@@ -39,3 +39,21 @@ it will have userList function that will have the animes films or series that th
 | profile function that will have the user's profile information in the profile settings.
 | updateProfile function that will update the user's profile information in the profile settings (avatar).
 |
+
+/_ /_ AnimeModel.updateOne(
+{ \_id: animeId },
+{
+$push: {
+episode: {
+title: "Episode 2",
+duration: 30,
+minutesWatched: 0,
+epUrl: "https://example.com/episode2.mp4",
+},
+},
+},
+function (err, result) {
+// handle error and result
+}
+);
+\*/

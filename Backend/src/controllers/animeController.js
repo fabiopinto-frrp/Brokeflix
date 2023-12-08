@@ -45,13 +45,15 @@ exports.getAnimes = async (req, res) => {
 exports.postAnime = async (req, res) => {
   let postAnime = {
     title: req.body.title,
-    episodes: req.body.episodes ? req.body.episodes : "?",
+    numberOfEpisodes: req.body.numberOfEpisodes
+      ? req.body.numberOfEpisodes
+      : "?",
+    episode: req.body.episode ? req.body.episode : [],
     description: req.body.description,
     status: req.body.status,
     genres: req.body.genres,
     imageUrl: req.body.imageUrl,
     backgroundImgUrl: req.body.backgroundImgUrl,
-    videosUrl: req.body.videosUrl ? req.body.videosUrl : [],
   };
 
   const duplicate = await AnimeModel.findOne({ title: postAnime.title });
@@ -77,7 +79,10 @@ exports.putAnime = async (req, res) => {
 
   let updateAnime = {
     title: req.body.title,
-    episodes: req.body.episodes ? req.body.episodes : anime.episodes,
+    numberOfEpisodes: req.body.numberOfEpisodes
+      ? req.body.numberOfEpisodes
+      : anime.numberOfEpisodes,
+    episode: req.body.episode ? req.body.episode : anime.episode,
     description: req.body.description
       ? req.body.description
       : anime.description,
@@ -87,7 +92,6 @@ exports.putAnime = async (req, res) => {
       ? req.body.backgroundImgUrl
       : anime.backgroundImgUrl,
     imageUrl: req.body.imageUrl ? req.body.imageUrl : anime.imageUrl,
-    videosUrl: req.body.videosUrl ? req.body.videosUrl : anime.videosUrl,
   };
 
   console.log(updateAnime, title);
@@ -99,6 +103,27 @@ exports.putAnime = async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).send("An error occurred in creating an Anime");
+  }
+};
+
+exports.addEpisode = async (req, res) => {
+  let title = req.params.title;
+  const episode = req.body.episode;
+  const anime = await AnimeModel.findOne({ title: title });
+  try {
+    if (!anime) {
+      res.status(404).send("Anime not found");
+      return;
+    }
+
+    anime.episode.push(episode);
+
+    await anime.save();
+
+    res.json(anime);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("An error occurred in adding episode");
   }
 };
 
