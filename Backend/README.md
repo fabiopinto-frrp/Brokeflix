@@ -14,7 +14,8 @@ git push -u origin main
 
 ---
 
-fix anime , series, films models - with the object size array so when i add one ep it will update the ep size and add an episode and because its an object inside i can have title etc so each episode has a title too.
+fix anime , series, films models - with the object size array so when i add one ep it will update the ep size and add an episode and because its an object inside i can have title etc so each episode has a title too. (partially done -  need to make same changes on series then proceed to firebase stuff)
+
 
 WHEN ALL IS WORKING:
 
@@ -31,7 +32,7 @@ WHEN ALL IS WORKING:
 ---
 
 Implement firebase storage to import images and videos and when the user uploads a video or image, it will be uploaded to firebase storage and the link will be saved in the database.
-
+(after firebase, start the user Controller, and implement logic in front end)
 ---
 
 Implement the user Controller :
