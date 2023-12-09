@@ -45,13 +45,15 @@ exports.getSeries = async (req, res) => {
 exports.postSerie = async (req, res) => {
   let postSerie = {
     title: req.body.title,
-    episodes: req.body.episodes ? req.body.episodes : "?",
+    numberOfEpisodes: req.body.numberOfEpisodes
+      ? req.body.numberOfEpisodes
+      : "?",
+    episode: req.body.episode ? req.body.episode : [],
     description: req.body.description,
     status: req.body.status,
     genres: req.body.genres,
     imageUrl: req.body.imageUrl,
     backgroundImgUrl: req.body.backgroundImgUrl,
-    videosUrl: req.body.videosUrl ? req.body.videosUrl : [],
   };
 
   const duplicate = await SerieModel.findOne({ title: postSerie.title });
@@ -78,7 +80,11 @@ exports.putSerie = async (req, res) => {
 
   let updateSerie = {
     title: req.body.title,
-    episodes: req.body.episodes ? req.body.episodes : serie.episodes,
+
+    numberOfEpisodes: req.body.numberOfEpisodes
+      ? req.body.numberOfEpisodes
+      : serie.numberOfEpisodes,
+    episode: req.body.episode ? req.body.episode : serie.episode,
     description: req.body.description
       ? req.body.description
       : serie.description,
@@ -88,7 +94,6 @@ exports.putSerie = async (req, res) => {
     backgroundImgUrl: req.body.backgroundImgUrl
       ? req.body.backgroundImgUrl
       : serie.backgroundImgUrl,
-    videosUrl: req.body.videosUrl ? req.body.videosUrl : serie.videosUrl,
   };
   try {
     const serie = await SerieModel.updateOne({ title: title }, updateSerie);
@@ -97,6 +102,34 @@ exports.putSerie = async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).send("An error occurred in updating Serie");
+  }
+};
+
+exports.addEpisode = async (req, res) => {
+  let title = req.params.title;
+  const episode = req.body.episode;
+  const duplicate = await SerieModel.findOne({ episode: episode.title });
+  const serie = await SerieModel.findOne({ title: title });
+
+  if (duplicate) {
+    res.status(409).send("Episode already exists");
+    return;
+  } else {
+    try {
+      if (!serie) {
+        res.status(404).send("Serie not found");
+        return;
+      }
+
+      anime.episode.push(serie);
+
+      await serie.save();
+
+      res.json(serie);
+    } catch (err) {
+      console.error(err);
+      res.status(500).send("An error occurred in adding episode");
+    }
   }
 };
 

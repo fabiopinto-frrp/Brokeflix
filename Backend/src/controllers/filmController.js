@@ -51,7 +51,7 @@ exports.postFilm = async (req, res) => {
     genres: req.body.genres,
     imageUrl: req.body.imageUrl,
     backgroundImgUrl: req.body.backgroundImgUrl,
-    videosUrl: req.body.videosUrl ? req.body.videosUrl : [],
+    videosUrl: req.body.videosUrl ? req.body.videosUrl : "",
   };
 
   const duplicate = await FilmModel.findOne({ title: postFilm.title });

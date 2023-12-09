@@ -27,28 +27,51 @@ const userSchema = new Schema({
   isAdmin: { type: Boolean, default: false },
   watchList: [
     {
-      mediaType: {
+      type: {
         type: String,
-        required: [true, "Please type the media Type (Anime, Serie, Film)"],
+        required: [true, "Please enter the type of media (Anime, Serie, Film)"],
       },
-      status: {
+      title: {
+        type: String,
+        required: [true, "Please enter the title of the media item"],
+      },
+      image: {
+        type: String,
+        required: [true, "Please enter the URL of the media item's image"],
+      },
+      animeStatus: { type: String, required: true },
+      userStatus: {
         type: String,
         required: [
           true,
-          "Please say the status! (Watching , Planned, On Hold)",
+          "Please enter the status of the media item (Watching, Planned, On Hold)",
         ],
       },
       progress: {
         type: Number,
-        required: [true, "Please say your progress ( ep watched 0, 1 , 2 ,3)"],
+        required: [true, "Please enter your progress (episodes watched)"],
+      },
+      description: {
+        type: String,
+        required: [true, "Please enter the description of the media item"],
+      },
+      genres: {
+        type: [String],
+        required: [true, "Please enter the genres of the media item"],
+      },
+      rating: {
+        type: Number,
+        required: [true, "Please enter the rating of the media item"],
+      },
+      episodes: {
+        type: Number,
+        required: [
+          true,
+          "Please enter the number of episodes in the media item",
+        ],
       },
     },
   ],
-});
-
-userSchema.post("save", function (doc, next) {
-  console.log("New User Created", doc);
-  next();
 });
 
 const UserModel = db.model("user", userSchema);

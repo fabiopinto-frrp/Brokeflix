@@ -109,21 +109,28 @@ exports.putAnime = async (req, res) => {
 exports.addEpisode = async (req, res) => {
   let title = req.params.title;
   const episode = req.body.episode;
+  const duplicate = await AnimeModel.findOne({ episode: episode.title });
   const anime = await AnimeModel.findOne({ title: title });
-  try {
-    if (!anime) {
-      res.status(404).send("Anime not found");
-      return;
+
+  if (duplicate) {
+    res.status(409).send("Episode already exists");
+    return;
+  } else {
+    try {
+      if (!anime) {
+        res.status(404).send("Anime not found");
+        return;
+      }
+
+      anime.episode.push(episode);
+
+      await anime.save();
+
+      res.json(anime);
+    } catch (err) {
+      console.error(err);
+      res.status(500).send("An error occurred in adding episode");
     }
-
-    anime.episode.push(episode);
-
-    await anime.save();
-
-    res.json(anime);
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("An error occurred in adding episode");
   }
 };
 

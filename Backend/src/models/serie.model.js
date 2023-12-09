@@ -9,8 +9,6 @@ const serieSchema = new Schema({
   episode: [
     {
       title: { type: String, required: true },
-      duration: { type: Number, required: true },
-      minutesWatched: { type: Number, required: true, default: 0 },
       epUrl: { type: String, required: true },
     },
   ],
