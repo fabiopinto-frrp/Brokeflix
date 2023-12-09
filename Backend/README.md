@@ -14,7 +14,7 @@ git push -u origin main
 
 ---
 
-fix anime , series, films models - with the object size array so when i add one ep it will update the ep size and add an episode and because its an object inside i can have title etc so each episode has a title too. (partially done -  need to make same changes on series then proceed to firebase stuff)
+fix anime , series, films models - with the object size array so when i add one ep it will update the ep size and add an episode and because its an object inside i can have title etc so each episode has a title too. (partially done -  make duplicated verification in addEpisode and need to make same changes on series then proceed to firebase stuff).
 
 
 WHEN ALL IS WORKING:
