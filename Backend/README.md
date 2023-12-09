@@ -29,10 +29,9 @@ WHEN ALL IS WORKING:
 ---
 
 Implement firebase storage to import images and videos and when the user uploads a video or image, it will be uploaded to firebase storage and the link will be saved in the database.
+(after firebase, start the user Controller, and implement logic in front end)
 
 ---
 
 Implement in the user Controller :
 it will have userList function that will have the animes films or series that the user has watched and the ones that he wants to watch.
-
-watchListController and routes incompleted , need testing and fixing maybe doing different routes for each thing (crud on watch list for each type and making on different api routes calls)
