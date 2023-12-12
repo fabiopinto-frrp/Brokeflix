@@ -26,7 +26,8 @@ class LoginPageState extends State<LoginPage> {
               left: 60,
               top: 750,
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 122, vertical: 20),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 122, vertical: 20),
                 decoration: ShapeDecoration(
                   color: const Color(0xFFFA3D3B),
                   shape: RoundedRectangleBorder(
@@ -86,7 +87,8 @@ class LoginPageState extends State<LoginPage> {
                               height: 53,
                               decoration: ShapeDecoration(
                                 shape: RoundedRectangleBorder(
-                                  side: const BorderSide(width: 1, color: Color(0xFFFA3D3B)),
+                                  side: const BorderSide(
+                                      width: 1, color: Color(0xFFFA3D3B)),
                                   borderRadius: BorderRadius.circular(32),
                                 ),
                               ),
@@ -95,7 +97,8 @@ class LoginPageState extends State<LoginPage> {
                                 style: const TextStyle(color: Colors.white),
                                 decoration: const InputDecoration(
                                   border: InputBorder.none,
-                                  contentPadding: EdgeInsets.symmetric(horizontal: 20),
+                                  contentPadding:
+                                      EdgeInsets.symmetric(horizontal: 20),
                                 ),
                               ),
                             ),
@@ -129,7 +132,8 @@ class LoginPageState extends State<LoginPage> {
                               height: 53,
                               decoration: ShapeDecoration(
                                 shape: RoundedRectangleBorder(
-                                  side: const BorderSide(width: 1, color: Color(0xFFFA3D3B)),
+                                  side: const BorderSide(
+                                      width: 1, color: Color(0xFFFA3D3B)),
                                   borderRadius: BorderRadius.circular(32),
                                 ),
                               ),
@@ -139,7 +143,8 @@ class LoginPageState extends State<LoginPage> {
                                 style: const TextStyle(color: Colors.white),
                                 decoration: const InputDecoration(
                                   border: InputBorder.none,
-                                  contentPadding: EdgeInsets.symmetric(horizontal: 20),
+                                  contentPadding:
+                                      EdgeInsets.symmetric(horizontal: 20),
                                 ),
                               ),
                             ),
@@ -175,7 +180,8 @@ class LoginPageState extends State<LoginPage> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 10),
                       child: const Text(
                         'Login',
                         style: TextStyle(
@@ -192,11 +198,13 @@ class LoginPageState extends State<LoginPage> {
                       onTap: () {
                         Navigator.pushReplacement(
                           context,
-                          MaterialPageRoute(builder: (context) => const RegisterPage()),
+                          MaterialPageRoute(
+                              builder: (context) => const RegisterPage()),
                         );
                       },
                       child: Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 20, vertical: 10),
                         child: const Text(
                           'Sign Up',
                           style: TextStyle(
