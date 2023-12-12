@@ -222,7 +222,7 @@ class RegisterPageState extends State<RegisterPage> {
                       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                       child: GestureDetector(
                         onTap: () {
-                        Navigator.push(
+                        Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(builder: (context) => const LoginPage()),
                         );
