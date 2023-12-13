@@ -44,10 +44,9 @@ exports.getFilms = async (req, res) => {
 
 exports.postFilm = async (req, res) => {
   let postFilm = {
+    type: req.body.type,
     title: req.body.title,
-    episodes: req.body.episodes ? req.body.episodes : "?",
     description: req.body.description,
-    status: req.body.status,
     genres: req.body.genres,
     imageUrl: req.body.imageUrl,
     backgroundImgUrl: req.body.backgroundImgUrl,
@@ -75,13 +74,12 @@ exports.postFilm = async (req, res) => {
 exports.putFilm = async (req, res) => {
   let title = req.params.title;
 
-  let film = await AnimeModel.findOne({ title: title });
+  let film = await FilmModel.findOne({ title: title });
 
   let updateFilm = {
+    type: film.type,
     title: req.body.title,
-    episodes: req.body.episodes ? req.body.episodes : film.episodes,
     description: req.body.description ? req.body.description : film.description,
-    status: req.body.status ? req.body.status : film.status,
     genres: req.body.genres ? req.body.genres : film.genres,
     imageUrl: req.body.imageUrl ? req.body.imageUrl : film.imageUrl,
     backgroundImgUrl: req.body.backgroundImgUrl
@@ -91,7 +89,7 @@ exports.putFilm = async (req, res) => {
   };
 
   try {
-    const film = await AnimeModel.updateOne({ title: title }, updateFilm);
+    const film = await FilmModel.updateOne({ title: title }, updateFilm);
 
     res.json(film);
   } catch (err) {

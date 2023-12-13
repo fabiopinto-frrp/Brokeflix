@@ -40,6 +40,7 @@ const userSchema = new Schema({
         required: [true, "Please enter the URL of the media item's image"],
       },
       animeStatus: { type: String, required: true },
+      seriesStatus: { type: String, required: true },
       userStatus: {
         type: String,
         required: [
@@ -59,7 +60,7 @@ const userSchema = new Schema({
         type: [String],
         required: [true, "Please enter the genres of the media item"],
       },
-      rating: {
+      score: {
         type: Number,
         required: [true, "Please enter the rating of the media item"],
       },
