@@ -23,7 +23,10 @@ router
   })
   .post(async (req, res) => {
     watchListController.addMedia(req, res);
-  })
+  });
+
+router
+  .route("/:username/watchList/:type/:title")
   .put(async (req, res) => {
     watchListController.editMedia(req, res);
   })

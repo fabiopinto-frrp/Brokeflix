@@ -10,28 +10,49 @@ exports.getWatchList = async (req, res) => {
 };
 
 exports.addMedia = async (req, res) => {
+  const type = req.body.type;
   const userProfile = await user.findOne({ username: req.user.username });
-  const animeToAdd = await anime.findOne({ title: req.body.title });
-  const serieToAdd = await serie.findOne({ title: req.body.title });
-  const filmToAdd = await film.findOne({ title: req.body.title });
+  const animeToAdd = await anime.findOne({ type: type });
+  const serieToAdd = await serie.findOne({ type: type });
+  const filmToAdd = await film.findOne({ type: type });
 
-  userProfile.watchList.push({
-    type: "Anime" || "Serie" || "Film",
-    title: animeToAdd.title || serieToAdd.title || filmToAdd.title,
-    image: animeToAdd.imageUrl || serieToAdd.imageUrl || filmToAdd.imageUrl,
-    animeStatus: animeToAdd.status || serieToAdd.status || filmToAdd.status,
+  let obj = {
+    type: req.body.type,
     userStatus: req.body.userStatus,
     progress: req.body.progress,
-    description:
-      animeToAdd.description || serieToAdd.description || filmToAdd.description,
-    genres: animeToAdd.genres || serieToAdd.genres || filmToAdd.genres,
     rating: req.body.rating,
-    episodes:
-      animeToAdd.numberOfEpisodes ||
-      serieToAdd.numberOfEpisodes ||
-      filmToAdd.numberOfEpisodes,
-  });
+  };
+
+  if (animeToAdd) {
+    obj.type = animeToAdd.type;
+    obj.title = animeToAdd.title;
+    obj.image = animeToAdd.imageUrl;
+    obj.animeStatus = animeToAdd.status;
+    obj.description = animeToAdd.description;
+    obj.genres = animeToAdd.genres;
+    obj.episodes = animeToAdd.numberOfEpisodes;
+  }
+
+  if (serieToAdd) {
+    obj.type = serieToAdd.type;
+    obj.title = serieToAdd.title;
+    obj.image = serieToAdd.imageUrl;
+    obj.seriesStatus = serieToAdd.status;
+    obj.description = serieToAdd.description;
+    obj.genres = serieToAdd.genres;
+    obj.episodes = serieToAdd.numberOfEpisodes;
+  }
+
+  if (filmToAdd) {
+    obj.type = filmToAdd.type;
+    obj.title = filmToAdd.title;
+    obj.image = filmToAdd.imageUrl;
+    obj.description = filmToAdd.description;
+    obj.genres = filmToAdd.genres;
+  }
+
   try {
+    userProfile.watchList.push(obj);
     await userProfile.save();
 
     res.status(200).send("Media added to watch list successfully");
@@ -44,14 +65,20 @@ exports.editMedia = async (req, res) => {
   const userProfile = await user.findOne({ username: req.user.username });
 
   const mediaToEdit = userProfile.watchList.find(
-    (media) => media.title === req.body.title
+    (media) => media.title === req.body.title && media.type === req.body.type
   );
+  if (req.body.type === "Anime" || req.body.type === "Serie") {
+    mediaToEdit.userStatus = req.body.userStatus;
+    mediaToEdit.progress = req.body.progress;
+    mediaToEdit.score = req.body.score;
+  }
+  if (req.body.type === "Film") {
+    mediaToEdit.userStatus = req.body.userStatus;
+    mediaToEdit.score = req.body.score;
+  }
 
-  mediaToEdit.progress = req.body.progress;
-  mediaToEdit.rating = req.body.rating;
   try {
-    await userProfile.save();
-
+    await mediaToEdit.save();
     res.status(200).send("Media updated successfully");
   } catch (err) {
     res.status(400).send("Error updating Media");
@@ -62,7 +89,7 @@ exports.deleteMedia = async (req, res) => {
   const userProfile = await user.findOne({ username: req.user.username });
 
   const mediaToDelete = userProfile.watchList.find(
-    (media) => media.title === req.body.title
+    (media) => media.title === req.body.title && media.type === req.body.type
   );
   try {
     mediaToDelete.remove();

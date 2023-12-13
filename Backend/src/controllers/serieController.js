@@ -44,6 +44,7 @@ exports.getSeries = async (req, res) => {
 
 exports.postSerie = async (req, res) => {
   let postSerie = {
+    type: req.body.type,
     title: req.body.title,
     numberOfEpisodes: req.body.numberOfEpisodes
       ? req.body.numberOfEpisodes
@@ -79,8 +80,8 @@ exports.putSerie = async (req, res) => {
   let serie = await SerieModel.findOne({ title: title });
 
   let updateSerie = {
+    type: serie.type,
     title: req.body.title,
-
     numberOfEpisodes: req.body.numberOfEpisodes
       ? req.body.numberOfEpisodes
       : serie.numberOfEpisodes,
@@ -121,7 +122,7 @@ exports.addEpisode = async (req, res) => {
         return;
       }
 
-      anime.episode.push(serie);
+      serie.episode.push(serie);
 
       await serie.save();
 

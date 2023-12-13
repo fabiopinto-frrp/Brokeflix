@@ -32,6 +32,3 @@ Implement firebase storage to import images and videos and when the user uploads
 (after firebase, start the user Controller, and implement logic in front end)
 
 ---
-
-Implement in the user Controller :
-it will have userList function that will have the animes films or series that the user has watched and the ones that he wants to watch.
