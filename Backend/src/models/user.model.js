@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const db = require("../configs/db.config");
-const { isLength, isBase64 } = require("validator");
+
 /*
 check if the string is base64 encoded. options is optional and defaults to { urlSafe: false }
 when urlSafe is true it tests the given base64 encoded string is url safe.
@@ -15,7 +15,8 @@ const userSchema = new Schema({
     lowercase: true,
     required: [true, "Please enter your Username"],
     unique: true,
-    validate: isLength("Please enter a valid username ", [{ min: 5, max: 15 }]),
+    minlength: [5, "Username should be at least 5 characters long"],
+    maxLength: [15, "Username should be at most 15 characters long"],
   },
 
   password: {

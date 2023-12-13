@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const userController = require("./controllers/userController");
-const watchListController = require("./controllers/watchListController");
+const userController = require("../controllers/userController");
+const watchListController = require("../controllers/watchListController");
 
 router.route("/").get(async (req, res) => {
   userController.getUsers(req, res);
