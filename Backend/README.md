@@ -28,7 +28,4 @@ WHEN ALL IS WORKING:
 
 ---
 
-Implement firebase storage to import images and videos and when the user uploads a video or image, it will be uploaded to firebase storage and the link will be saved in the database.
-(after firebase, start the user Controller, and implement logic in front end)
-
 ---
