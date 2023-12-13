@@ -20,3 +20,7 @@ flutter:
 
   assets:
     - assets/BrokeFlix.png
+    - assets/Home.png
+    - assets/Profile.png
+    - assets/Search.png
+    - assets/WatchList.png
