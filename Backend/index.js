@@ -6,6 +6,9 @@ const seriesRoutes = require("./src/routes/seriesRoutes");
 const userRoutes = require("./src/routes/usersRoutes");
 
 const port = process.env.PORT || 3000;
+app.get("/api/docs", (req, res) => {
+  res.status(200).send("GREETINGS !");
+});
 
 app.use("/api/animes", animesRoutes);
 app.use("/api/films", filmsRoutes);
