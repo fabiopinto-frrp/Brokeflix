@@ -39,7 +39,7 @@ exports.getUsers = async (req, res) => {
       res.json(userToSend);
     } catch (err) {
       console.error(err);
-      res.status(500).send("An error occurred in anime by title");
+      res.status(500).send("An error occurred in user by username");
     }
   } else {
     try {
@@ -48,7 +48,7 @@ exports.getUsers = async (req, res) => {
       res.json(users);
     } catch (err) {
       console.error(err);
-      res.status(500).send("An error occurred in getting All Animes");
+      res.status(500).send("An error occurred in getting All Users");
     }
   }
 };
