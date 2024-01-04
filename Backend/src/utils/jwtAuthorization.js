@@ -1,6 +1,5 @@
 var jwt = require("jsonwebtoken");
 const user = require("../models/user.model");
-
 let secret = process.env.JWT_SECRET;
 
 exports.generateToken = (user_info, callback) => {

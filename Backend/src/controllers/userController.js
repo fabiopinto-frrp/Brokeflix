@@ -58,6 +58,11 @@ exports.getProfile = async (req, res) => {
     const userProfile = await UserModel.findOne({
       username: req.params.username,
     });
+
+    if (req.user.username !== userProfile.username) {
+      return res.status(401).send("Not Authorized");
+    }
+
     res.status(200).json(userProfile);
   } catch (err) {
     res.status(400).send("Error getting profile");
@@ -72,9 +77,12 @@ exports.updateProfile = async (req, res) => {
   if (req.user.username !== userProfile.username) {
     return res.status(401).send("Not Authorized");
   }
+
   try {
-    userProfile.avatar = req.body.avatar;
-    userProfile.fullName = req.body.fullName;
+    userProfile.avatar = req.body.avatar ? req.body.avatar : userProfile.avatar;
+    userProfile.fullName = req.body.fullName
+      ? req.body.fullName
+      : userProfile.fullName;
     await userProfile.save();
     res.status(200).send("Profile updated successfully");
   } catch (err) {

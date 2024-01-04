@@ -24,8 +24,11 @@ WHEN ALL IS WORKING:
 jwtAuth:
 WHEN ALL IS WORKING:
 
-- implement admin role - if the user is admin or user , if its admin it goes somewhere else than the user home page (LAST THING TO DO IN THE PROJECT)
+- implement admin role - in the user model we have a isAdmin bollean property that is by default false
 
----
+need to implement a function that if the property isAdmin is true to have access on the protected admin routes , so we have a middleware to verify user token i can get the info of the user in case the isAdmin and if its true to have access to those things
+so in controller i can have a similiar verification but the user logged needs to have the isAdmin property true
+
+then i put the series , films and animes routes on the front with the app.use(adminAuth0 behind) and behind this i will have the app.use(auth) and user routes.
 
 ---
