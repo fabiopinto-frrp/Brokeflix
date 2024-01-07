@@ -8,7 +8,7 @@ router.route("/login").post(async (req, res) => {
 });
 
 router
-  .route("/signup")
+  .route("/register")
   .post(
     [
       body("fullname").notEmpty().escape(),
