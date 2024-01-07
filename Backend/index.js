@@ -4,7 +4,7 @@ const animesRoutes = require("./src/routes/animesRoutes");
 const filmsRoutes = require("./src/routes/filmsRoutes");
 const seriesRoutes = require("./src/routes/seriesRoutes");
 const userRoutes = require("./src/routes/usersRoutes");
-const jwtAuthorization = require("../utils/jwtAuthorization");
+const jwtAuthorization = require("./src/utils/jwtAuthorization");
 const authRoutes = require("./src/routes/authRoutes");
 const port = process.env.PORT || 3000;
 
