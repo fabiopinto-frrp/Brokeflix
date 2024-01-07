@@ -25,12 +25,4 @@ router
     }
   );
 
-router.route("/logout").get(async (req, res) => {
-  try {
-    authController.logoutUser(req, res);
-  } catch (err) {
-    res.status(400).send("error: User not logged out");
-  }
-});
-
 module.exports = router;

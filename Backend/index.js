@@ -5,7 +5,7 @@ const filmsRoutes = require("./src/routes/filmsRoutes");
 const seriesRoutes = require("./src/routes/seriesRoutes");
 const userRoutes = require("./src/routes/usersRoutes");
 const jwtAuthorization = require("../utils/jwtAuthorization");
-
+const authRoutes = require("./src/routes/authRoutes");
 const port = process.env.PORT || 3000;
 
 const auth = function (req, res, next) {
@@ -33,6 +33,7 @@ app.get("/api/docs", (req, res) => {
 app.use("/api/animes", animesRoutes);
 app.use("/api/films", filmsRoutes);
 app.use("/api/series", seriesRoutes);
+app.use("/", authRoutes);
 app.use(auth);
 app.use("/api/users/", userRoutes);
 
