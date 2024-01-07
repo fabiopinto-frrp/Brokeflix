@@ -1,5 +1,9 @@
+import 'dart:convert';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter/material.dart';
 import 'register.dart';
+import 'home.dart';
+import 'package:http/http.dart' as http;
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -9,8 +13,43 @@ class LoginPage extends StatefulWidget {
 }
 
 class LoginPageState extends State<LoginPage> {
-  TextEditingController emailController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
+  TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
+  final storage = const FlutterSecureStorage();
+
+  Future<void> loginUser() async {
+    var response = await http.post(
+      Uri.parse('http://localhost:8080/api/login'),
+      body: {
+        'username': usernameController.text,
+        'password': passwordController.text,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      await storage.write(key: 'token', value: response.body);
+
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const HomePage()),
+      );
+    } else if (response.statusCode == 401) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: const Text('Your username or password is wrong'),
+          action: SnackBarAction(
+            label: 'Undo',
+            textColor: const Color(0xFFFA3D3B),
+            onPressed: () {
+              ScaffoldMessenger.of(context).hideCurrentSnackBar();
+            },
+          ),
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,22 +73,25 @@ class LoginPageState extends State<LoginPage> {
                     borderRadius: BorderRadius.circular(32),
                   ),
                 ),
-                child: const Row(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Login',
-                      style: TextStyle(
-                        color: Color(0xFFD9D9D9),
-                        fontSize: 20,
-                        fontFamily: 'Poppins',
-                        fontWeight: FontWeight.w700,
-                        height: 0,
+                child: GestureDetector(
+                  onTap: loginUser,
+                  child: const Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Login',
+                        style: TextStyle(
+                          color: Color(0xFFD9D9D9),
+                          fontSize: 20,
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.w700,
+                          height: 0,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -93,7 +135,7 @@ class LoginPageState extends State<LoginPage> {
                                 ),
                               ),
                               child: TextField(
-                                controller: emailController,
+                                controller: usernameController,
                                 style: const TextStyle(color: Colors.white),
                                 decoration: const InputDecoration(
                                   border: InputBorder.none,

@@ -33,7 +33,7 @@ app.get("/api/docs", (req, res) => {
 app.use("/api/animes", animesRoutes);
 app.use("/api/films", filmsRoutes);
 app.use("/api/series", seriesRoutes);
-app.use("/", authRoutes);
+app.use("/api", authRoutes);
 app.use(auth);
 app.use("/api/users/", userRoutes);
 

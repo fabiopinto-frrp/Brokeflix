@@ -1,5 +1,9 @@
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter/material.dart';
 import 'login.dart';
+import 'home.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({Key? key}) : super(key: key);
@@ -9,9 +13,56 @@ class RegisterPage extends StatefulWidget {
 }
 
 class RegisterPageState extends State<RegisterPage> {
+  final formKey = GlobalKey<FormState>();
   TextEditingController nameController = TextEditingController();
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+
+  final storage = const FlutterSecureStorage();
+
+  Future<void> registerUser() async {
+    var response = await http.post(
+      Uri.parse('http://localhost:8080/api/register'),
+      body: {
+        'name': nameController.text,
+        'username': usernameController.text,
+        'password': passwordController.text,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      var loginResponse = await http.post(
+        Uri.parse('http://localhost:8080/api/login'),
+        body: {
+          'username': usernameController.text,
+          'password': passwordController.text,
+        },
+      );
+
+      if (loginResponse.statusCode == 200) {
+        await storage.write(key: 'token', value: loginResponse.body);
+
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const HomePage()),
+        );
+      } else {
+        // Handle registration error
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: const Text('Registration failed'),
+            action: SnackBarAction(
+              label: 'Undo',
+              textColor: const Color(0xFFFA3D3B),
+              onPressed: () {
+                ScaffoldMessenger.of(context).hideCurrentSnackBar();
+              },
+            ),
+          ),
+        );
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,29 +78,33 @@ class RegisterPageState extends State<RegisterPage> {
               left: 50,
               top: 750,
               child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 122, vertical: 20),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 122, vertical: 20),
                 decoration: ShapeDecoration(
                   color: const Color(0xFFFA3D3B),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(32),
                   ),
                 ),
-                child: const Row(
-                  mainAxisSize: MainAxisSize.min,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Register',
-                      style: TextStyle(
-                        color: Color(0xFFD9D9D9),
-                        fontSize: 20,
-                        fontFamily: 'Poppins',
-                        fontWeight: FontWeight.w700,
-                        height: 0,
+                child: GestureDetector(
+                  onTap: registerUser,
+                  child: const Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Register',
+                        style: TextStyle(
+                          color: Color(0xFFD9D9D9),
+                          fontSize: 20,
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.w700,
+                          height: 0,
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -87,7 +142,8 @@ class RegisterPageState extends State<RegisterPage> {
                               height: 53,
                               decoration: ShapeDecoration(
                                 shape: RoundedRectangleBorder(
-                                  side: const BorderSide(width: 1, color: Color(0xFFFA3D3B)),
+                                  side: const BorderSide(
+                                      width: 1, color: Color(0xFFFA3D3B)),
                                   borderRadius: BorderRadius.circular(32),
                                 ),
                               ),
@@ -96,7 +152,8 @@ class RegisterPageState extends State<RegisterPage> {
                                 style: const TextStyle(color: Colors.white),
                                 decoration: const InputDecoration(
                                   border: InputBorder.none,
-                                  contentPadding: EdgeInsets.symmetric(horizontal: 20),
+                                  contentPadding:
+                                      EdgeInsets.symmetric(horizontal: 20),
                                 ),
                               ),
                             ),
@@ -130,7 +187,8 @@ class RegisterPageState extends State<RegisterPage> {
                               height: 53,
                               decoration: ShapeDecoration(
                                 shape: RoundedRectangleBorder(
-                                  side: const BorderSide(width: 1, color: Color(0xFFFA3D3B)),
+                                  side: const BorderSide(
+                                      width: 1, color: Color(0xFFFA3D3B)),
                                   borderRadius: BorderRadius.circular(32),
                                 ),
                               ),
@@ -139,7 +197,8 @@ class RegisterPageState extends State<RegisterPage> {
                                 style: const TextStyle(color: Colors.white),
                                 decoration: const InputDecoration(
                                   border: InputBorder.none,
-                                  contentPadding: EdgeInsets.symmetric(horizontal: 20),
+                                  contentPadding:
+                                      EdgeInsets.symmetric(horizontal: 20),
                                 ),
                               ),
                             ),
@@ -173,7 +232,8 @@ class RegisterPageState extends State<RegisterPage> {
                               height: 53,
                               decoration: ShapeDecoration(
                                 shape: RoundedRectangleBorder(
-                                  side: const BorderSide(width: 1, color: Color(0xFFFA3D3B)),
+                                  side: const BorderSide(
+                                      width: 1, color: Color(0xFFFA3D3B)),
                                   borderRadius: BorderRadius.circular(32),
                                 ),
                               ),
@@ -183,7 +243,8 @@ class RegisterPageState extends State<RegisterPage> {
                                 style: const TextStyle(color: Colors.white),
                                 decoration: const InputDecoration(
                                   border: InputBorder.none,
-                                  contentPadding: EdgeInsets.symmetric(horizontal: 20),
+                                  contentPadding:
+                                      EdgeInsets.symmetric(horizontal: 20),
                                 ),
                               ),
                             ),
@@ -219,14 +280,16 @@ class RegisterPageState extends State<RegisterPage> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 10),
                       child: GestureDetector(
                         onTap: () {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(builder: (context) => const LoginPage()),
-                        );
-                      },
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const LoginPage()),
+                          );
+                        },
                         child: const Text(
                           'Login',
                           style: TextStyle(
@@ -241,7 +304,8 @@ class RegisterPageState extends State<RegisterPage> {
                     ),
                     const SizedBox(width: 55),
                     Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20, vertical: 10),
                       child: const Text(
                         'Sign Up',
                         style: TextStyle(
