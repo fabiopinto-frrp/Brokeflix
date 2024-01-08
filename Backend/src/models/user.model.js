@@ -9,7 +9,7 @@ isBase64(str [, options])
 
 const { Schema } = mongoose;
 const userSchema = new Schema({
-  fullName: { type: String, required: true },
+  fullname: { type: String, required: true },
   username: {
     type: String,
     lowercase: true,

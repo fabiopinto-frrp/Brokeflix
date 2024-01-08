@@ -3,56 +3,54 @@ const user = require("../models/user.model");
 const jwtAuthorization = require("../utils/jwtAuthorization");
 
 exports.signUpUser = async (req, res) => {
-  bcrypt.genSalt(10, function (err, salt) {
-    bcrypt.hash(req.body.password, salt, function (err, hash) {
-      const userToCreate = new user({
-        fullname: req.body.fullname,
-        username: req.body.username,
-        password: hash,
-        watchList: [],
-      });
-      user.find({ username: req.body.username }, function (err, user) {
-        if (err) {
-          res.status(400).send(err);
-        }
+  try {
+    const salt = await bcrypt.genSalt(10);
+    const hash = await bcrypt.hash(req.body.password, salt);
 
-        if (user.length > 0) {
-          res.status(406).send("Duplicated User");
-        } else {
-          userToCreate.save(function (err, newUser) {
-            if (err) {
-              res.status(400).send(err);
-            }
-            res.status(200).send("Registered User");
-          });
-        }
-      });
+    const existingUser = await user.find({ username: req.body.username });
+
+    if (existingUser.length > 0) {
+      return res.status(406).send("Duplicated User");
+    }
+
+    const userToCreate = new user({
+      fullname: req.body.fullname,
+      username: req.body.username,
+      password: hash,
+      watchList: [],
     });
-  });
+
+    const newUser = await userToCreate.save();
+    res.status(201).json(newUser);
+  } catch (err) {
+    res.status(500).send(err);
+  }
 };
 exports.loginUser = async (req, res) => {
-  user.find({ username: req.body.username }, function (err, user) {
-    if (err) {
-      res.status(400).send(err);
-    }
+  try {
+    const users = await user.find({ username: req.body.username });
 
-    if (user.length > 0) {
-      bcrypt
-        .compare(req.body.password, user[0].password)
-        .then(function (result) {
-          if (result) {
-            jwtAuthorization.generateToken(
-              { user: req.body.username },
-              (token) => {
-                res.status(200).json(token);
-              }
-            );
-          } else {
-            res.status(401).send("Not Authorized");
+    if (users.length > 0) {
+      const match = await bcrypt.compare(req.body.password, users[0].password);
+
+      if (match) {
+        jwtAuthorization.generateToken(
+          { user: req.body.username },
+          function (err, token) {
+            if (err) {
+              res.status(500).send(err);
+            } else {
+              res.status(200).json({ token: token });
+            }
           }
-        });
+        );
+      } else {
+        res.status(401).send("Not Authorized");
+      }
     } else {
-      res.status(401).send("Not Authorized");
+      res.status(404).send("Not Authorized");
     }
-  });
+  } catch (err) {
+    res.status(500).send(err);
+  }
 };
