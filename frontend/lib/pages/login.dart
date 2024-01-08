@@ -41,8 +41,8 @@ class LoginPageState extends State<LoginPage> {
                     ),
                   ),
                   child: ElevatedButton(
-                    onPressed: () {
-                      loginUser();
+                    onPressed: () async {
+                      await loginUser();
                     },
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(
@@ -241,7 +241,7 @@ class LoginPageState extends State<LoginPage> {
 
   Future<void> loginUser() async {
     var response = await http.post(
-      Uri.parse('https://www.brokeflix-api.tech/api/login'),
+      Uri.parse('https://www.brokeflix-api.tech/auth/login'),
       body: {
         'username': usernameController.text,
         'password': passwordController.text,
