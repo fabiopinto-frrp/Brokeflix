@@ -9,6 +9,7 @@ exports.signUpUser = async (req, res) => {
         fullname: req.body.fullname,
         username: req.body.username,
         password: hash,
+        watchList: [],
       });
       user.find({ username: req.body.username }, function (err, user) {
         if (err) {

@@ -9,7 +9,7 @@ const authRoutes = require("./src/routes/authRoutes");
 const port = process.env.PORT || 3000;
 
 const auth = function (req, res, next) {
-  let exceptions = ["/login", "/register"];
+  let exceptions = ["/auth/login", "/auth/register"];
   if (exceptions.indexOf(req.url) >= 0) {
     next();
   } else {
@@ -33,7 +33,7 @@ app.get("/api/docs", (req, res) => {
 app.use("/api/animes", animesRoutes);
 app.use("/api/films", filmsRoutes);
 app.use("/api/series", seriesRoutes);
-app.use("/api", authRoutes);
+app.use("/auth", authRoutes);
 app.use(auth);
 app.use("/api/users/", userRoutes);
 

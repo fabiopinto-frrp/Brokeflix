@@ -48,6 +48,7 @@ exports.postFilm = async (req, res) => {
     title: req.body.title,
     description: req.body.description,
     genres: req.body.genres,
+    status: req.body.status,
     imageUrl: req.body.imageUrl,
     backgroundImgUrl: req.body.backgroundImgUrl,
     videosUrl: req.body.videosUrl ? req.body.videosUrl : "",
@@ -82,6 +83,7 @@ exports.putFilm = async (req, res) => {
     description: req.body.description ? req.body.description : film.description,
     genres: req.body.genres ? req.body.genres : film.genres,
     imageUrl: req.body.imageUrl ? req.body.imageUrl : film.imageUrl,
+    status: req.body.status ? req.body.status : film.status,
     backgroundImgUrl: req.body.backgroundImgUrl
       ? req.body.backgroundImgUrl
       : film.backgroundImgUrl,

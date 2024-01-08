@@ -9,20 +9,20 @@ isBase64(str [, options])
 
 const { Schema } = mongoose;
 const userSchema = new Schema({
-  fullName: { type: String, required: [true, "Please enter your Full Name"] },
+  fullName: { type: String, required: true },
   username: {
     type: String,
     lowercase: true,
-    required: [true, "Please enter your Username"],
+    required: true,
     unique: true,
-    minlength: [5, "Username should be at least 5 characters long"],
-    maxLength: [15, "Username should be at most 15 characters long"],
+    minlength: 5,
+    maxLength: 15,
   },
 
   password: {
     type: String,
-    required: [true, "Please enter your Password"],
-    minlength: [6, "Password should be at least 6 characters long"],
+    required: true,
+    minlength: 6,
   },
   avatar: { type: String, required: false },
   isAdmin: { type: Boolean, default: false },
@@ -30,47 +30,40 @@ const userSchema = new Schema({
     {
       type: {
         type: String,
-        required: [true, "Please enter the type of media (Anime, Serie, Film)"],
+        required: true,
       },
       title: {
         type: String,
-        required: [true, "Please enter the title of the media item"],
+        required: true,
       },
       image: {
         type: String,
-        required: [true, "Please enter the URL of the media item's image"],
+        required: true,
       },
-      animeStatus: { type: String, required: true },
-      seriesStatus: { type: String, required: true },
+      mediaStatus: { type: String, required: true },
       userStatus: {
         type: String,
-        required: [
-          true,
-          "Please enter the status of the media item (Watching, Planned, On Hold)",
-        ],
+        required: true,
       },
       progress: {
         type: Number,
-        required: [true, "Please enter your progress (episodes watched)"],
+        required: true,
       },
       description: {
         type: String,
-        required: [true, "Please enter the description of the media item"],
+        required: true,
       },
       genres: {
         type: [String],
-        required: [true, "Please enter the genres of the media item"],
+        required: true,
       },
       score: {
         type: Number,
-        required: [true, "Please enter the rating of the media item"],
+        required: true,
       },
       episodes: {
         type: Number,
-        required: [
-          true,
-          "Please enter the number of episodes in the media item",
-        ],
+        required: true,
       },
     },
   ],
