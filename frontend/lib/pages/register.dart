@@ -19,12 +19,13 @@ class RegisterPageState extends State<RegisterPage> {
 
   final storage = const FlutterSecureStorage();
 
-  final String loginUrl = 'https://www.brokeflix-api.tech/auth/login';
-  final String registerUrl = 'https://www.brokeflix-api.tech/auth/register';
+  final String loginUrl = 'https://brokeflix-api.tech/auth/login';
+  final String registerUrl = 'https://brokeflix-api.tech/auth/register';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       body: Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
@@ -44,7 +45,7 @@ class RegisterPageState extends State<RegisterPage> {
                 ),
                 child: ElevatedButton(
                   onPressed: () async {
-                    Map<String, dynamic> registerData = {
+                    Map<String, String> registerData = {
                       'fullname': nameController.text,
                       'username': usernameController.text,
                       'password': passwordController.text,
@@ -294,18 +295,33 @@ class RegisterPageState extends State<RegisterPage> {
     );
   }
 
-  Future<void> postRequest(String url, Map<String, dynamic> data) async {
+  Future<void> postRequest(String url, Map<String, String> data) async {
     try {
+      var res = json.encode(data);
       var response = await http.post(
         Uri.parse(url),
-        body: json.encode(data),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: res,
       );
+
+      print(url);
+      print(res);
       print(data);
+      print(response.request?.url);
       print(response.body);
 
-      if (response.statusCode == 200) {
+      if (response.statusCode == 201) {
         print('Post request: $url was successful!');
         print('Server response: ${response.body}');
+      } else if (response.statusCode == 200) {
+        await storage.write(key: 'token', value: response.body);
+
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const HomePage()),
+        );
       } else {
         print('Server returned an error:');
         print('Status Code: ${response.statusCode}');
@@ -331,13 +347,11 @@ class RegisterPageState extends State<RegisterPage> {
   }
 
   Future<void> loginAuto(String username, String password) async {
-    Map<String, dynamic> loginData = {
+    Map<String, String> loginData = {
       'username': username,
       'password': password,
     };
 
     await postRequest(loginUrl, loginData);
-
-    
   }
 }

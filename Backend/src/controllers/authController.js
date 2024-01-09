@@ -36,11 +36,11 @@ exports.loginUser = async (req, res) => {
       if (match) {
         jwtAuthorization.generateToken(
           { user: req.body.username },
-          function (err, token) {
-            if (err) {
-              res.status(500).send(err);
-            } else {
+          function (token, err) {
+            if (token) {
               res.status(200).json({ token: token });
+            } else {
+              res.status(500).send(err);
             }
           }
         );
