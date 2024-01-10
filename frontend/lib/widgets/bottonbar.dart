@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import '../pages/watch_list.dart';
+import '../pages/home.dart';
+import '../pages/profile.dart';
 
 class BottonBar extends StatefulWidget {
   const BottonBar({super.key});
@@ -25,20 +28,44 @@ class BottonBarState extends State<BottonBar> {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Image.asset(
-            'assets/Home.png',
-            width: 30,
-            height: 30,
+          GestureDetector(
+            onTap: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => const HomePage()),
+              );
+            },
+            child: Image.asset(
+              'assets/Home.png',
+              width: 30,
+              height: 30,
+            ),
           ),
-          Image.asset(
-            'assets/WatchList.png',
-            width: 30,
-            height: 30,
+          GestureDetector(
+            onTap: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => const WatchListPage()),
+              );
+            },
+            child: Image.asset(
+              'assets/WatchList.png',
+              width: 30,
+              height: 30,
+            ),
           ),
-          Image.asset(
-            'assets/Profile.png',
-            width: 30,
-            height: 30,
+          GestureDetector(
+            onTap: () {
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => const ProfilePage()),
+              );
+            },
+            child: Image.asset(
+              'assets/Profile.png',
+              width: 30,
+              height: 30,
+            ),
           ),
         ],
       ),

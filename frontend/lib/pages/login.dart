@@ -1,5 +1,6 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter/material.dart';
+import 'dart:convert';
 import 'register.dart';
 import 'home.dart';
 import 'package:http/http.dart' as http;
@@ -17,6 +18,8 @@ class LoginPageState extends State<LoginPage> {
   TextEditingController passwordController = TextEditingController();
 
   final storage = const FlutterSecureStorage();
+
+  final String loginUrl = 'https://brokeflix-api.tech/auth/login';
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +45,12 @@ class LoginPageState extends State<LoginPage> {
                   ),
                   child: ElevatedButton(
                     onPressed: () async {
-                      await loginUser();
+                      Map<String, String> loginData = {
+                        'username': usernameController.text,
+                        'password': passwordController.text,
+                      };
+
+                      await postRequest(loginUrl, loginData);
                     },
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(
@@ -239,35 +247,62 @@ class LoginPageState extends State<LoginPage> {
     );
   }
 
-  Future<void> loginUser() async {
-    var response = await http.post(
-      Uri.parse('https://www.brokeflix-api.tech/auth/login'),
-      body: {
-        'username': usernameController.text,
-        'password': passwordController.text,
-      },
-    );
-
-    if (response.statusCode == 200) {
-      await storage.write(key: 'token', value: response.body);
-
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const HomePage()),
+  Future<void> postRequest(String url, Map<String, String> data) async {
+    try {
+      var res = json.encode(data);
+      var response = await http.post(
+        Uri.parse(url),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: res,
       );
-    } else if (response.statusCode == 401) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: const Text('Your username or password is wrong'),
-          action: SnackBarAction(
-            label: 'Undo',
-            textColor: const Color(0xFFFA3D3B),
-            onPressed: () {
-              ScaffoldMessenger.of(context).hideCurrentSnackBar();
-            },
+
+      print('Request URL: $url');
+      print('Request Body: $res');
+      print('Response URL: ${response.request?.url}');
+      print('Response Body: ${response.body}');
+
+      if (response.statusCode == 200) {
+        await storage.write(key: 'token', value: response.body);
+
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const HomePage()),
+        );
+      } else if (response.statusCode == 401) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: const Text('Your username or password is wrong'),
+            action: SnackBarAction(
+              label: 'Undo',
+              textColor: const Color(0xFFFA3D3B),
+              onPressed: () {
+                ScaffoldMessenger.of(context).hideCurrentSnackBar();
+              },
+            ),
           ),
-        ),
-      );
+        );
+      } else {
+        print('Unexpected response: ${response.statusCode}');
+        print('Response Body: ${response.body}');
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Unexpected response: ${response.statusCode}'),
+            action: SnackBarAction(
+              label: 'Undo',
+              textColor: const Color(0xFFFA3D3B),
+              onPressed: () {
+                ScaffoldMessenger.of(context).hideCurrentSnackBar();
+              },
+            ),
+          ),
+        );
+      }
+    } catch (error, stackTrace) {
+      print('Error sending POST $url: $error');
+      print('Caught error: $error');
+      print('Stack trace: $stackTrace');
     }
   }
 }

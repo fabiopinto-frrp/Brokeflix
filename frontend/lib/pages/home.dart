@@ -9,12 +9,24 @@ class HomePage extends StatefulWidget {
 }
 
 class HomePageState extends State<HomePage> {
-  final storage = new FlutterSecureStorage();
+  final storage = const FlutterSecureStorage();
 
   @override
   Widget build(BuildContext context) {
-    test();
-    throw UnimplementedError();
+    
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Home"),
+      ),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {
+            test();
+          },
+          child: const Text("Test"),
+        ),
+      ),
+    );
   }
 
   Future<void> test() async {
