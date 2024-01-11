@@ -265,6 +265,9 @@ class LoginPageState extends State<LoginPage> {
 
       if (response.statusCode == 200) {
         await storage.write(key: 'token', value: response.body);
+        DateTime expireDate = DateTime.now().add(const Duration(days: 31));
+        await storage.write(
+            key: "expireDate", value: expireDate.toIso8601String());
 
         Navigator.pushReplacement(
           context,

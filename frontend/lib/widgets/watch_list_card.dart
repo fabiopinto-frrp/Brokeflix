@@ -1,13 +1,12 @@
-
 import 'package:flutter/material.dart';
-
 
 class WatchlistCard extends StatefulWidget {
   final String imageUrl;
   final String name;
   final String episodes;
 
-  WatchlistCard({required this.imageUrl, required this.name, required this.episodes});
+  WatchlistCard(
+      {required this.imageUrl, required this.name, required this.episodes});
 
   @override
   WatchlistCardState createState() => WatchlistCardState();
@@ -58,7 +57,7 @@ class WatchlistCardState extends State<WatchlistCard> {
             child: SizedBox(
               width: 99,
               child: Text(
-                episodes,
+                widget.episodes,
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 12,
@@ -77,7 +76,7 @@ class WatchlistCardState extends State<WatchlistCard> {
               height: 88,
               decoration: ShapeDecoration(
                 image: DecorationImage(
-                  image: NetworkImage(imageUrl),
+                  image: NetworkImage(widget.imageUrl),
                   fit: BoxFit.fill,
                 ),
                 shape: RoundedRectangleBorder(

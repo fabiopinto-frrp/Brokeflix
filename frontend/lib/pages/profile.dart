@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import '../widgets/bottonbar.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'login.dart';
+import '../services/checkLogin.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -9,7 +12,14 @@ class ProfilePage extends StatefulWidget {
 }
 
 class ProfilePageState extends State<ProfilePage> {
+  final storage = new FlutterSecureStorage();
+
   @override
+  void initState() {
+    super.initState();
+    checkLoginStatus(context);
+  }
+
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
@@ -57,30 +67,28 @@ class ProfilePageState extends State<ProfilePage> {
           Positioned(
             left: 152,
             top: 687,
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-              decoration: ShapeDecoration(
-                color: const Color(0xFFFA3D3B),
-                shape: RoundedRectangleBorder(
+            child: ElevatedButton(
+              style: ButtonStyle(
+                padding: MaterialStateProperty.all(
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10)),
+                backgroundColor:
+                    MaterialStateProperty.all(const Color(0xFFFA3D3B)),
+                shape: MaterialStateProperty.all(RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16),
-                ),
+                )),
               ),
-              child: const Row(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    'Logout',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 14,
-                      fontFamily: 'Poppins',
-                      fontWeight: FontWeight.w700,
-                      height: 0,
-                    ),
-                  ),
-                ],
+              onPressed: () {
+                logout();
+              },
+              child: const Text(
+                'Logout',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 14,
+                  fontFamily: 'Poppins',
+                  fontWeight: FontWeight.w700,
+                  height: 0,
+                ),
               ),
             ),
           ),
@@ -89,6 +97,13 @@ class ProfilePageState extends State<ProfilePage> {
       bottomNavigationBar: const BottonBar(),
     );
   }
+
+  Future<void> logout() async {
+    await storage.delete(key: 'token');
+    await storage.delete(key: 'expireDate');
+
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(builder: (BuildContext context) => LoginPage()),
+    );
+  }
 }
-
-

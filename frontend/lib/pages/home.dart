@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'profile.dart';
+import 'login.dart';
+import '../services/checkLogin.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -12,8 +15,12 @@ class HomePageState extends State<HomePage> {
   final storage = const FlutterSecureStorage();
 
   @override
+  void initState() {
+    super.initState();
+    checkLoginStatus(context);
+  }
+
   Widget build(BuildContext context) {
-    
     return Scaffold(
       appBar: AppBar(
         title: const Text("Home"),
@@ -21,17 +28,14 @@ class HomePageState extends State<HomePage> {
       body: Center(
         child: ElevatedButton(
           onPressed: () {
-            test();
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (context) => const ProfilePage()),
+            );
           },
           child: const Text("Test"),
         ),
       ),
     );
-  }
-
-  Future<void> test() async {
-    var token = await storage.read(key: "token");
-    print("fabio");
-    print(token);
   }
 }
