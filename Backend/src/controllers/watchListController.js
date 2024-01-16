@@ -20,16 +20,14 @@ exports.addMedia = async (req, res) => {
     type: req.body.type,
     userStatus: req.body.userStatus,
     progress: req.body.progress,
-    rating: req.body.rating,
+    score: req.body.score,
   };
 
   if (animeToAdd) {
     obj.type = animeToAdd.type;
     obj.title = animeToAdd.title;
     obj.image = animeToAdd.imageUrl;
-    obj.mediaStatus = animeToAdd.status;
-    obj.description = animeToAdd.description;
-    obj.genres = animeToAdd.genres;
+    // obj.genres = animeToAdd.genres;
     obj.episodes = animeToAdd.numberOfEpisodes;
   }
 
@@ -37,9 +35,8 @@ exports.addMedia = async (req, res) => {
     obj.type = serieToAdd.type;
     obj.title = serieToAdd.title;
     obj.image = serieToAdd.imageUrl;
-    obj.mediaStatus = serieToAdd.status;
-    obj.description = serieToAdd.description;
-    obj.genres = serieToAdd.genres;
+
+    // obj.genres = serieToAdd.genres;
     obj.episodes = serieToAdd.numberOfEpisodes;
   }
 
@@ -47,9 +44,7 @@ exports.addMedia = async (req, res) => {
     obj.type = filmToAdd.type;
     obj.title = filmToAdd.title;
     obj.image = filmToAdd.imageUrl;
-    obj.mediaStatus = filmToAdd.status;
-    obj.description = filmToAdd.description;
-    obj.genres = filmToAdd.genres;
+    // obj.genres = filmToAdd.genres;
   }
 
   try {

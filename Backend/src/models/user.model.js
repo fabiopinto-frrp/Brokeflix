@@ -40,7 +40,6 @@ const userSchema = new Schema({
         type: String,
         required: true,
       },
-      mediaStatus: { type: String, required: true },
       userStatus: {
         type: String,
         required: true,
@@ -49,17 +48,13 @@ const userSchema = new Schema({
         type: Number,
         required: true,
       },
-      description: {
-        type: String,
-        required: true,
-      },
-      genres: {
-        type: [String],
-        required: true,
-      },
+      // genres: {
+      //   type: [String],
+      //   required: true,
+      // },
       score: {
         type: Number,
-        required: true,
+        required: false,
       },
       episodes: {
         type: Number,

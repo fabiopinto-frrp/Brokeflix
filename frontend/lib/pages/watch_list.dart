@@ -10,14 +10,20 @@ class WatchlistItem {
   final String imageUrl;
   final String name;
   final String episodes;
+  final String score;
 
-  WatchlistItem({required this.imageUrl, required this.name, required this.episodes});
+  WatchlistItem(
+      {required this.imageUrl,
+      required this.name,
+      required this.episodes,
+      required this.score});
 
   factory WatchlistItem.fromJson(Map<String, dynamic> json) {
     return WatchlistItem(
       imageUrl: json['imageUrl'],
       name: json['name'],
       episodes: json['episodes'],
+      score: json['score'],
     );
   }
 }
@@ -30,7 +36,7 @@ class WatchListPage extends StatefulWidget {
 }
 
 class WatchListPageState extends State<WatchListPage> {
-  int selectedIndex = 0; 
+  int selectedIndex = 0;
 
   @override
   void initState() {
@@ -64,6 +70,7 @@ class WatchListPageState extends State<WatchListPage> {
                         imageUrl: snapshot.data![index].imageUrl,
                         name: snapshot.data![index].name,
                         episodes: snapshot.data![index].episodes,
+                        score: snapshot.data![index].score,
                       );
                     },
                   );
@@ -80,8 +87,10 @@ class WatchListPageState extends State<WatchListPage> {
       bottomNavigationBar: const BottonBar(),
     );
   }
+
   Future<List<WatchlistItem>> fetchWatchlist() async {
-    final response = await http.get(Uri.parse('https://your-api-url.com/watchlist'));
+    final response =
+        await http.get(Uri.parse('https://your-api-url.com/watchlist'));
 
     if (response.statusCode == 200) {
       List jsonResponse = json.decode(response.body);
