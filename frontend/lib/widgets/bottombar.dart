@@ -3,14 +3,14 @@ import '../pages/watch_list.dart';
 import '../pages/home.dart';
 import '../pages/profile.dart';
 
-class BottonBar extends StatefulWidget {
-  const BottonBar({super.key});
+class BottomBar extends StatefulWidget {
+  const BottomBar({super.key});
 
   @override
-  BottonBarState createState() => BottonBarState();
+  BottomBarState createState() => BottomBarState();
 }
 
-class BottonBarState extends State<BottonBar> {
+class BottomBarState extends State<BottomBar> {
   @override
   Widget build(BuildContext context) {
     return Container(

@@ -6,7 +6,7 @@ class WatchlistCard extends StatefulWidget {
   final String episodes;
 
   const WatchlistCard(
-      {required this.imageUrl, required this.name, required this.episodes});
+      {required this.imageUrl, required this.name, required this.episodes, required String score});
 
   @override
   WatchlistCardState createState() => WatchlistCardState();

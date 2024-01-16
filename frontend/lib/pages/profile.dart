@@ -94,7 +94,7 @@ class ProfilePageState extends State<ProfilePage> {
           ),
         ],
       ),
-      bottomNavigationBar: const BottonBar(),
+      bottomNavigationBar: const BottomBar(),
     );
   }
 

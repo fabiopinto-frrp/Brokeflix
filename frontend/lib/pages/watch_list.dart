@@ -84,7 +84,7 @@ class WatchListPageState extends State<WatchListPage> {
           ),
         ],
       ),
-      bottomNavigationBar: const BottonBar(),
+      bottomNavigationBar: const BottomBar(),
     );
   }
 

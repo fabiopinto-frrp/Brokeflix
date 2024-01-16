@@ -33,7 +33,7 @@ class WatchListTopbarState extends State<WatchListTopbar> {
               children: [
                 for (int i = 0; i < 6; i++)
                   Positioned(
-                    left: i * 77, // Adjust based on your design
+                    left: i * 77,
                     top: 0,
                     child: GestureDetector(
                       onTap: () {
