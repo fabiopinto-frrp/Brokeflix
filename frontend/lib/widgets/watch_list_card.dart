@@ -5,7 +5,7 @@ class WatchlistCard extends StatefulWidget {
   final String name;
   final String episodes;
 
-  WatchlistCard(
+  const WatchlistCard(
       {required this.imageUrl, required this.name, required this.episodes});
 
   @override
@@ -15,7 +15,7 @@ class WatchlistCard extends StatefulWidget {
 class WatchlistCardState extends State<WatchlistCard> {
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: 334,
       height: 108,
       child: Stack(
@@ -27,7 +27,7 @@ class WatchlistCardState extends State<WatchlistCard> {
               width: 334,
               height: 108,
               decoration: ShapeDecoration(
-                color: Color(0xFF313131),
+                color: const Color(0xFF313131),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(16),
                 ),
@@ -41,7 +41,7 @@ class WatchlistCardState extends State<WatchlistCard> {
               width: 175,
               child: Text(
                 widget.name,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 14,
                   fontFamily: 'Poppins',
@@ -58,7 +58,7 @@ class WatchlistCardState extends State<WatchlistCard> {
               width: 99,
               child: Text(
                 widget.episodes,
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.white,
                   fontSize: 12,
                   fontFamily: 'Poppins',
@@ -79,7 +79,7 @@ class WatchlistCardState extends State<WatchlistCard> {
                   image: NetworkImage(widget.imageUrl),
                   fit: BoxFit.fill,
                 ),
-                shape: RoundedRectangleBorder(
+                shape: const RoundedRectangleBorder(
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(12),
                     bottomLeft: Radius.circular(12),
@@ -91,7 +91,7 @@ class WatchlistCardState extends State<WatchlistCard> {
           Positioned(
             left: 280,
             top: 5,
-            child: Container(
+            child: SizedBox(
               width: 30,
               height: 30,
               child: Stack(
@@ -102,7 +102,7 @@ class WatchlistCardState extends State<WatchlistCard> {
                     child: Container(
                       width: 30,
                       height: 30,
-                      decoration: BoxDecoration(color: Color(0xFFD9D9D9)),
+                      decoration: const BoxDecoration(color: Color(0xFFD9D9D9)),
                     ),
                   ),
                 ],
