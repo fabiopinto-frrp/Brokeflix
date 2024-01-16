@@ -11,6 +11,7 @@ Future<void> checkLoginStatus(BuildContext context) async {
 
   if (token == null || expireDateString.isEmpty) {
     await storage.delete(key: "token");
+    await storage.delete(key: "username");
     await storage.delete(key: "expireDate");
     Navigator.of(context).pushReplacement(
       MaterialPageRoute(builder: (BuildContext context) => LoginPage()),
@@ -19,6 +20,7 @@ Future<void> checkLoginStatus(BuildContext context) async {
     DateTime expireDate = DateTime.parse(expireDateString);
     if (DateTime.now().isAfter(expireDate)) {
       await storage.delete(key: "token");
+      await storage.delete(key: "username");
       await storage.delete(key: "expireDate");
       Navigator.of(context).pushReplacement(
         MaterialPageRoute(builder: (BuildContext context) => LoginPage()),

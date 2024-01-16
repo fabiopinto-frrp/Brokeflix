@@ -9,6 +9,7 @@ const animeSchema = new Schema({
   numberOfEpisodes: { type: String, required: true },
   episode: [
     {
+      imageUrl: { type: String, required: true },
       title: { type: String, required: true },
       epUrl: { type: String, required: true },
     },

@@ -28,7 +28,7 @@ exports.addMedia = async (req, res) => {
     obj.title = animeToAdd.title;
     obj.image = animeToAdd.imageUrl;
     // obj.genres = animeToAdd.genres;
-    obj.episodes = animeToAdd.numberOfEpisodes;
+    obj.numberOfEpisodes = animeToAdd.numberOfEpisodes;
   }
 
   if (serieToAdd) {
@@ -37,7 +37,7 @@ exports.addMedia = async (req, res) => {
     obj.image = serieToAdd.imageUrl;
 
     // obj.genres = serieToAdd.genres;
-    obj.episodes = serieToAdd.numberOfEpisodes;
+    obj.numberOfEpisodes = serieToAdd.numberOfEpisodes;
   }
 
   if (filmToAdd) {
@@ -64,13 +64,19 @@ exports.editMedia = async (req, res) => {
     (media) => media.title === req.body.title && media.type === req.body.type
   );
   if (req.body.type === "Anime" || req.body.type === "Serie") {
-    mediaToEdit.userStatus = req.body.userStatus;
-    mediaToEdit.progress = req.body.progress;
-    mediaToEdit.score = req.body.score;
+    mediaToEdit.userStatus = req.body.userStatus
+      ? req.body.userStatus
+      : mediaToEdit.userStatus;
+    mediaToEdit.progress = req.body.progress
+      ? req.body.progress
+      : mediaToEdit.progress;
+    mediaToEdit.score = req.body.score ? req.body.score : mediaToEdit.score;
   }
   if (req.body.type === "Film") {
-    mediaToEdit.userStatus = req.body.userStatus;
-    mediaToEdit.score = req.body.score;
+    mediaToEdit.userStatus = req.body.userStatus
+      ? req.body.userStatus
+      : mediaToEdit.userStatus;
+    mediaToEdit.score = req.body.score ? req.body.score : mediaToEdit.score;
   }
 
   try {

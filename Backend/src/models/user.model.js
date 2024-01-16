@@ -56,7 +56,7 @@ const userSchema = new Schema({
         type: Number,
         required: false,
       },
-      episodes: {
+      numberOfEpisodes: {
         type: Number,
         required: true,
       },

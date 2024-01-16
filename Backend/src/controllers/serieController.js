@@ -112,6 +112,12 @@ exports.addEpisode = async (req, res) => {
   const duplicate = await SerieModel.findOne({ episode: episode.title });
   const serie = await SerieModel.findOne({ title: title });
 
+  let completedEpisode = {
+    imageUrl: serie.imageUrl,
+    title: episode.title,
+    epUrl: episode.epUrl,
+  };
+
   if (duplicate) {
     res.status(409).send("Episode already exists");
     return;
@@ -122,7 +128,7 @@ exports.addEpisode = async (req, res) => {
         return;
       }
 
-      serie.episode.push(serie);
+      serie.episode.push(completedEpisode);
 
       await serie.save();
 

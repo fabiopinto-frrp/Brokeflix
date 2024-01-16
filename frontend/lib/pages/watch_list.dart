@@ -5,25 +5,29 @@ import '../widgets/bottombar.dart';
 import '../widgets/watch_list_card.dart';
 import '../widgets/watch_list_topbar.dart';
 import '../services/checkLogin.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class WatchlistItem {
   final String imageUrl;
   final String name;
-  final String episodes;
+  final String numberOfEpisodes;
   final String score;
+  final String progress;
 
   WatchlistItem(
       {required this.imageUrl,
       required this.name,
-      required this.episodes,
-      required this.score});
+      required this.numberOfEpisodes,
+      required this.score,
+      required this.progress});
 
   factory WatchlistItem.fromJson(Map<String, dynamic> json) {
     return WatchlistItem(
       imageUrl: json['imageUrl'],
       name: json['name'],
-      episodes: json['episodes'],
+      numberOfEpisodes: json['numberOfEpisodes'],
       score: json['score'],
+      progress: json['progress'],
     );
   }
 }
@@ -37,6 +41,7 @@ class WatchListPage extends StatefulWidget {
 
 class WatchListPageState extends State<WatchListPage> {
   int selectedIndex = 0;
+  final storage = new FlutterSecureStorage();
 
   @override
   void initState() {
@@ -44,7 +49,6 @@ class WatchListPageState extends State<WatchListPage> {
     checkLoginStatus(context);
   }
 
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
@@ -69,7 +73,9 @@ class WatchListPageState extends State<WatchListPage> {
                       return WatchlistCard(
                         imageUrl: snapshot.data![index].imageUrl,
                         name: snapshot.data![index].name,
-                        episodes: snapshot.data![index].episodes,
+                        numberOfEpisodes:
+                            snapshot.data![index].numberOfEpisodes,
+                        progress: snapshot.data![index].progress,
                         score: snapshot.data![index].score,
                       );
                     },
@@ -89,8 +95,10 @@ class WatchListPageState extends State<WatchListPage> {
   }
 
   Future<List<WatchlistItem>> fetchWatchlist() async {
-    final response =
-        await http.get(Uri.parse('https://your-api-url.com/watchlist'));
+    final username = await storage.read(key: "username");
+
+    final response = await http.get(
+        Uri.parse('https://brokeflix-api.tech/api/users/$username/watchList'));
 
     if (response.statusCode == 200) {
       List jsonResponse = json.decode(response.body);

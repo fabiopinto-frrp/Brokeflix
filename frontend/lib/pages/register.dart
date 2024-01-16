@@ -317,6 +317,10 @@ class RegisterPageState extends State<RegisterPage> {
         print('Server response: ${response.body}');
       } else if (response.statusCode == 200) {
         await storage.write(key: 'token', value: response.body);
+        await storage.write(key: 'username', value: usernameController.text);
+        DateTime expireDate = DateTime.now().add(const Duration(days: 31));
+        await storage.write(
+            key: "expireDate", value: expireDate.toIso8601String());
 
         Navigator.pushReplacement(
           context,

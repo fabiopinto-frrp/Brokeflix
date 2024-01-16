@@ -3,10 +3,20 @@ import 'package:flutter/material.dart';
 class WatchlistCard extends StatefulWidget {
   final String imageUrl;
   final String name;
-  final String episodes;
+  final String numberOfEpisodes;
+  final String progress;
+  final String score;
 
   const WatchlistCard(
+<<<<<<< HEAD
       {required this.imageUrl, required this.name, required this.episodes, required String score});
+=======
+      {required this.imageUrl,
+      required this.name,
+      required this.numberOfEpisodes,
+      required this.progress,
+      required this.score});
+>>>>>>> 00abfc72b22c1bdc204d94e144677cca113940ad
 
   @override
   WatchlistCardState createState() => WatchlistCardState();

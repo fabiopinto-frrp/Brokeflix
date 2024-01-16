@@ -5,9 +5,8 @@ import 'package:http/http.dart' as http;
 class MediaDetails {
   final String title;
   final String description;
-  final String score;
   final String type;
-  final String episodes;
+  final String numberOfEpisodes;
   final String status;
   final String genres;
   final String imageUrl;
@@ -15,9 +14,8 @@ class MediaDetails {
   MediaDetails({
     required this.title,
     required this.description,
-    required this.score,
     required this.type,
-    required this.episodes,
+    required this.numberOfEpisodes,
     required this.status,
     required this.genres,
     required this.imageUrl,
@@ -27,9 +25,8 @@ class MediaDetails {
     return MediaDetails(
       title: json['title'],
       description: json['description'],
-      score: json['score'],
       type: json['type'],
-      episodes: json['episodes'],
+      numberOfEpisodes: json['numberOfEpisodes'],
       status: json['status'],
       genres: json['genres'],
       imageUrl: json['imageUrl'],
@@ -176,7 +173,7 @@ class MediaDetailsWidgetState extends State<MediaDetailsWidget> {
                           ),
                         ),
                         TextSpan(
-                          text: snapshot.data!.episodes,
+                          text: snapshot.data!.numberOfEpisodes,
                           style: const TextStyle(
                             color: Colors.white,
                             fontSize: 12,
@@ -207,36 +204,6 @@ class MediaDetailsWidgetState extends State<MediaDetailsWidget> {
                         ),
                         TextSpan(
                           text: snapshot.data!.status,
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 12,
-                            fontFamily: 'Poppins',
-                            fontWeight: FontWeight.w600,
-                            height: 0,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                Positioned(
-                  left: 30,
-                  top: 608,
-                  child: Text.rich(
-                    TextSpan(
-                      children: [
-                        const TextSpan(
-                          text: 'Score : ',
-                          style: TextStyle(
-                            color: Color(0xFFD9D9D9),
-                            fontSize: 12,
-                            fontFamily: 'Poppins',
-                            fontWeight: FontWeight.w400,
-                            height: 0,
-                          ),
-                        ),
-                        TextSpan(
-                          text: snapshot.data!.score,
                           style: const TextStyle(
                             color: Colors.white,
                             fontSize: 12,
