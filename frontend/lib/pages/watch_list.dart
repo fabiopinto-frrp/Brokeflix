@@ -6,6 +6,7 @@ import '../widgets/watch_list_card.dart';
 import '../widgets/watch_list_topbar.dart';
 import '../services/checkLogin.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import '../widgets/topbar.dart';
 
 class WatchlistItem {
   final String imageUrl;
@@ -51,7 +52,8 @@ class WatchListPageState extends State<WatchListPage> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      backgroundColor: const Color(0xFF1C1C1C),
+      appBar: TopBar(),
       body: Column(
         children: [
           WatchListTopbar(
@@ -84,7 +86,13 @@ class WatchListPageState extends State<WatchListPage> {
                   return Text('${snapshot.error}');
                 }
 
-                return const CircularProgressIndicator();
+                return Center(
+                  child: Container(
+                    width: 30.0,
+                    height: 30.0,
+                    child: const CircularProgressIndicator(),
+                  ),
+                );
               },
             ),
           ),

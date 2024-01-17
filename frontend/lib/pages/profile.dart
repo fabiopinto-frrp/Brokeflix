@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import '../widgets/bottombar.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'login.dart';
 import '../services/checkLogin.dart';
+import '../widgets/profile_overlay.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -22,46 +24,61 @@ class ProfilePageState extends State<ProfilePage> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
+      backgroundColor: const Color(0xFF1C1C1C),
+      body: Stack(
         children: [
-          SizedBox(
-            width: 24,
-            height: 24,
-            child: Stack(
-              children: [
-                Positioned(
-                  left: 0,
-                  top: 0,
-                  child: Container(
-                    width: 24,
-                    height: 24,
-                    decoration: const BoxDecoration(color: Color(0xFFD9D9D9)),
-                  ),
+          Positioned(
+            left: 250,
+            top: 290,
+            child: Container(
+              padding: const EdgeInsets.all(0.1),
+              decoration: BoxDecoration(
+                color: const Color.fromARGB(255, 255, 255, 255),
+                borderRadius: BorderRadius.circular(32),
+              ),
+              child: IconButton(
+                icon: const Image(image: AssetImage('assets/Edit.png')),
+                onPressed: () {
+                  showModalBottomSheet(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return ProfileOverlayWidget(
+                        onImageSourceSelected: (ImageSource source) {},
+                      );
+                    },
+                  );
+                },
+              ),
+            ),
+          ),
+          Positioned(
+            left: 120,
+            top: 164,
+            child: Container(
+              width: 153,
+              height: 153,
+              decoration: ShapeDecoration(
+                image: const DecorationImage(
+                  image: NetworkImage("https://via.placeholder.com/153x153"),
+                  fit: BoxFit.fill,
                 ),
-              ],
-            ),
-          ),
-          Container(
-            width: 153,
-            height: 153,
-            decoration: ShapeDecoration(
-              image: const DecorationImage(
-                image: NetworkImage("https://via.placeholder.com/153x153"),
-                fit: BoxFit.fill,
-              ),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(360),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(360),
+                ),
               ),
             ),
           ),
-          const Text(
-            'BROKEFLIX',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 16,
-              fontFamily: 'Poppins',
-              fontWeight: FontWeight.w700,
-              height: 0,
+          const Positioned(
+            left: 154,
+            top: 341,
+            child: Text(
+              'BROKEFLIX',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 16,
+                fontFamily: 'Poppins',
+                fontWeight: FontWeight.w700,
+              ),
             ),
           ),
           Positioned(
@@ -87,7 +104,6 @@ class ProfilePageState extends State<ProfilePage> {
                   fontSize: 14,
                   fontFamily: 'Poppins',
                   fontWeight: FontWeight.w700,
-                  height: 0,
                 ),
               ),
             ),

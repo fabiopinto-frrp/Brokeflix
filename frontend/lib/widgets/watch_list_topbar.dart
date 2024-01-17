@@ -16,47 +16,44 @@ class WatchListTopbar extends StatefulWidget {
 class WatchListTopbarState extends State<WatchListTopbar> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 457,
-      height: 19,
-      clipBehavior: Clip.antiAlias,
-      decoration: const BoxDecoration(),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          SizedBox(
-            width: 457,
-            height: 19,
-            child: Stack(
-              children: [
-                for (int i = 0; i < 6; i++)
-                  Positioned(
-                    left: i * 77,
-                    top: 0,
-                    child: GestureDetector(
-                      onTap: () {
-                        widget.onItemSelected(i);
-                      },
-                      child: Text(
-                        getTextForIndex(i),
-                        style: TextStyle(
-                          color: i == widget.selectedIndex
-                              ? const Color(0xFFFA3D3B)
-                              : Colors.white,
-                          fontSize: 16,
-                          fontFamily: 'Inter',
-                          fontWeight: FontWeight.w700,
-                          height: 0,
-                        ),
+    return Padding(
+      padding: const EdgeInsets.only(top: 15,left: 30.0),
+      child: Container(
+        width: 457,
+        height: 19,
+        clipBehavior: Clip.antiAlias,
+        decoration: const BoxDecoration(),
+        child: SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              for (int i = 0; i < 6; i++)
+                GestureDetector(
+                  onTap: () {
+                    widget.onItemSelected(i);
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    child: Text(
+                      getTextForIndex(i),
+                      style: TextStyle(
+                        color: i == widget.selectedIndex
+                            ? const Color(0xFFFA3D3B)
+                            : Colors.white,
+                        fontSize: 16,
+                        fontFamily: 'Poppins',
+                        fontWeight: FontWeight.w700,
+                        height: 0,
                       ),
                     ),
                   ),
-              ],
-            ),
+                ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
