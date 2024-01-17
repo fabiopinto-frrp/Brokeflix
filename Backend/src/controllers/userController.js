@@ -18,7 +18,7 @@ exports.getUsers = async (req, res) => {
         isAdmin: user.isAdmin,
       };
 
-      res.json(userToSend);
+      res.status(200).json(userToSend);
     } catch (err) {
       console.error(err);
       res.status(500).send("An error occurred in User by id");
@@ -36,7 +36,7 @@ exports.getUsers = async (req, res) => {
         isAdmin: users.isAdmin,
       };
 
-      res.json(userToSend);
+      res.status(200).json(userToSend);
     } catch (err) {
       console.error(err);
       res.status(500).send("An error occurred in user by username");
@@ -45,7 +45,7 @@ exports.getUsers = async (req, res) => {
     try {
       const users = await UserModel.find({ username: req.user.username });
 
-      res.json(users);
+      res.status(200).json(users);
     } catch (err) {
       console.error(err);
       res.status(500).send("An error occurred in getting All Users");
@@ -65,7 +65,7 @@ exports.getProfile = async (req, res) => {
 
     res.status(200).json(userProfile);
   } catch (err) {
-    res.status(400).send("Error getting profile");
+    res.status(404).send("Error getting profile");
   }
 };
 
@@ -86,6 +86,6 @@ exports.updateProfile = async (req, res) => {
     await userProfile.save();
     res.status(200).send("Profile updated successfully");
   } catch (err) {
-    res.status(400).send("Error updating profile");
+    res.status(404).send("Error updating profile");
   }
 };

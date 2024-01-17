@@ -57,7 +57,7 @@ exports.postFilm = async (req, res) => {
   const duplicate = await FilmModel.findOne({ title: postFilm.title });
 
   if (duplicate) {
-    res.status(409).send("Film already exists");
+    res.status(406).send("Film already exists");
     return;
   }
 
@@ -65,7 +65,7 @@ exports.postFilm = async (req, res) => {
 
   try {
     await film.save();
-    res.json(film);
+    res.status(201).json(film);
   } catch (err) {
     console.error(err);
     res.status(500).send("An error occurred in saving Film");
@@ -93,7 +93,7 @@ exports.putFilm = async (req, res) => {
   try {
     const film = await FilmModel.updateOne({ title: title }, updateFilm);
 
-    res.json(film);
+    res.status(201).json(film);
   } catch (err) {
     console.error(err);
     res.status(500).send("An error occurred in updating Film");
@@ -110,9 +110,24 @@ exports.deleteFilm = async (req, res) => {
       res.status(404).send("Film not found");
       return;
     }
-    res.json(film);
+    res.status(200).json(film);
   } catch (err) {
     console.error(err);
     res.status(500).send("An error occurred in deleting film by title");
+  }
+};
+
+exports.random = async (req, res) => {
+  const count = parseInt(req.params.count, 10);
+  try {
+    const films = await FilmModel.aggregate([{ $sample: { size: count } }]);
+    if (!films || films.length === 0) {
+      res.status(404).send("Film not found");
+      return;
+    }
+    res.status(200).json(films);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("An error occurred in getting random films");
   }
 };

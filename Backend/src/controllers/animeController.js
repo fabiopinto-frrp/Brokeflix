@@ -12,7 +12,7 @@ exports.getAnimes = async (req, res) => {
         return;
       }
 
-      res.json(anime);
+      res.status(200).json(anime);
     } catch (err) {
       console.error(err);
       res.status(500).send("An error occurred in Anime by id");
@@ -25,7 +25,7 @@ exports.getAnimes = async (req, res) => {
         title: { $regex: new RegExp(title, "i") },
       });
 
-      res.json(animes);
+      res.status(200).json(animes);
     } catch (err) {
       console.error(err);
       res.status(500).send("An error occurred in anime by title");
@@ -34,7 +34,7 @@ exports.getAnimes = async (req, res) => {
     try {
       const animes = await AnimeModel.find({});
 
-      res.json(animes);
+      res.status(200).json(animes);
     } catch (err) {
       console.error(err);
       res.status(500).send("An error occurred in getting All Animes");
@@ -59,12 +59,13 @@ exports.postAnime = async (req, res) => {
   const duplicate = await AnimeModel.findOne({ title: postAnime.title });
 
   if (duplicate) {
-    res.status(409).send("Anime already exists");
+    res.status(406).send("Anime already exists");
   } else {
     try {
       const anime = await AnimeModel.create(postAnime);
 
       res.json(anime);
+      res.status(201).send("Anime created");
     } catch (err) {
       console.error(err);
       res.status(500).send("An error occurred in creating an Anime");
@@ -98,8 +99,7 @@ exports.putAnime = async (req, res) => {
 
   try {
     const anime = await AnimeModel.updateOne({ title: title }, updateAnime);
-
-    res.json(anime);
+    res.status(200).json(anime);
   } catch (err) {
     console.error(err);
     res.status(500).send("An error occurred in creating an Anime");
@@ -119,7 +119,7 @@ exports.addEpisode = async (req, res) => {
   };
 
   if (duplicate) {
-    res.status(409).send("Episode already exists");
+    res.status(406).send("Episode already exists");
     return;
   } else {
     try {
@@ -132,7 +132,7 @@ exports.addEpisode = async (req, res) => {
 
       await anime.save();
 
-      res.json(anime);
+      res.status(201).json(anime);
     } catch (err) {
       console.error(err);
       res.status(500).send("An error occurred in adding episode");
@@ -150,9 +150,26 @@ exports.deleteAnime = async (req, res) => {
       res.status(404).send("Anime not found");
       return;
     }
-    res.json(anime);
+
+    res.status(200).json(anime);
   } catch (err) {
     console.error(err);
     res.status(500).send("An error occurred in deleting anime by title");
+  }
+};
+
+exports.random = async (req, res) => {
+  const count = parseInt(req.params.count, 10);
+  try {
+    const animes = await AnimeModel.aggregate([{ $sample: { size: count } }]);
+    if (!animes || animes.length === 0) {
+      res.status(404).send("Anime not found");
+      return;
+    }
+    res.json(animes);
+    res.status(200).send("Random animes");
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("An error occurred in getting random animes");
   }
 };

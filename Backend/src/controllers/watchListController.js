@@ -4,9 +4,16 @@ const serie = require("../models/serie.model");
 const film = require("../models/film.model");
 
 exports.getWatchList = async (req, res) => {
-  const userProfile = await user.findOne({ username: req.user.username });
-
-  res.json(userProfile.watchList);
+  try {
+    const userProfile = await user.findOne({ username: req.user.username });
+    if (!userProfile) {
+      return res.status(404).send("User not found");
+    }
+    res.status(200).json(userProfile.watchList);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("An error occurred in getting watch list");
+  }
 };
 
 exports.addMedia = async (req, res) => {
@@ -60,7 +67,7 @@ exports.addMedia = async (req, res) => {
 exports.editMedia = async (req, res) => {
   const userProfile = await user.findOne({ username: req.user.username });
 
-  const mediaToEdit = userProfile.watchList.find(
+  const mediaToEdit = userProfile.watchList.findIndex(
     (media) => media.title === req.body.title && media.type === req.body.type
   );
   if (req.body.type === "Anime" || req.body.type === "Serie") {
@@ -90,7 +97,7 @@ exports.editMedia = async (req, res) => {
 exports.deleteMedia = async (req, res) => {
   const userProfile = await user.findOne({ username: req.user.username });
 
-  const mediaToDelete = userProfile.watchList.find(
+  const mediaToDelete = userProfile.watchList.findIndex(
     (media) => media.title === req.body.title && media.type === req.body.type
   );
   try {

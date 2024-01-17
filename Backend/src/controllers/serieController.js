@@ -12,7 +12,7 @@ exports.getSeries = async (req, res) => {
         return;
       }
 
-      res.json(serie);
+      res.status(200).json(serie);
     } catch (err) {
       console.error(err);
       res.status(500).send("An error occurred in serie by id");
@@ -25,7 +25,7 @@ exports.getSeries = async (req, res) => {
         title: { $regex: new RegExp(title, "i") },
       });
 
-      res.json(series);
+      res.status(200).json(series);
     } catch (err) {
       console.error(err);
       res.status(500).send("An error occurred in serie by title");
@@ -34,7 +34,7 @@ exports.getSeries = async (req, res) => {
     try {
       const series = await SerieModel.find({});
 
-      res.json(series);
+      res.status(200).json(series);
     } catch (err) {
       console.error(err);
       res.status(500).send("An error occurred in getting All series");
@@ -60,14 +60,14 @@ exports.postSerie = async (req, res) => {
   const duplicate = await SerieModel.findOne({ title: postSerie.title });
 
   if (duplicate) {
-    res.status(409).send("Serie already exists");
+    res.status(406).send("Serie already exists");
     return;
   }
 
   try {
     const serie = await SerieModel.create(postSerie);
 
-    res.json(serie);
+    res.status(201).json(serie);
   } catch (err) {
     console.error(err);
     res.status(500).send("An error occurred in creating serie");
@@ -99,7 +99,7 @@ exports.putSerie = async (req, res) => {
   try {
     const serie = await SerieModel.updateOne({ title: title }, updateSerie);
 
-    res.json(serie);
+    res.status(201).json(serie);
   } catch (err) {
     console.error(err);
     res.status(500).send("An error occurred in updating Serie");
@@ -119,7 +119,7 @@ exports.addEpisode = async (req, res) => {
   };
 
   if (duplicate) {
-    res.status(409).send("Episode already exists");
+    res.status(406).send("Episode already exists");
     return;
   } else {
     try {
@@ -150,9 +150,24 @@ exports.deleteSerie = async (req, res) => {
       res.status(404).send("Serie not found");
       return;
     }
-    res.json(serie);
+    res.status(200).json(serie);
   } catch (err) {
     console.error(err);
     res.status(500).send("An error occurred in deleting serie by title");
+  }
+};
+
+exports.random = async (req, res) => {
+  const count = parseInt(req.params.count, 10);
+  try {
+    const series = await SerieModel.aggregate([{ $sample: { size: count } }]);
+    if (!series || series.length === 0) {
+      res.status(404).send("Serie not found");
+      return;
+    }
+    res.status(200).json(series);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("An error occurred in getting random series");
   }
 };
