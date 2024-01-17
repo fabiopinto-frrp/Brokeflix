@@ -8,15 +8,11 @@ class WatchlistCard extends StatefulWidget {
   final String score;
 
   const WatchlistCard(
-<<<<<<< HEAD
-      {required this.imageUrl, required this.name, required this.episodes, required String score});
-=======
       {required this.imageUrl,
       required this.name,
       required this.numberOfEpisodes,
       required this.progress,
       required this.score});
->>>>>>> 00abfc72b22c1bdc204d94e144677cca113940ad
 
   @override
   WatchlistCardState createState() => WatchlistCardState();
@@ -67,7 +63,7 @@ class WatchlistCardState extends State<WatchlistCard> {
             child: SizedBox(
               width: 99,
               child: Text(
-                widget.episodes,
+                widget.numberOfEpisodes,
                 style: const TextStyle(
                   color: Colors.white,
                   fontSize: 12,

@@ -51,6 +51,7 @@ class WatchListPageState extends State<WatchListPage> {
 
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFF1C1C1C),
       appBar: AppBar(),
       body: Column(
         children: [
