@@ -22,7 +22,7 @@ exports.getAnimes = async (req, res) => {
 
     try {
       const animes = await AnimeModel.find({
-        title: { $regex: new RegExp(title, "i") },
+        title: { $regex: new RegExp("^" + title, "i") },
       });
 
       res.status(200).json(animes);
@@ -42,6 +42,23 @@ exports.getAnimes = async (req, res) => {
   }
 };
 
+exports.getAnimesByGenres = async (req, res) => {
+  const genres = req.params.genres.split(",");
+
+  try {
+    const animes = await AnimeModel.find({ genres: { $in: genres } });
+
+    if (!animes || animes.length === 0) {
+      res.status(404).send("Anime not found");
+      return;
+    }
+
+    res.status(200).json(animes);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("An error occurred in Anime by genres");
+  }
+};
 exports.postAnime = async (req, res) => {
   let postAnime = {
     title: req.body.title,

@@ -7,8 +7,8 @@ router
   // /**
   //  * @route GET /api/series
   //  * @group Serie - Operations about serie
-  //  * @query {string} title.query - serie title
-  //  * @query {string} id.query - serie id
+  //  * @param {?string} title.query - serie title
+  //  * @param {?string} id.query - serie id
   //  * @returns {object} 200 - An array of series info
   //  * @returns {Error}  404 - Serie not found
   //  * @returns {Error}  500 - An error occurred
@@ -28,6 +28,21 @@ router
   //  */
   .post(async (req, res) => {
     serieController.postSerie(req, res);
+  });
+
+router
+  .route("/genres/:genres")
+  // /**
+  //  * @route GET /api/series/genres/{genres}
+  //  * @group Serie - Operations about serie
+  //  * @param {string} genres.param - serie genres
+  //  * @returns {object} 200 - An array of serie info
+  //  * @returns {Error}  404 - Serie not found
+  //  * @returns {Error}  500 - An error occurred
+  //  * @security Bearer
+  //  */
+  .get(async (req, res) => {
+    serieController.getSeriesByGenres(req, res);
   });
 
 router

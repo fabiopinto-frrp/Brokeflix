@@ -22,7 +22,7 @@ exports.getSeries = async (req, res) => {
 
     try {
       const series = await SerieModel.find({
-        title: { $regex: new RegExp(title, "i") },
+        title: { $regex: new RegExp("^" + title, "i") },
       });
 
       res.status(200).json(series);
@@ -39,6 +39,24 @@ exports.getSeries = async (req, res) => {
       console.error(err);
       res.status(500).send("An error occurred in getting All series");
     }
+  }
+};
+
+exports.getSeriesByGenres = async (req, res) => {
+  const genres = req.params.genres.split(",");
+
+  try {
+    const series = await SerieModel.find({ genres: { $in: genres } });
+
+    if (!series || series.length === 0) {
+      res.status(404).send("Serie not found");
+      return;
+    }
+
+    res.status(200).json(series);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("An error occurred in Serie by genres");
   }
 };
 

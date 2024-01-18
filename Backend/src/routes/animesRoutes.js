@@ -7,8 +7,8 @@ router
   // /**
   //  * @route GET /api/animes
   //  * @group Anime - Operations about anime
-  //  * @query {string} title.query - anime title
-  //  * @query {string} id.query - anime id
+  //  * @param {?string} title.query - anime title
+  //  * @param {?string} id.query - anime id
   //  * @returns {object} 200 - An array of anime info
   //  * @returns {Error}  404 - Anime not found
   //  * @returns {Error}  500 - An error occurred
@@ -43,6 +43,21 @@ router
   //  */
   .get(async (req, res) => {
     animeController.random(req, res);
+  });
+
+router
+  .route("/genres/:genres")
+  // /**
+  //  * @route GET /api/animes/genres/{genres}
+  //  * @group Anime - Operations about anime
+  //  * @param {string} genres.param - anime genres
+  //  * @returns {object} 200 - An array of anime info
+  //  * @returns {Error}  404 - Anime not found
+  //  * @returns {Error}  500 - An error occurred
+  //  * @security Bearer
+  //  */
+  .get(async (req, res) => {
+    animeController.getAnimesByGenres(req, res);
   });
 
 router

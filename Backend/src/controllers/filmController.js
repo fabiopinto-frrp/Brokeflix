@@ -22,7 +22,7 @@ exports.getFilms = async (req, res) => {
 
     try {
       const films = await FilmModel.find({
-        title: { $regex: new RegExp(title, "i") },
+        title: { $regex: new RegExp("^" + title, "i") },
       });
 
       res.json(films);
@@ -39,6 +39,23 @@ exports.getFilms = async (req, res) => {
       console.error(err);
       res.status(500).send("An error occurred in getting All Films");
     }
+  }
+};
+exports.getFilmsByGenres = async (req, res) => {
+  const genres = req.params.genres.split(",");
+
+  try {
+    const films = await FilmModel.find({ genres: { $in: genres } });
+
+    if (!films || films.length === 0) {
+      res.status(404).send("Film not found");
+      return;
+    }
+
+    res.status(200).json(films);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("An error occurred in Film by genres");
   }
 };
 

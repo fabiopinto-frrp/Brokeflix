@@ -7,8 +7,8 @@ router
   // /**
   //  * @route GET /api/films
   //  * @group Film - Operations about film
-  //  * @query {string} title.query - film title
-  //  * @query {string} id.query - film id
+  //  * @param {?string} title.query - film title
+  //  * @param {?string} id.query - film id
   //  * @returns {object} 200 - An array of films info
   //  * @returns {Error}  404 - Film not found
   //  * @returns {Error}  500 - An error occurred
@@ -44,6 +44,20 @@ router
     filmController.random(req, res);
   });
 
+router
+  .route("/genres/:genres")
+  // /**
+  //  * @route GET /api/films/genres/{genres}
+  //  * @group Film - Operations about film
+  //  * @param {string} genres.param - film genres
+  //  * @returns {object} 200 - An array of film info
+  //  * @returns {Error}  404 - Film not found
+  //  * @returns {Error}  500 - An error occurred
+  //  * @security Bearer
+  //  */
+  .get(async (req, res) => {
+    filmController.getFilmsByGenres(req, res);
+  });
 router
   .route("/:title")
   // /**
