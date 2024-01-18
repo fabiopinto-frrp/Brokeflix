@@ -11,10 +11,10 @@ const authRoutes = require("./src/routes/authRoutes");
 const catchRoutes = require("./src/routes/catchRoutes");
 const port = process.env.PORT || 3000;
 //Swagger
-const expressSwagger = require("express-swagger-generator")(app);
-const options = require("./src/configs/swagger.config");
+// const expressSwagger = require("express-swagger-generator")(app);
+// const options = require("./src/configs/swagger.config");
 
-expressSwagger(options);
+// expressSwagger(options);
 
 const auth = function (req, res, next) {
   let exceptions = ["/auth/login", "/auth/register"];
@@ -35,7 +35,7 @@ const auth = function (req, res, next) {
   }
 };
 
-app.get("/api-docs");
+// app.get("/api-docs");
 app.use("/api/animes", animesRoutes);
 app.use("/api/films", filmsRoutes);
 app.use("/api/series", seriesRoutes);
