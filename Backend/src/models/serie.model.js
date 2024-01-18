@@ -28,7 +28,7 @@ const { Schema } = mongoose;
 //  */
 
 const serieSchema = new Schema({
-  type: { type: String, required: true },
+  type: { type: String, default: "Serie", required: true },
   title: { type: String, required: true },
   numberOfEpisodes: { type: String, required: true },
   episode: [

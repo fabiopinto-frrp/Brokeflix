@@ -29,7 +29,7 @@ class HomePageState extends State<HomePage> {
         body: const SingleChildScrollView(
           child: Column(
             children: [
-              MediaSection(title: 'Movies', mediaType: 'movies'),
+              MediaSection(title: 'Movies', mediaType: 'films'),
               MediaSection(title: 'Series', mediaType: 'series'),
               MediaSection(title: 'Animes', mediaType: 'animes'),
             ],
@@ -71,7 +71,8 @@ class MediaSection extends StatelessWidget {
             itemBuilder: (context, index) {
               return Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: MediaCard(mediaType: mediaType, mediaId: 'yourMediaId'),
+                child:
+                    MediaCard(mediaType: mediaType, mediaId: index.toString()),
               );
             },
           ),

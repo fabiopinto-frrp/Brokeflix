@@ -79,7 +79,8 @@ exports.putAnime = async (req, res) => {
   let anime = await AnimeModel.findOne({ title: title });
 
   let updateAnime = {
-    title: req.body.title,
+    type: anime.type,
+    title: anime.title,
     numberOfEpisodes: req.body.numberOfEpisodes
       ? req.body.numberOfEpisodes
       : anime.numberOfEpisodes,

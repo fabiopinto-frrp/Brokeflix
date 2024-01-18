@@ -44,7 +44,6 @@ exports.getFilms = async (req, res) => {
 
 exports.postFilm = async (req, res) => {
   let postFilm = {
-    type: req.body.type,
     title: req.body.title,
     description: req.body.description,
     genres: req.body.genres,
@@ -79,7 +78,7 @@ exports.putFilm = async (req, res) => {
 
   let updateFilm = {
     type: film.type,
-    title: req.body.title,
+    title: req.body.title ? req.body.title : film.title,
     description: req.body.description ? req.body.description : film.description,
     genres: req.body.genres ? req.body.genres : film.genres,
     imageUrl: req.body.imageUrl ? req.body.imageUrl : film.imageUrl,

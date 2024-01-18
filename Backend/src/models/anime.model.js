@@ -26,7 +26,7 @@ const { Schema } = mongoose;
 //  * @property {string} genre.required true -  Anime genre - eg: Comedy, Drama, Romance, School, Slice of Life
 //  */
 const animeSchema = new Schema({
-  type: { type: String, required: true },
+  type: { type: String, default: "Anime", required: true },
   title: { type: String, required: true },
   numberOfEpisodes: { type: String, required: true },
   episode: [

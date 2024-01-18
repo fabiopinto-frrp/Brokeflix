@@ -44,7 +44,6 @@ exports.getSeries = async (req, res) => {
 
 exports.postSerie = async (req, res) => {
   let postSerie = {
-    type: req.body.type,
     title: req.body.title,
     numberOfEpisodes: req.body.numberOfEpisodes
       ? req.body.numberOfEpisodes

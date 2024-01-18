@@ -20,7 +20,7 @@ const { Schema } = mongoose;
 //  */
 
 const filmSchema = new Schema({
-  type: { type: String, required: true },
+  type: { type: String, default: "Film", required: true },
   title: { type: String, required: true },
   description: { type: String, required: true },
   genres: { type: [String], required: true },

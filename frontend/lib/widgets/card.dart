@@ -17,7 +17,7 @@ class MediaCard extends StatefulWidget {
 class MediaCardState extends State<MediaCard> {
   Future<Map<String, dynamic>> fetchMedia() async {
     final response = await http.get(Uri.parse(
-        'https://api.example.com/${widget.mediaType}/${widget.mediaId}'));
+        'https://brokeflix-api.tech/api/${widget.mediaType}/random/5'));
 
     if (response.statusCode == 200) {
       return jsonDecode(response.body);
