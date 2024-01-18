@@ -5,7 +5,7 @@ const options = {
       title: "Brokeflix API",
       version: "1.0.0",
     },
-    host: "localhost:8080",
+    host: "https://brokeflix-api.tech" || "localhost:8080",
     basePath: "/",
     produces: ["application/json"],
     schemes: ["http"],

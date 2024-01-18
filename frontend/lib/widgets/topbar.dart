@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import '../pages/animePage.dart';
+import '../pages/seriePage.dart';
+import '../pages/filmPage.dart';
 
 class TopBar extends StatelessWidget implements PreferredSizeWidget {
   @override
@@ -22,38 +25,62 @@ class TopBar extends StatelessWidget implements PreferredSizeWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Image.asset(
-              'assets/Search.png',
+              'assets/Search.png', // Remove search from here and put on animePage, seriePage and filmPage
               width: 24,
               height: 24,
             ),
-            const Text(
-              'Movies',
-              style: TextStyle(
-                color: Color(0xFFFA3D3B),
-                fontSize: 16,
-                fontFamily: 'Poppins',
-                fontWeight: FontWeight.w700,
-                height: 0,
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => const FilmPage()),
+                );
+              },
+              child: const Text(
+                'Movies',
+                style: TextStyle(
+                  color: Color(0xFFFA3D3B),
+                  fontSize: 16,
+                  fontFamily: 'Poppins',
+                  fontWeight: FontWeight.w700,
+                  height: 0,
+                ),
               ),
             ),
-            const Text(
-              'Series',
-              style: TextStyle(
-                color: Color(0xFFFA3D3B),
-                fontSize: 16,
-                fontFamily: 'Poppins',
-                fontWeight: FontWeight.w700,
-                height: 0,
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => const SeriePage()),
+                );
+              },
+              child: const Text(
+                'Series',
+                style: TextStyle(
+                  color: Color(0xFFFA3D3B),
+                  fontSize: 16,
+                  fontFamily: 'Poppins',
+                  fontWeight: FontWeight.w700,
+                  height: 0,
+                ),
               ),
             ),
-            const Text(
-              'Anime',
-              style: TextStyle(
-                color: Color(0xFFFA3D3B),
-                fontSize: 16,
-                fontFamily: 'Poppins',
-                fontWeight: FontWeight.w700,
-                height: 0,
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => const AnimePage()),
+                );
+              },
+              child: const Text(
+                'Anime',
+                style: TextStyle(
+                  color: Color(0xFFFA3D3B),
+                  fontSize: 16,
+                  fontFamily: 'Poppins',
+                  fontWeight: FontWeight.w700,
+                  height: 0,
+                ),
               ),
             ),
           ],
