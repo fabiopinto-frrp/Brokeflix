@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import '../pages/media.dart'; 
+import '../pages/mediaDetailsPage.dart';
 
 class MediaCard extends StatefulWidget {
   final String mediaType;
   final String mediaId;
 
-  const MediaCard({Key? key, required this.mediaType, required this.mediaId}) : super(key: key);
+  const MediaCard({Key? key, required this.mediaType, required this.mediaId})
+      : super(key: key);
 
   @override
   MediaCardState createState() => MediaCardState();
@@ -15,14 +16,15 @@ class MediaCard extends StatefulWidget {
 
 class MediaCardState extends State<MediaCard> {
   Future<Map<String, dynamic>> fetchMedia() async {
-  final response = await http.get(Uri.parse('https://api.example.com/${widget.mediaType}/${widget.mediaId}'));
+    final response = await http.get(Uri.parse(
+        'https://api.example.com/${widget.mediaType}/${widget.mediaId}'));
 
-  if (response.statusCode == 200) {
-    return jsonDecode(response.body);
-  } else {
-    throw Exception('Failed to load media');
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body);
+    } else {
+      throw Exception('Failed to load media');
+    }
   }
-}
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +41,8 @@ class MediaCardState extends State<MediaCard> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => MediaPage(mediaId: snapshot.data!['id'].toString()),
+                  builder: (context) => MediaDetailsPage(
+                      mediaId: snapshot.data!['id'].toString()),
                 ),
               );
             },

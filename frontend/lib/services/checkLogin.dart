@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import '../pages/login.dart';
-import '../pages/home.dart';
+import '../pages/loginPage.dart';
+import '../pages/homePage.dart';
 
 final storage = FlutterSecureStorage();
 

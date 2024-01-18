@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import '../pages/watch_list.dart';
-import '../pages/home.dart';
-import '../pages/profile.dart';
+import '../pages/watchListPage.dart';
+import '../pages/homePage.dart';
+import '../pages/profilePage.dart';
 
 class BottomBar extends StatefulWidget {
   const BottomBar({super.key});

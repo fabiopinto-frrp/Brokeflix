@@ -1,8 +1,8 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
-import 'register.dart';
-import 'home.dart';
+import 'registerPage.dart';
+import 'homePage.dart';
 import 'package:http/http.dart' as http;
 
 class LoginPage extends StatefulWidget {

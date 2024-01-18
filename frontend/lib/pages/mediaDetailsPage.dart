@@ -3,21 +3,21 @@ import '../widgets/bottombar.dart';
 import '../widgets/media_details.dart';
 import '../widgets/arrowback.dart';
 
-class MediaPage extends StatefulWidget {
+class MediaDetailsPage extends StatefulWidget {
   final String mediaId;
 
-  const MediaPage({Key? key, required this.mediaId}) : super(key: key);
+  const MediaDetailsPage({Key? key, required this.mediaId}) : super(key: key);
 
   @override
-  MediaPageState createState() => MediaPageState();
+  MediaDetailsPageState createState() => MediaDetailsPageState();
 }
 
-class MediaPageState extends State<MediaPage> {
+class MediaDetailsPageState extends State<MediaDetailsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: const ArrowBackWidget(), 
+        leading: const ArrowBackWidget(),
       ),
       body: MediaDetailsWidget(mediaId: widget.mediaId),
       bottomNavigationBar: const BottomBar(),
