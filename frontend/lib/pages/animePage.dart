@@ -30,7 +30,7 @@ class AnimePageState extends State<AnimePage> {
         body: const SingleChildScrollView(
           child: Column(
             children: [
-              MediaSection(title: 'Actiom', mediaType: 'animes'),
+              MediaSection(title: 'Action', mediaType: 'animes'),
               MediaSection(title: 'Romance', mediaType: 'animes'),
               MediaSection(title: 'Fantasy', mediaType: 'animes'),
             ],

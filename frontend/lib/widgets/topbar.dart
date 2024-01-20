@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../pages/animePage.dart';
 import '../pages/seriePage.dart';
 import '../pages/filmPage.dart';
+import '../pages/searchPage.dart';
 
 class TopBar extends StatelessWidget implements PreferredSizeWidget {
   @override
@@ -24,12 +25,24 @@ class TopBar extends StatelessWidget implements PreferredSizeWidget {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Image.asset(
-              'assets/Search.png', // Remove search from here and put on animePage, seriePage and filmPage
-              width: 24,
-              height: 24,
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SearchPage()),
+                );
+              },
+              child: Image.asset(
+                'assets/Search.png',
+                width: 24,
+                height: 24,
+              ),
             ),
             ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor:
+                    MaterialStateProperty.all<Color>(Color(0xFF1C1C1C)),
+              ),
               onPressed: () {
                 Navigator.pushReplacement(
                   context,
@@ -48,6 +61,10 @@ class TopBar extends StatelessWidget implements PreferredSizeWidget {
               ),
             ),
             ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor:
+                    MaterialStateProperty.all<Color>(Color(0xFF1C1C1C)),
+              ),
               onPressed: () {
                 Navigator.pushReplacement(
                   context,
@@ -66,6 +83,10 @@ class TopBar extends StatelessWidget implements PreferredSizeWidget {
               ),
             ),
             ElevatedButton(
+              style: ButtonStyle(
+                backgroundColor:
+                    MaterialStateProperty.all<Color>(Color(0xFF1C1C1C)),
+              ),
               onPressed: () {
                 Navigator.pushReplacement(
                   context,

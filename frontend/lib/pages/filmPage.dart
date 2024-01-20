@@ -30,7 +30,7 @@ class FilmPageState extends State<FilmPage> {
         body: const SingleChildScrollView(
           child: Column(
             children: [
-              MediaSection(title: 'Actiom', mediaType: 'films'),
+              MediaSection(title: 'Action', mediaType: 'films'),
               MediaSection(title: 'Romance', mediaType: 'films'),
               MediaSection(title: 'Fantasy', mediaType: 'films'),
             ],

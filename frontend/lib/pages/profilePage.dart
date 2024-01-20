@@ -1,7 +1,9 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import '../widgets/bottombar.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:http/http.dart' as http;
+import '../widgets/bottombar.dart';
 import 'loginPage.dart';
 import '../services/checkLogin.dart';
 import '../widgets/profile_overlay.dart';
@@ -14,12 +16,48 @@ class ProfilePage extends StatefulWidget {
 }
 
 class ProfilePageState extends State<ProfilePage> {
-  final storage = new FlutterSecureStorage();
+  final storage = FlutterSecureStorage();
+  String userName = '';
+  String imageUrl = 'https://via.placeholder.com/153x153';
 
   @override
   void initState() {
     super.initState();
     checkLoginStatus(context);
+    fetchUserData();
+  }
+
+  Future<void> fetchUserData() async {
+    String? token = await storage.read(key: 'token');
+    String? username = await storage.read(key: 'username');
+
+    if (token != null && username != null) {
+      String apiUrl = 'https://brokeflix-api.tech/api/users/$username/profile';
+
+      try {
+        final response = await http.get(
+          Uri.parse(apiUrl),
+          headers: {'Authorization': 'Bearer $token'},
+        );
+
+        print('Response headers: ${response.headers}');
+        print('Response body: ${response.body}');
+
+        if (response.statusCode == 200) {
+          var data = jsonDecode(response.body);
+          if (data.containsKey('fullname')) {
+            setState(() {
+              userName = data['fullname'];
+            });
+          }
+        } else {
+          print(
+              'Failed to load user profile. Status code: ${response.statusCode}');
+        }
+      } catch (e) {
+        print('Error fetching user data: $e');
+      }
+    }
   }
 
   Widget build(BuildContext context) {
@@ -37,7 +75,7 @@ class ProfilePageState extends State<ProfilePage> {
                 borderRadius: BorderRadius.circular(32),
               ),
               child: IconButton(
-                icon: const Image(image: AssetImage('assets/Edit.png')),
+                icon: Image(image: AssetImage('assets/Edit.png')),
                 onPressed: () {
                   showModalBottomSheet(
                     context: context,
@@ -58,8 +96,8 @@ class ProfilePageState extends State<ProfilePage> {
               width: 153,
               height: 153,
               decoration: ShapeDecoration(
-                image: const DecorationImage(
-                  image: NetworkImage("https://via.placeholder.com/153x153"),
+                image: DecorationImage(
+                  image: NetworkImage(imageUrl),
                   fit: BoxFit.fill,
                 ),
                 shape: RoundedRectangleBorder(
@@ -68,11 +106,11 @@ class ProfilePageState extends State<ProfilePage> {
               ),
             ),
           ),
-          const Positioned(
+          Positioned(
             left: 154,
             top: 341,
             child: Text(
-              'BROKEFLIX',
+              userName,
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 16,

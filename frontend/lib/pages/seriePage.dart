@@ -30,7 +30,7 @@ class SeriePageState extends State<SeriePage> {
         body: const SingleChildScrollView(
           child: Column(
             children: [
-              MediaSection(title: 'Actiom', mediaType: 'series'),
+              MediaSection(title: 'Action', mediaType: 'series'),
               MediaSection(title: 'Romance', mediaType: 'series'),
               MediaSection(title: 'Fantasy', mediaType: 'series'),
             ],
