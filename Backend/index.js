@@ -35,15 +35,14 @@ const auth = function (req, res, next) {
   }
 };
 
-// app.get("/api-docs");
 app.use("/api/animes", animesRoutes);
 app.use("/api/films", filmsRoutes);
 app.use("/api/series", seriesRoutes);
 app.use("/auth", authRoutes);
-
+app.get("/api-docs");
 app.use("*", catchRoutes);
-app.use(auth);
-app.use("/api/users/", userRoutes);
+
+app.use("/api/users", auth, userRoutes);
 
 app.use("*", catchRoutes);
 
