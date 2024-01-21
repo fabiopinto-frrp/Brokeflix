@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import '../widgets/card.dart'; // Update this import with the correct path
+import '../widgets/card.dart';
 
 class SearchPage extends StatefulWidget {
   @override
@@ -10,7 +10,7 @@ class SearchPage extends StatefulWidget {
 
 class SearchPageState extends State<SearchPage> {
   String query = '';
-  String selectedMediaType = 'anime'; // Default media type
+  String selectedMediaType = 'animes'; 
   List<dynamic> results = [];
 
   Future<void> search() async {
@@ -42,7 +42,6 @@ class SearchPageState extends State<SearchPage> {
       ),
       body: Column(
         children: <Widget>[
-          // Dropdown for selecting media type
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
@@ -57,7 +56,7 @@ class SearchPageState extends State<SearchPage> {
                         selectedMediaType = newValue!;
                       });
                     },
-                    items: <String>['anime', 'movie', 'series']
+                    items: <String>['animes', 'films', 'series']
                         .map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
@@ -72,7 +71,6 @@ class SearchPageState extends State<SearchPage> {
               ],
             ),
           ),
-          // Search bar and icon in the same row
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
@@ -99,7 +97,6 @@ class SearchPageState extends State<SearchPage> {
               ],
             ),
           ),
-          // Display search results using MediaCard
           Expanded(
             child: ListView.builder(
               itemCount: results.length,
