@@ -77,9 +77,8 @@ exports.postFilm = async (req, res) => {
     return;
   }
 
-  const film = new FilmModel(postFilm);
-
   try {
+    const film = await FilmModel.create(postFilm);
     await film.save();
     res.status(201).json(film);
   } catch (err) {
