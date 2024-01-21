@@ -43,7 +43,7 @@ app.use("/auth", authRoutes);
 
 app.use("*", catchRoutes);
 app.use(auth);
-app.use("/api/users/", userRoutes);
+app.use("/api/users", userRoutes);
 
 app.use("*", catchRoutes);
 
