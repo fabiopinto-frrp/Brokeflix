@@ -59,7 +59,7 @@ exports.getProfile = async (req, res) => {
       username: req.params.username,
     });
 
-    if (req.user.username !== userProfile.username) {
+    if (req.loggedInUser !== userProfile.username) {
       return res.status(401).send("Not Authorized");
     }
 
