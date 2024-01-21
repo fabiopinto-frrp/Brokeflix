@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const userController = require("../controllers/userController");
 const watchListController = require("../controllers/watchListController");
-// const middleware = require("../middlewares/validateToken");
+const middleware = require("../middlewares/validateToken");
 
 router
   .route("/")
@@ -32,8 +32,7 @@ router
    * @returns {Error}  500 - An error occurred
    * @security Bearer
    */
-  .get(async (req, res) => {
-    //middleware.validateToken,
+  .get(middleware.validateToken, async (req, res) => {
     userController.getProfile(req, res);
   })
   /**
@@ -46,8 +45,7 @@ router
    * @returns {Error}  404 - User not found
    * @security Bearer
    */
-  .put(async (req, res) => {
-    // middleware.validateToken,
+  .put(middleware.validateToken, async (req, res) => {
     userController.updateProfile(req, res);
   });
 
@@ -62,8 +60,7 @@ router
    * @returns {Error}  500 - An error occurred
    * @security Bearer
    */
-  .get(async (req, res) => {
-    // middleware.validateToken,
+  .get(middleware.validateToken, async (req, res) => {
     watchListController.getWatchList(req, res);
   })
   /**
@@ -75,8 +72,7 @@ router
    * @returns {Error}  400 - An error occurred
    * @security Bearer
    */
-  .post(async (req, res) => {
-    // middleware.validateToken,
+  .post(middleware.validateToken, async (req, res) => {
     watchListController.addMedia(req, res);
   });
 
@@ -93,8 +89,7 @@ router
    * @returns {Error}  400 - An error occurred
    * @security Bearer
    */
-  .put(async (req, res) => {
-    // middleware.validateToken,
+  .put(middleware.validateToken, async (req, res) => {
     watchListController.editMedia(req, res);
   })
   /**
@@ -107,8 +102,7 @@ router
    * @returns {Error}  400 - An error occurred
    * @security Bearer
    */
-  .delete(async (req, res) => {
-    //middleware.validateToken,
+  .delete(middleware.validateToken, async (req, res) => {
     watchListController.deleteMedia(req, res);
   });
 
