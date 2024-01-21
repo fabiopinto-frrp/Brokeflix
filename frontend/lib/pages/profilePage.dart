@@ -18,7 +18,7 @@ class ProfilePage extends StatefulWidget {
 
 class ProfilePageState extends State<ProfilePage> {
   final storage = FlutterSecureStorage();
-  String userName = '';
+  String fullName = '';
   String avatar = '';
 
   @override
@@ -27,7 +27,7 @@ class ProfilePageState extends State<ProfilePage> {
     checkLoginStatus(context);
     fetchUserData().then((userData) {
       setState(() {
-        userName = userData['fullName'];
+        fullName = userData['fullName'];
         avatar = userData['avatar'];
       });
     });
@@ -83,7 +83,7 @@ class ProfilePageState extends State<ProfilePage> {
             left: 154,
             top: 341,
             child: Text(
-              userName,
+              fullName,
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 16,
