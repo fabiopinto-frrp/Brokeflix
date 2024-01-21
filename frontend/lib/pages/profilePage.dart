@@ -7,6 +7,7 @@ import '../widgets/bottombar.dart';
 import 'loginPage.dart';
 import '../services/checkLogin.dart';
 import '../widgets/profile_overlay.dart';
+import '../services/getUserProfile.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -18,46 +19,18 @@ class ProfilePage extends StatefulWidget {
 class ProfilePageState extends State<ProfilePage> {
   final storage = FlutterSecureStorage();
   String userName = '';
-  String imageUrl = 'https://via.placeholder.com/153x153';
+  String avatar = '';
 
   @override
   void initState() {
     super.initState();
     checkLoginStatus(context);
-    fetchUserData();
-  }
-
-  Future<void> fetchUserData() async {
-    String? token = await storage.read(key: 'token');
-    String? username = await storage.read(key: 'username');
-
-    if (token != null && username != null) {
-      String apiUrl = 'https://brokeflix-api.tech/api/users/$username/profile';
-
-      try {
-        final response = await http.get(
-          Uri.parse(apiUrl),
-          headers: {'Authorization': 'Bearer $token'},
-        );
-
-        print('Response headers: ${response.headers}');
-        print('Response body: ${response.body}');
-
-        if (response.statusCode == 200) {
-          var data = jsonDecode(response.body);
-          if (data.containsKey('fullname')) {
-            setState(() {
-              userName = data['fullname'];
-            });
-          }
-        } else {
-          print(
-              'Failed to load user profile. Status code: ${response.statusCode}');
-        }
-      } catch (e) {
-        print('Error fetching user data: $e');
-      }
-    }
+    fetchUserData().then((userData) {
+      setState(() {
+        userName = userData['fullName'];
+        avatar = userData['avatar'];
+      });
+    });
   }
 
   Widget build(BuildContext context) {
@@ -97,7 +70,7 @@ class ProfilePageState extends State<ProfilePage> {
               height: 153,
               decoration: ShapeDecoration(
                 image: DecorationImage(
-                  image: NetworkImage(imageUrl),
+                  image: NetworkImage(avatar),
                   fit: BoxFit.fill,
                 ),
                 shape: RoundedRectangleBorder(

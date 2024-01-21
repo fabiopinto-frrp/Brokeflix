@@ -81,8 +81,7 @@ exports.postAnime = async (req, res) => {
     try {
       const anime = await AnimeModel.create(postAnime);
 
-      res.json(anime);
-      res.status(201).send("Anime created");
+      res.status(201).json(anime).send("Anime created");
     } catch (err) {
       console.error(err);
       res.status(500).send("An error occurred in creating an Anime");
@@ -117,7 +116,7 @@ exports.putAnime = async (req, res) => {
 
   try {
     const anime = await AnimeModel.updateOne({ title: title }, updateAnime);
-    res.status(200).json(anime);
+    res.status(201).json(anime);
   } catch (err) {
     console.error(err);
     res.status(500).send("An error occurred in creating an Anime");
@@ -184,8 +183,8 @@ exports.random = async (req, res) => {
       res.status(404).send("Anime not found");
       return;
     }
-    res.json(animes);
-    res.status(200).send("Random animes");
+
+    res.status(200).json(animes);
   } catch (err) {
     console.error(err);
     res.status(500).send("An error occurred in getting random animes");

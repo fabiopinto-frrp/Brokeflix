@@ -1,5 +1,5 @@
 var jwt = require("jsonwebtoken");
-const user = require("../models/user.model");
+const userModel = require("../models/user.model");
 
 let secret = process.env.JWT_SECRET;
 exports.validateToken = (req, res, next) => {
@@ -16,7 +16,7 @@ exports.validateToken = (req, res, next) => {
 
     let loggedUser = decoded.data.user;
 
-    user.findOne({ username: loggedUser }, function (error, user) {
+    userModel.findOne({ username: loggedUser }, function (error, user) {
       if (error) {
         return res.status(500).json({ error: "Error finding user" });
       }

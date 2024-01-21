@@ -84,7 +84,7 @@ exports.updateProfile = async (req, res) => {
       ? req.body.fullName
       : userProfile.fullName;
     await userProfile.save();
-    res.status(200).send("Profile updated successfully");
+    res.status(201).send("Profile updated successfully");
   } catch (err) {
     res.status(404).send("Error updating profile");
   }

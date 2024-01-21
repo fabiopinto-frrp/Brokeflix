@@ -58,7 +58,7 @@ exports.addMedia = async (req, res) => {
     userProfile.watchList.push(obj);
     await userProfile.save();
 
-    res.status(200).send("Media added to watch list successfully");
+    res.status(201).send("Media added to watch list successfully");
   } catch (err) {
     res.status(400).send("Error adding media to watch list");
   }
@@ -88,7 +88,7 @@ exports.editMedia = async (req, res) => {
 
   try {
     await mediaToEdit.save();
-    res.status(200).send("Media updated successfully");
+    res.status(201).send("Media updated successfully");
   } catch (err) {
     res.status(400).send("Error updating Media");
   }
