@@ -12,7 +12,7 @@ exports.getFilms = async (req, res) => {
         return;
       }
 
-      res.send(200).json(film);
+      res.status(200).json(film);
     } catch (err) {
       console.error(err);
       res.status(500).send("An error occurred in Film by id");
@@ -25,7 +25,7 @@ exports.getFilms = async (req, res) => {
         title: { $regex: new RegExp("^" + title, "i") },
       });
 
-      res.send(200).json(films);
+      res.status(200).json(films);
     } catch (err) {
       console.error(err);
       res.status(500).send("An error occurred in Film by title");
@@ -34,7 +34,7 @@ exports.getFilms = async (req, res) => {
     try {
       const films = await FilmModel.find({});
 
-      res.send(200).json(films);
+      res.status(200).json(films);
     } catch (err) {
       console.error(err);
       res.status(500).send("An error occurred in getting All Films");
@@ -79,7 +79,7 @@ exports.postFilm = async (req, res) => {
     try {
       const film = await FilmModel.create(postFilm);
 
-      res.status(201).json(film).send("Film created");
+      res.status(201).json(film);
     } catch (err) {
       console.error(err);
       res.status(500).send("An error occurred in saving Film");

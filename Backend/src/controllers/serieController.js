@@ -149,7 +149,7 @@ exports.addEpisode = async (req, res) => {
 
       await serie.save();
 
-      res.send(201).json(serie);
+      res.status(201).json(serie);
     } catch (err) {
       console.error(err);
       res.status(500).send("An error occurred in adding episode");

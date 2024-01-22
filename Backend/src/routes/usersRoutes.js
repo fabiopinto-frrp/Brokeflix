@@ -33,6 +33,7 @@ router
    * @security Bearer
    */
   .get(middleware.validateToken, async (req, res) => {
+    console.log("Entra");
     userController.getProfile(req, res);
   })
   /**

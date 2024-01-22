@@ -34,17 +34,17 @@ const auth = function (req, res, next) {
     );
   }
 };
-app.get("/api-docs");
+// app.get("/api-docs");
 app.use("/api/animes", animesRoutes);
 app.use("/api/films", filmsRoutes);
 app.use("/api/series", seriesRoutes);
 app.use("/auth", authRoutes);
 
-app.use("*", catchRoutes);
+// app.use("*", catchRoutes);
 app.use(auth);
 app.use("/api/users", userRoutes);
 
-app.use("*", catchRoutes);
+// app.use("*", catchRoutes);
 
 app.listen(port, () => {
   console.log(`App running on port http://localhost:${port} ...`);

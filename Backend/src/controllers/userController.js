@@ -62,8 +62,13 @@ exports.getProfile = async (req, res) => {
     if (req.user.username !== userProfile.username) {
       return res.status(401).send("Not Authorized");
     }
+    // i can create a object that receives the profile values i want to show and get
+    let profile = {
+      fullname: userProfile.fullname,
+      avatar: userProfile.avatar,
+    };
 
-    res.status(200).json(userProfile);
+    res.status(200).json(profile);
   } catch (err) {
     res.status(404).send("Error getting profile");
   }
@@ -83,8 +88,9 @@ exports.updateProfile = async (req, res) => {
     userProfile.fullName = req.body.fullName
       ? req.body.fullName
       : userProfile.fullName;
+
     await userProfile.save();
-    res.status(201).send("Profile updated successfully");
+    res.status(201).send("Profile Updated");
   } catch (err) {
     res.status(404).send("Error updating profile");
   }

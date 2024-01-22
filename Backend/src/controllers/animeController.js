@@ -81,7 +81,7 @@ exports.postAnime = async (req, res) => {
     try {
       const anime = await AnimeModel.create(postAnime);
 
-      res.status(201).json(anime).send("Anime created");
+      res.status(201).json(anime);
     } catch (err) {
       console.error(err);
       res.status(500).send("An error occurred in creating an Anime");
