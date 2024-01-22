@@ -58,6 +58,24 @@ class RegisterPageState extends State<RegisterPage> {
 
                       await loginAuto(
                           usernameController.text, passwordController.text);
+
+                      // Slide to home page
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => SlideTransition(
+                            position: Tween<Offset>(
+                              begin: const Offset(1.0, 0.0),
+                              end: Offset.zero,
+                            ).animate(CurvedAnimation(
+                              parent: ModalRoute.of(context)!.animation!,
+                              curve: Curves.easeInOutCirc,
+                              reverseCurve: Curves.easeInOutCirc,
+                            )),
+                            child: const HomePage(),
+                          ),
+                        ),
+                      );
                     },
                     style: ElevatedButton.styleFrom(
                       padding: EdgeInsets.symmetric(
@@ -93,7 +111,7 @@ class RegisterPageState extends State<RegisterPage> {
                         top: 0,
                         child: SizedBox(
                           width: ScreenUtil().setWidth(313),
-                          height: ScreenUtil().setHeight(66), // Adjusted height
+                          height: ScreenUtil().setHeight(66),
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -135,11 +153,10 @@ class RegisterPageState extends State<RegisterPage> {
                       ),
                       Positioned(
                         left: 0,
-                        top:
-                            ScreenUtil().setHeight(74), // Adjusted top position
+                        top: ScreenUtil().setHeight(74),
                         child: SizedBox(
                           width: ScreenUtil().setWidth(313),
-                          height: ScreenUtil().setHeight(66), // Adjusted height
+                          height: ScreenUtil().setHeight(66),
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -181,11 +198,10 @@ class RegisterPageState extends State<RegisterPage> {
                       ),
                       Positioned(
                         left: 0,
-                        top: ScreenUtil()
-                            .setHeight(148), // Adjusted top position
+                        top: ScreenUtil().setHeight(148),
                         child: SizedBox(
                           width: ScreenUtil().setWidth(313),
-                          height: ScreenUtil().setHeight(66), // Adjusted height
+                          height: ScreenUtil().setHeight(66),
                           child: Column(
                             mainAxisSize: MainAxisSize.min,
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -262,7 +278,18 @@ class RegisterPageState extends State<RegisterPage> {
                             Navigator.pushReplacement(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const LoginPage()),
+                                builder: (context) => SlideTransition(
+                                  position: Tween<Offset>(
+                                    begin: const Offset(1.0, 0.0),
+                                    end: Offset.zero,
+                                  ).animate(CurvedAnimation(
+                                    parent: ModalRoute.of(context)!.animation!,
+                                    curve: Curves.easeInOutCirc,
+                                    reverseCurve: Curves.easeInOutCirc,
+                                  )),
+                                  child: const LoginPage(),
+                                ),
+                              ),
                             );
                           },
                           child: Text(

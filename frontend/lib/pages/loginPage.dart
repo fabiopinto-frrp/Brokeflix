@@ -59,8 +59,9 @@ class LoginPageState extends State<LoginPage> {
                           },
                           style: ElevatedButton.styleFrom(
                             padding: EdgeInsets.symmetric(
-                                horizontal: ScreenUtil().setWidth(120),
-                                vertical: ScreenUtil().setHeight(15)),
+                              horizontal: ScreenUtil().setWidth(120),
+                              vertical: ScreenUtil().setHeight(15),
+                            ),
                             backgroundColor: Colors.transparent,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(32.r),
@@ -113,8 +114,9 @@ class LoginPageState extends State<LoginPage> {
                                       decoration: ShapeDecoration(
                                         shape: RoundedRectangleBorder(
                                           side: const BorderSide(
-                                              width: 1,
-                                              color: Color(0xFFFA3D3B)),
+                                            width: 1,
+                                            color: Color(0xFFFA3D3B),
+                                          ),
                                           borderRadius:
                                               BorderRadius.circular(32),
                                         ),
@@ -126,7 +128,8 @@ class LoginPageState extends State<LoginPage> {
                                         decoration: const InputDecoration(
                                           border: InputBorder.none,
                                           contentPadding: EdgeInsets.symmetric(
-                                              horizontal: 20),
+                                            horizontal: 20,
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -136,7 +139,7 @@ class LoginPageState extends State<LoginPage> {
                             ),
                             Positioned(
                               left: 0,
-                              top: ScreenUtil().setHeight(111),
+                              top: ScreenUtil().setHeight(85),
                               child: SizedBox(
                                 width: ScreenUtil().setWidth(300),
                                 height: ScreenUtil().setHeight(87),
@@ -161,8 +164,9 @@ class LoginPageState extends State<LoginPage> {
                                       decoration: ShapeDecoration(
                                         shape: RoundedRectangleBorder(
                                           side: const BorderSide(
-                                              width: 1,
-                                              color: Color(0xFFFA3D3B)),
+                                            width: 1,
+                                            color: Color(0xFFFA3D3B),
+                                          ),
                                           borderRadius:
                                               BorderRadius.circular(32),
                                         ),
@@ -175,7 +179,8 @@ class LoginPageState extends State<LoginPage> {
                                         decoration: const InputDecoration(
                                           border: InputBorder.none,
                                           contentPadding: EdgeInsets.symmetric(
-                                              horizontal: 20),
+                                            horizontal: 20,
+                                          ),
                                         ),
                                       ),
                                     ),
@@ -212,8 +217,9 @@ class LoginPageState extends State<LoginPage> {
                           children: [
                             Container(
                               padding: EdgeInsets.symmetric(
-                                  horizontal: ScreenUtil().setWidth(20),
-                                  vertical: ScreenUtil().setHeight(5)),
+                                horizontal: ScreenUtil().setWidth(20),
+                                vertical: ScreenUtil().setHeight(5),
+                              ),
                               child: Text(
                                 'Login',
                                 style: TextStyle(
@@ -232,14 +238,26 @@ class LoginPageState extends State<LoginPage> {
                                 Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
-                                      builder: (context) =>
-                                          const RegisterPage()),
+                                    builder: (context) => SlideTransition(
+                                      position: Tween<Offset>(
+                                        begin: const Offset(1.0, 0.0),
+                                        end: Offset.zero,
+                                      ).animate(CurvedAnimation(
+                                        parent:
+                                            ModalRoute.of(context)!.animation!,
+                                        curve: Curves.easeInOutCirc,
+                                        reverseCurve: Curves.easeInOutCirc,
+                                      )),
+                                      child: const RegisterPage(),
+                                    ),
+                                  ),
                                 );
                               },
                               child: Container(
                                 padding: EdgeInsets.symmetric(
-                                    horizontal: ScreenUtil().setWidth(20),
-                                    vertical: ScreenUtil().setHeight(10)),
+                                  horizontal: ScreenUtil().setWidth(20),
+                                  vertical: ScreenUtil().setHeight(10),
+                                ),
                                 child: Text(
                                   'Sign Up',
                                   style: TextStyle(
@@ -290,7 +308,19 @@ class LoginPageState extends State<LoginPage> {
 
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => const HomePage()),
+          MaterialPageRoute(
+            builder: (context) => SlideTransition(
+              position: Tween<Offset>(
+                begin: const Offset(1.0, 0.0),
+                end: Offset.zero,
+              ).animate(CurvedAnimation(
+                parent: ModalRoute.of(context)!.animation!,
+                curve: Curves.easeInOutCirc,
+                reverseCurve: Curves.easeInOutCirc,
+              )),
+              child: const HomePage(),
+            ),
+          ),
         );
       } else if (response.statusCode == 401) {
         ScaffoldMessenger.of(context).showSnackBar(
