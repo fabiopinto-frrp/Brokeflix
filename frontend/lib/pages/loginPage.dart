@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'registerPage.dart';
 import 'homePage.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -17,230 +18,247 @@ class LoginPageState extends State<LoginPage> {
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
-  final storage = const FlutterSecureStorage();
+  final storage = FlutterSecureStorage();
 
   final String loginUrl = 'https://brokeflix-api.tech/auth/login';
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Form(
-        key: formKey,
-        child: Container(
-          width: MediaQuery.of(context).size.width,
-          height: MediaQuery.of(context).size.height,
-          clipBehavior: Clip.antiAlias,
-          decoration: const BoxDecoration(color: Color(0xFF1C1C1C)),
-          child: Stack(
-            children: [
-              Positioned(
-                left: 60,
-                top: 750,
-                child: Container(
-                  decoration: ShapeDecoration(
-                    color: const Color(0xFFFA3D3B),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(32),
-                    ),
-                  ),
-                  child: ElevatedButton(
-                    onPressed: () async {
-                      Map<String, String> loginData = {
-                        'username': usernameController.text,
-                        'password': passwordController.text,
-                      };
+    return ScreenUtilInit(
+      designSize: Size(375, 667),
+      builder: (context, child) => Scaffold(
+        body: Form(
+          key: formKey,
+          child: LayoutBuilder(
+            builder: (BuildContext context, BoxConstraints constraints) {
+              return Container(
+                width: constraints.maxWidth,
+                height: constraints.maxHeight,
+                clipBehavior: Clip.antiAlias,
+                decoration: const BoxDecoration(color: Color(0xFF1C1C1C)),
+                child: Stack(
+                  children: [
+                    Positioned(
+                      left: ScreenUtil().setWidth(45),
+                      top: ScreenUtil().setHeight(550),
+                      child: Container(
+                        decoration: ShapeDecoration(
+                          color: const Color(0xFFFA3D3B),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(32.r),
+                          ),
+                        ),
+                        child: ElevatedButton(
+                          onPressed: () async {
+                            Map<String, String> loginData = {
+                              'username': usernameController.text,
+                              'password': passwordController.text,
+                            };
 
-                      await postRequest(loginUrl, loginData);
-                    },
-                    style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 122, vertical: 20),
-                      backgroundColor: Colors.transparent,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(32),
-                      ),
-                    ),
-                    child: const Text(
-                      'Login',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                        fontFamily: 'Poppins',
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
-                  ),
-                ),
-              ),
-              Positioned(
-                left: 50,
-                top: 405,
-                child: SizedBox(
-                  width: 313,
-                  height: 198,
-                  child: Stack(
-                    children: [
-                      Positioned(
-                        left: 0,
-                        top: 0,
-                        child: SizedBox(
-                          width: 313,
-                          height: 87,
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
-                                'Username',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 16,
-                                  fontFamily: 'Poppins',
-                                  fontWeight: FontWeight.w700,
-                                  height: 0,
-                                ),
-                              ),
-                              Container(
-                                width: 313,
-                                height: 53,
-                                decoration: ShapeDecoration(
-                                  shape: RoundedRectangleBorder(
-                                    side: const BorderSide(
-                                        width: 1, color: Color(0xFFFA3D3B)),
-                                    borderRadius: BorderRadius.circular(32),
-                                  ),
-                                ),
-                                child: TextField(
-                                  controller: usernameController,
-                                  style: const TextStyle(color: Colors.white),
-                                  decoration: const InputDecoration(
-                                    border: InputBorder.none,
-                                    contentPadding:
-                                        EdgeInsets.symmetric(horizontal: 20),
-                                  ),
-                                ),
-                              ),
-                            ],
+                            await postRequest(loginUrl, loginData);
+                          },
+                          style: ElevatedButton.styleFrom(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: ScreenUtil().setWidth(120),
+                                vertical: ScreenUtil().setHeight(15)),
+                            backgroundColor: Colors.transparent,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(32.r),
+                            ),
                           ),
-                        ),
-                      ),
-                      Positioned(
-                        left: 0,
-                        top: 111,
-                        child: SizedBox(
-                          width: 313,
-                          height: 87,
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
-                                'Password',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 16,
-                                  fontFamily: 'Poppins',
-                                  fontWeight: FontWeight.w700,
-                                  height: 0,
-                                ),
-                              ),
-                              Container(
-                                width: 313,
-                                height: 53,
-                                decoration: ShapeDecoration(
-                                  shape: RoundedRectangleBorder(
-                                    side: const BorderSide(
-                                        width: 1, color: Color(0xFFFA3D3B)),
-                                    borderRadius: BorderRadius.circular(32),
-                                  ),
-                                ),
-                                child: TextField(
-                                  controller: passwordController,
-                                  obscureText: true,
-                                  style: const TextStyle(color: Colors.white),
-                                  decoration: const InputDecoration(
-                                    border: InputBorder.none,
-                                    contentPadding:
-                                        EdgeInsets.symmetric(horizontal: 20),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Positioned(
-                left: 95,
-                top: 145,
-                child: Container(
-                  width: 219,
-                  height: 53,
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage("assets/BrokeFlix.png"),
-                      fit: BoxFit.fill,
-                    ),
-                  ),
-                ),
-              ),
-              Positioned(
-                left: 87,
-                top: 318,
-                child: Container(
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 20, vertical: 10),
-                        child: const Text(
-                          'Login',
-                          style: TextStyle(
-                            color: Color(0xFFFA3D3B),
-                            fontSize: 16,
-                            fontFamily: 'Poppins',
-                            fontWeight: FontWeight.w700,
-                            height: 0,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 55),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const RegisterPage()),
-                          );
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 10),
-                          child: const Text(
-                            'Sign Up',
+                          child: Text(
+                            'Login',
                             style: TextStyle(
                               color: Colors.white,
-                              fontSize: 16,
+                              fontSize: ScreenUtil().setSp(16),
                               fontFamily: 'Poppins',
                               fontWeight: FontWeight.w700,
-                              height: 0,
                             ),
                           ),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                    Positioned(
+                      left: ScreenUtil().setWidth(40),
+                      top: ScreenUtil().setHeight(300),
+                      child: SizedBox(
+                        width: ScreenUtil().setWidth(313),
+                        height: ScreenUtil().setHeight(198),
+                        child: Stack(
+                          children: [
+                            Positioned(
+                              left: 0,
+                              top: 0,
+                              child: SizedBox(
+                                width: ScreenUtil().setWidth(300),
+                                height: ScreenUtil().setHeight(85),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Username',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: ScreenUtil().setSp(16),
+                                        fontFamily: 'Poppins',
+                                        fontWeight: FontWeight.w700,
+                                        height: 0,
+                                      ),
+                                    ),
+                                    Container(
+                                      width: ScreenUtil().setWidth(313),
+                                      height: ScreenUtil().setHeight(40),
+                                      decoration: ShapeDecoration(
+                                        shape: RoundedRectangleBorder(
+                                          side: const BorderSide(
+                                              width: 1,
+                                              color: Color(0xFFFA3D3B)),
+                                          borderRadius:
+                                              BorderRadius.circular(32),
+                                        ),
+                                      ),
+                                      child: TextField(
+                                        controller: usernameController,
+                                        style: const TextStyle(
+                                            color: Colors.white),
+                                        decoration: const InputDecoration(
+                                          border: InputBorder.none,
+                                          contentPadding: EdgeInsets.symmetric(
+                                              horizontal: 20),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            Positioned(
+                              left: 0,
+                              top: ScreenUtil().setHeight(111),
+                              child: SizedBox(
+                                width: ScreenUtil().setWidth(300),
+                                height: ScreenUtil().setHeight(87),
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Password',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: ScreenUtil().setSp(16),
+                                        fontFamily: 'Poppins',
+                                        fontWeight: FontWeight.w700,
+                                        height: 0,
+                                      ),
+                                    ),
+                                    Container(
+                                      width: ScreenUtil().setWidth(313),
+                                      height: ScreenUtil().setHeight(40),
+                                      decoration: ShapeDecoration(
+                                        shape: RoundedRectangleBorder(
+                                          side: const BorderSide(
+                                              width: 1,
+                                              color: Color(0xFFFA3D3B)),
+                                          borderRadius:
+                                              BorderRadius.circular(32),
+                                        ),
+                                      ),
+                                      child: TextField(
+                                        controller: passwordController,
+                                        obscureText: true,
+                                        style: const TextStyle(
+                                            color: Colors.white),
+                                        decoration: const InputDecoration(
+                                          border: InputBorder.none,
+                                          contentPadding: EdgeInsets.symmetric(
+                                              horizontal: 20),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      left: ScreenUtil().setWidth(90),
+                      top: ScreenUtil().setHeight(100),
+                      child: Container(
+                        width: ScreenUtil().setWidth(200),
+                        height: ScreenUtil().setHeight(40),
+                        decoration: const BoxDecoration(
+                          image: DecorationImage(
+                            image: AssetImage("assets/BrokeFlix.png"),
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      left: ScreenUtil().setWidth(75),
+                      top: ScreenUtil().setHeight(200),
+                      child: Container(
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: ScreenUtil().setWidth(20),
+                                  vertical: ScreenUtil().setHeight(5)),
+                              child: Text(
+                                'Login',
+                                style: TextStyle(
+                                  color: Color(0xFFFA3D3B),
+                                  fontSize: ScreenUtil().setSp(16),
+                                  fontFamily: 'Poppins',
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              width: ScreenUtil().setWidth(55),
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const RegisterPage()),
+                                );
+                              },
+                              child: Container(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: ScreenUtil().setWidth(20),
+                                    vertical: ScreenUtil().setHeight(10)),
+                                child: Text(
+                                  'Sign Up',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: ScreenUtil().setSp(16),
+                                    fontFamily: 'Poppins',
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-            ],
+              );
+            },
           ),
         ),
       ),

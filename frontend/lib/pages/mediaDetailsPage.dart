@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
-import '../widgets/bottombar.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import '../services/checkLogin.dart';
+import '../widgets/bottomBar.dart';
 import '../widgets/media_details.dart';
 import '../widgets/arrowback.dart';
 import 'package:http/http.dart' as http;
@@ -38,31 +41,44 @@ class MediaDetailsPageState extends State<MediaDetailsPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        leading: const ArrowBackWidget(),
+    return ScreenUtilInit(
+      designSize: Size(375, 667),
+      builder: (context, child) => Scaffold(
+        backgroundColor: const Color(0xFF1C1C1C),
+        body: FutureBuilder<dynamic>(
+          future: futureMediaDetails,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              var data = snapshot.data[0];
+              return Stack(
+                children: [
+                  MediaDetailsWidget(
+                    title: data['title'],
+                    description: data['description'],
+                    type: data['type'],
+                    numberOfEpisodes: data['numberOfEpisodes'],
+                    status: data['status'],
+                    genres: (data['genres'] as List)
+                        .map((item) => item.toString())
+                        .toList(),
+                    imageUrl: data['imageUrl'],
+                  ),
+                  SafeArea(
+                    child: Padding(
+                      padding: EdgeInsets.all(16.w),
+                      child: const ArrowBackWidget(),
+                    ),
+                  ),
+                ],
+              );
+            } else if (snapshot.hasError) {
+              return Text("${snapshot.error}");
+            }
+            return CircularProgressIndicator();
+          },
+        ),
+        bottomNavigationBar: const BottomBar(),
       ),
-      body: FutureBuilder<dynamic>(
-        future: futureMediaDetails,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            var data = snapshot.data[0]; // Access the first object in the list
-            return MediaDetailsWidget(
-              title: data['title'],
-              description: data['description'],
-              type: data['type'],
-              numberOfEpisodes: data['numberOfEpisodes'],
-              status: data['status'],
-              genres: (data['genres'] as List).map((item) => item.toString()).toList(),
-              imageUrl: data['imageUrl'],
-            );
-          } else if (snapshot.hasError) {
-            return Text("${snapshot.error}");
-          }
-          return CircularProgressIndicator();
-        },
-      ),
-      bottomNavigationBar: const BottomBar(),
     );
   }
 }

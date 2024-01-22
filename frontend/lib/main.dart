@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/pages/splashScreen.dart';
 import 'package:frontend/pages/loginPage.dart';
 
@@ -17,7 +18,15 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       initialRoute: '/',
       routes: {
-        '/': (context) => const SplashScreen(),
+        '/': (context) {
+          // Initialize ScreenUtil
+          ScreenUtil.init(
+            context,
+            designSize: const Size(375, 667),
+          );
+
+          return const SplashScreen();
+        },
         '/login': (context) => const LoginPage(),
       },
     );

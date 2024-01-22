@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../services/checkLogin.dart';
 import '../widgets/card.dart';
 import '../widgets/bottomBar.dart';
@@ -25,8 +26,10 @@ class HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        // appBar: TopBar(),
+    return ScreenUtilInit(
+      designSize: Size(375, 667),
+      builder: (context, child) => Scaffold(
+        appBar: TopBar(),
         backgroundColor: const Color(0xFF1C1C1C),
         body: SingleChildScrollView(
           child: Column(
@@ -37,7 +40,9 @@ class HomePageState extends State<HomePage> {
             ],
           ),
         ),
-        bottomNavigationBar: const BottomBar());
+        bottomNavigationBar: const BottomBar(),
+      ),
+    );
   }
 }
 
@@ -76,19 +81,25 @@ class MediaSectionState extends State<MediaSection> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.only(
-            top: 45,
-            left: 35,
-            right: 35,
+          padding: EdgeInsets.only(
+            left: 35.w,
+            right: 35.w,
+            top: 15.h,
           ),
-          child: Text(
-            widget.title,
-            style: const TextStyle(
-                fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              widget.title,
+              style: TextStyle(
+                fontSize: 16.sp,
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+              ),
+            ),
           ),
         ),
         SizedBox(
-          height: 220,
+          height: 200.h,
           child: FutureBuilder<List<dynamic>>(
             future: futureMediaData,
             builder: (context, snapshot) {
@@ -98,11 +109,12 @@ class MediaSectionState extends State<MediaSection> {
                   itemCount: snapshot.data!.length,
                   itemBuilder: (context, index) {
                     return Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: EdgeInsets.all(8.0),
                       child: MediaCard(
-                          mediaType: widget.mediaType,
-                          mediaImgUrl: snapshot.data![index]["imageUrl"],
-                          mediaTitle: snapshot.data![index]["title"]),
+                        mediaType: widget.mediaType,
+                        mediaImgUrl: snapshot.data![index]["imageUrl"],
+                        mediaTitle: snapshot.data![index]["title"],
+                      ),
                     );
                   },
                 );
