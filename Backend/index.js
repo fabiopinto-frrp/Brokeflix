@@ -8,7 +8,7 @@ const filmsRoutes = require("./src/routes/filmsRoutes");
 const seriesRoutes = require("./src/routes/seriesRoutes");
 const userRoutes = require("./src/routes/usersRoutes");
 const authRoutes = require("./src/routes/authRoutes");
-const catchRoutes = require("./src/routes/catchRoutes");
+
 const port = process.env.PORT || 3000;
 //Swagger
 const expressSwagger = require("express-swagger-generator")(app);
@@ -40,11 +40,12 @@ app.use("/api/films", filmsRoutes);
 app.use("/api/series", seriesRoutes);
 app.use("/auth", authRoutes);
 
-// app.use("*", catchRoutes);
 app.use(auth);
 app.use("/api/users", userRoutes);
 
-// app.use("*", catchRoutes);
+app.use((req, res) => {
+  res.status(400).send("Not found");
+});
 
 app.listen(port, () => {
   console.log(`App running on port http://localhost:${port} ...`);
