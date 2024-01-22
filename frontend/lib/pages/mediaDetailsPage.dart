@@ -64,9 +64,7 @@ class MediaDetailsPageState extends State<MediaDetailsPage> {
                     imageUrl: data['imageUrl'],
                     episodes: widget.mediaType == 'animes' ||
                             widget.mediaType == 'series'
-                        ? (data['episodes'] as List)
-                            .map((item) => item.toString())
-                            .toList()
+                        ? (data['episodes'] as List<Map<String, dynamic>>)
                         : [],
                     videoUrl: widget.mediaType == 'animes' ||
                             widget.mediaType == 'series'

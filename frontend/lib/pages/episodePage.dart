@@ -26,7 +26,13 @@ class _EpisodePageState extends State<EpisodePage> {
             title: Text(widget.episodes[index]['title']),
             subtitle: Text('Episode ${index + 1}'),
             onTap: () {
-              // Navigate to the specific episode page or video player
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) =>
+                      VideoPlayerPage(widget.episodes[index]['epUrl']),
+                ),
+              );
             },
           );
         },
