@@ -16,17 +16,19 @@ exports.validateToken = (req, res, next) => {
 
     let loggedUser = decoded.data.user;
 
-    userModel.findOne({ username: loggedUser }, function (error, user) {
-      if (error) {
+    userModel
+      .findOne({ username: loggedUser })
+      .then((info) => {
+        if (info) {
+          req.user = info;
+          next();
+        } else {
+          return res.status(404).json({ error: "No user found" });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
         return res.status(500).json({ error: "Error finding user" });
-      }
-
-      if (!user) {
-        return res.status(404).json({ error: "No user found" });
-      }
-
-      req.user = user;
-      next();
-    });
+      });
   });
 };

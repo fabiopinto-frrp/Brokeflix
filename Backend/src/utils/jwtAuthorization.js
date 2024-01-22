@@ -1,5 +1,5 @@
 var jwt = require("jsonwebtoken");
-const UserModel = require("../models/user.model");
+const userModel = require("../models/user.model");
 let secret = process.env.JWT_SECRET;
 
 exports.generateToken = (user_info, callback) => {
@@ -17,17 +17,16 @@ exports.validateToken = (token, callback) => {
   if (!token) {
     return callback(false, null);
   }
-  jwt.verify(token.replace("Bearer ", ""), secret, function (error, decoded) {
-    let loggedUser = decoded.data.user;
+  let decoded = jwt.verify(token.replace("Bearer ", ""), secret);
+  let loggedUser = decoded.data.user;
 
-    console.log(decoded.data.user);
-    UserModel.findOne({ username: loggedUser }, function (error, user) {
+  console.log(decoded.data.user);
+  let user_info = userModel.findOne({ username: loggedUser }).then((user) => {
+    if (user_info) {
       console.log(user);
-      if (user) {
-        return callback(true, loggedUser);
-      } else {
-        return callback(false, null);
-      }
-    });
+      return callback(true, loggedUser);
+    } else {
+      return callback(false, null);
+    }
   });
 };
