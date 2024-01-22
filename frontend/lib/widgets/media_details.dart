@@ -1,24 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../pages/episodePage.dart';
 
 class MediaDetailsWidget extends StatefulWidget {
   final String title;
   final String description;
-  final String type;
   final String numberOfEpisodes;
   final String status;
   final List<String> genres;
   final String imageUrl;
+  final String mediaType;
+  final String videoUrl;
+  final List<Map<String, dynamic>> episodes;
 
   MediaDetailsWidget({
     Key? key,
     required this.title,
     required this.description,
-    required this.type,
     required this.numberOfEpisodes,
     required this.status,
     required this.genres,
     required this.imageUrl,
+    required this.mediaType,
+    required this.videoUrl,
+    required this.episodes,
   }) : super(key: key);
 
   @override
@@ -84,11 +89,35 @@ class MediaDetailsWidgetState extends State<MediaDetailsWidget> {
                                 fontWeight: FontWeight.w700,
                               ),
                             ),
-                            const Spacer(), 
+                            const Spacer(),
                             Padding(
-                              padding: const EdgeInsets.only(right: 16.0), 
-                              child: Image.asset('assets/Play.png',
-                                  width: 40, height: 40),
+                              padding: const EdgeInsets.only(right: 16.0),
+                              child: GestureDetector(
+                                onTap: () {
+                                  if (widget.mediaType == 'animes' ||
+                                      widget.mediaType == 'series') {
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => EpisodePage(
+                                            widget.mediaType,
+                                            widget.title,
+                                            widget.episodes),
+                                      ),
+                                    );
+                                  } else {
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            VideoPlayerPage(widget.videoUrl),
+                                      ),
+                                    );
+                                  }
+                                },
+                                child: Image.asset('assets/Play.png',
+                                    width: 40, height: 40),
+                              ),
                             ),
                           ],
                         ),
@@ -123,7 +152,7 @@ class MediaDetailsWidgetState extends State<MediaDetailsWidget> {
                                 ),
                               ),
                               TextSpan(
-                                text: widget.type,
+                                text: widget.mediaType,
                                 style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 12,
@@ -136,35 +165,38 @@ class MediaDetailsWidgetState extends State<MediaDetailsWidget> {
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 20.w),
-                        child: Text.rich(
-                          TextSpan(
-                            children: [
-                              const TextSpan(
-                                text: 'Episodes: ',
-                                style: TextStyle(
-                                  color: Color(0xFFD9D9D9),
-                                  fontSize: 12,
-                                  fontFamily: 'Poppins',
-                                  fontWeight: FontWeight.w400,
-                                  height: 0,
+                      widget.mediaType == 'animes' ||
+                              widget.mediaType == 'series'
+                          ? Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 20.w),
+                              child: Text.rich(
+                                TextSpan(
+                                  children: [
+                                    const TextSpan(
+                                      text: 'Episodes: ',
+                                      style: TextStyle(
+                                        color: Color(0xFFD9D9D9),
+                                        fontSize: 12,
+                                        fontFamily: 'Poppins',
+                                        fontWeight: FontWeight.w400,
+                                        height: 0,
+                                      ),
+                                    ),
+                                    TextSpan(
+                                      text: widget.numberOfEpisodes,
+                                      style: const TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 12,
+                                        fontFamily: 'Poppins',
+                                        fontWeight: FontWeight.w600,
+                                        height: 0,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                              TextSpan(
-                                text: widget.numberOfEpisodes,
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 12,
-                                  fontFamily: 'Poppins',
-                                  fontWeight: FontWeight.w600,
-                                  height: 0,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
+                            )
+                          : Container(),
                       Padding(
                         padding: EdgeInsets.symmetric(
                             horizontal: 20.w, vertical: 10.h),

@@ -54,14 +54,24 @@ class MediaDetailsPageState extends State<MediaDetailsPage> {
                 children: [
                   MediaDetailsWidget(
                     title: data['title'],
+                    mediaType: data['type'],
                     description: data['description'],
-                    type: data['type'],
                     numberOfEpisodes: data['numberOfEpisodes'],
                     status: data['status'],
                     genres: (data['genres'] as List)
                         .map((item) => item.toString())
                         .toList(),
                     imageUrl: data['imageUrl'],
+                    episodes: widget.mediaType == 'animes' ||
+                            widget.mediaType == 'series'
+                        ? (data['episodes'] as List)
+                            .map((item) => item.toString())
+                            .toList()
+                        : [],
+                    videoUrl: widget.mediaType == 'animes' ||
+                            widget.mediaType == 'series'
+                        ? ''
+                        : data['videoUrl'],
                   ),
                   SafeArea(
                     child: Padding(
