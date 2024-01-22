@@ -75,16 +75,15 @@ exports.postFilm = async (req, res) => {
   if (duplicate) {
     res.status(406).send("Film already exists");
     return;
-  }
+  } else {
+    try {
+      const film = await FilmModel.create(postFilm);
 
-  const film = new FilmModel(postFilm);
-
-  try {
-    await film.save();
-    res.status(201).json(film);
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("An error occurred in saving Film");
+      res.status(201).json(film).send("Film created");
+    } catch (err) {
+      console.error(err);
+      res.status(500).send("An error occurred in saving Film");
+    }
   }
 };
 
