@@ -11,8 +11,9 @@ class MediaDetailsWidget extends StatefulWidget {
   final List<String> genres;
   final String imageUrl;
   final String mediaType;
+  final String type;
   final String videoUrl;
-  final List<Map<String, dynamic>> episodes;
+  final List<Map<String, dynamic>> episode;
 
   MediaDetailsWidget({
     Key? key,
@@ -23,8 +24,9 @@ class MediaDetailsWidget extends StatefulWidget {
     required this.genres,
     required this.imageUrl,
     required this.mediaType,
+    required this.type,
     required this.videoUrl,
-    required this.episodes,
+    required this.episode,
   }) : super(key: key);
 
   @override
@@ -101,9 +103,9 @@ class MediaDetailsWidgetState extends State<MediaDetailsWidget> {
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) => EpisodePage(
-                                            widget.mediaType,
+                                            widget.type,
                                             widget.title,
-                                            widget.episodes),
+                                            widget.episode),
                                       ),
                                     );
                                   } else {
@@ -153,7 +155,7 @@ class MediaDetailsWidgetState extends State<MediaDetailsWidget> {
                                 ),
                               ),
                               TextSpan(
-                                text: widget.mediaType,
+                                text: widget.type,
                                 style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 12,

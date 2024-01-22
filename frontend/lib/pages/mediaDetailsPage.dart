@@ -54,7 +54,8 @@ class MediaDetailsPageState extends State<MediaDetailsPage> {
                 children: [
                   MediaDetailsWidget(
                     title: data['title'],
-                    mediaType: data['type'],
+                    mediaType: widget.mediaType,
+                    type: data['type'],
                     description: data['description'],
                     numberOfEpisodes: data['numberOfEpisodes'],
                     status: data['status'],
@@ -62,16 +63,16 @@ class MediaDetailsPageState extends State<MediaDetailsPage> {
                         .map((item) => item.toString())
                         .toList(),
                     imageUrl: data['imageUrl'],
-                    episodes: widget.mediaType == 'animes' ||
+                    episode: widget.mediaType == 'animes' ||
                             widget.mediaType == 'series'
-                        ? (data['episodes'] != null
-                            ? (data['episodes'] as List<Map<String, dynamic>>)
+                        ? (data['episode'] != null
+                            ? (data['episode'] as List)
+                                .map((item) => item as Map<String, dynamic>)
+                                .toList()
                             : [])
                         : [],
-                    videoUrl: widget.mediaType == 'animes' ||
-                            widget.mediaType == 'series'
-                        ? ''
-                        : data['videoUrl'],
+                    videoUrl:
+                        widget.mediaType == 'films' ? data['videoUrl'] : '',
                   ),
                   SafeArea(
                     child: Padding(
