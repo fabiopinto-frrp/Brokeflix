@@ -1,115 +1,83 @@
-// import 'package:flutter/material.dart';
-// import 'package:http/http.dart' as http;
-// import 'dart:convert';
-// import '../widgets/card.dart';
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import '../widgets/card.dart';
+import '../widgets/topbar.dart';
+import '../widgets/bottomBar.dart';
 
-// class SearchPage extends StatefulWidget {
-//   @override
-//   SearchPageState createState() => SearchPageState();
-// }
+class SearchPage extends StatefulWidget {
+  @override
+  SearchPageState createState() => SearchPageState();
+}
 
-// class SearchPageState extends State<SearchPage> {
-//   String query = '';
-//   String selectedMediaType = 'animes'; 
-//   List<dynamic> results = [];
+class SearchPageState extends State<SearchPage> {
+  String query = '';
+  List<dynamic> results = [];
 
-//   Future<void> search() async {
-//     final response = await http.get(Uri.parse(
-//         'https://brokeflix-api.tech/api/search?mediaType=$selectedMediaType&title=$query'));
+  Future<void> search() async {
+  try {
+    final response = await http.get(Uri.parse(
+        'https://brokeflix-api.tech/api/animes/$query'));
 
-//     if (response.statusCode == 200) {
-//       setState(() {
-//         results = jsonDecode(response.body);
-//       });
-//     } else {
-//       throw Exception('Failed to load search results');
-//     }
-//   }
+    print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       backgroundColor: const Color(0xFF1C1C1C),
-//       appBar: AppBar(
-//         backgroundColor: const Color(0xFF1C1C1C),
-//         leading: IconButton(
-//           icon: Icon(Icons.arrow_back),
-//           onPressed: () {
-//             Navigator.pop(context);
-//           },
-//           color: const Color(0xFFFA3D3B),
-//         ),
-//       ),
-//       body: Column(
-//         children: <Widget>[
-//           Padding(
-//             padding: const EdgeInsets.all(8.0),
-//             child: Row(
-//               children: [
-//                 Expanded(
-//                   child: DropdownButtonFormField<String>(
-//                     dropdownColor: const Color(0xFF1C1C1C),
-//                     style: TextStyle(color: Colors.white),
-//                     value: selectedMediaType,
-//                     onChanged: (String? newValue) {
-//                       setState(() {
-//                         selectedMediaType = newValue!;
-//                       });
-//                     },
-//                     items: <String>['animes', 'films', 'series']
-//                         .map<DropdownMenuItem<String>>((String value) {
-//                       return DropdownMenuItem<String>(
-//                         value: value,
-//                         child: Text(
-//                           value,
-//                           style: TextStyle(color: Colors.white),
-//                         ),
-//                       );
-//                     }).toList(),
-//                   ),
-//                 ),
-//               ],
-//             ),
-//           ),
-//           Padding(
-//             padding: const EdgeInsets.all(8.0),
-//             child: Row(
-//               children: [
-//                 Expanded(
-//                   child: TextField(
-//                     onChanged: (value) {
-//                       setState(() {
-//                         query = value;
-//                       });
-//                     },
-//                     style: TextStyle(color: Colors.white),
-//                     decoration: InputDecoration(
-//                       hintText: 'Search',
-//                       hintStyle: TextStyle(color: Colors.white),
-//                     ),
-//                   ),
-//                 ),
-//                 IconButton(
-//                   onPressed: search,
-//                   icon: Icon(Icons.search),
-//                   color: const Color(0xFFFA3D3B),
-//                 ),
-//               ],
-//             ),
-//           ),
-//           Expanded(
-//             child: ListView.builder(
-//               itemCount: results.length,
-//               itemBuilder: (context, index) {
-//                 return MediaCard(
-//                   mediaType: selectedMediaType,
-//                   mediaId: results[index]['id'].toString(),
-//                 );
-//               },
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
+    if (response.statusCode == 200) {
+      var data = jsonDecode(response.body);
+      setState(() {
+        results = [data];
+      });
+    } else {
+      print('Failed to load search results. Status code: ${response.statusCode}');
+    }
+  } catch (e) {
+    print('An error occurred: $e');
+  }
+}
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: TopBar(),
+      backgroundColor: const Color(0xFF1C1C1C),
+      body: Column(
+        children: [
+          Padding(
+            padding: EdgeInsets.all(10.0),
+            child: TextField(
+              onChanged: (value) {
+                setState(() {
+                  query = value;
+                });
+                search();
+              },
+              style: TextStyle(color: Colors.white),
+              decoration: InputDecoration(
+                hintText: 'Search...',
+                hintStyle: TextStyle(color: Colors.white),
+                filled: true,
+                fillColor: Colors.white24,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+              ),
+            ),
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: results.length,
+              itemBuilder: (context, index) {
+                return MediaCard(
+                  mediaType: results[index]["mediaType"],
+                  mediaImgUrl: results[index]["imageUrl"],
+                  mediaTitle: results[index]["title"],
+                );
+              },
+            ),
+          ),
+        ],
+      ),
+      bottomNavigationBar: const BottomBar(),
+    );
+  }
+}

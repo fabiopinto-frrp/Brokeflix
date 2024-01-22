@@ -27,10 +27,10 @@ class TopBar extends StatelessWidget implements PreferredSizeWidget {
           children: [
             GestureDetector(
               onTap: () {
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(builder: (context) => SearchPage()),
-                // );
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => SearchPage()),
+                );
               },
               child: Image.asset(
                 'assets/Search.png',
@@ -44,10 +44,12 @@ class TopBar extends StatelessWidget implements PreferredSizeWidget {
                     MaterialStateProperty.all<Color>(Color(0xFF1C1C1C)),
               ),
               onPressed: () {
-                // Navigator.pushReplacement(
-                //   context,
-                //   MaterialPageRoute(builder: (context) => const FilmPage()),
-                // );
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          FilmPage(title: 'Movies', mediaType: 'films')),
+                );
               },
               child: const Text(
                 'Movies',
@@ -66,10 +68,12 @@ class TopBar extends StatelessWidget implements PreferredSizeWidget {
                     MaterialStateProperty.all<Color>(Color(0xFF1C1C1C)),
               ),
               onPressed: () {
-                // Navigator.pushReplacement(
-                //   context,
-                //   MaterialPageRoute(builder: (context) => const SeriePage()),
-                // );
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          SeriePage(title: 'Series', mediaType: 'series')),
+                );
               },
               child: const Text(
                 'Series',
@@ -88,10 +92,12 @@ class TopBar extends StatelessWidget implements PreferredSizeWidget {
                     MaterialStateProperty.all<Color>(Color(0xFF1C1C1C)),
               ),
               onPressed: () {
-                // Navigator.pushReplacement(
-                //   context,
-                //   MaterialPageRoute(builder: (context) => const AnimePage()),
-                // );
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>
+                          AnimePage(title: 'Anime', mediaType: 'animes')),
+                );
               },
               child: const Text(
                 'Anime',
