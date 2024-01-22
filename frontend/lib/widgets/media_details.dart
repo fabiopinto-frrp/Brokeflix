@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../pages/episodePage.dart';
+import '../pages/videoPlayerPage.dart';
 
 class MediaDetailsWidget extends StatefulWidget {
   final String title;

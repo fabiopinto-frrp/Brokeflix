@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import './videoPlayerPage.dart';
 
 class EpisodePage extends StatefulWidget {
   final String mediaType;
