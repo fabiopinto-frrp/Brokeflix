@@ -108,12 +108,29 @@ class MediaDetailsWidgetState extends State<MediaDetailsWidget> {
                                             widget.episode),
                                       ),
                                     );
-                                  } else {
+                                  } else if (widget.mediaType == 'films' &&
+                                          widget.videoUrl != null ||
+                                      widget.videoUrl != '') {
                                     Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) =>
                                             VideoPlayerPage(widget.videoUrl),
+                                      ),
+                                    );
+                                  } else {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      const SnackBar(
+                                        content: Text(
+                                          'No video available',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 12,
+                                            fontFamily: 'Poppins',
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                        backgroundColor: Color(0xFF1C1C1C),
                                       ),
                                     );
                                   }

@@ -72,7 +72,9 @@ class MediaDetailsPageState extends State<MediaDetailsPage> {
                             : [])
                         : [],
                     videoUrl:
-                        widget.mediaType == 'films' ? data['videoUrl'] : '',
+                        widget.mediaType == 'films' && data['videoUrl'] != null
+                            ? data['videoUrl']
+                            : '',
                   ),
                   SafeArea(
                     child: Padding(
