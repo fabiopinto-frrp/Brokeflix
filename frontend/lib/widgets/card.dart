@@ -5,9 +5,10 @@ import '../pages/mediaDetailsPage.dart';
 
 class MediaCard extends StatefulWidget {
   final String mediaType;
-  final String mediaId;
+  final String mediaImgUrl;
+  final String mediaTitle;
 
-  const MediaCard({Key? key, required this.mediaType, required this.mediaId})
+  const MediaCard({Key? key, required this.mediaType, required this.mediaImgUrl, required this.mediaTitle})
       : super(key: key);
 
   @override
@@ -15,34 +16,14 @@ class MediaCard extends StatefulWidget {
 }
 
 class MediaCardState extends State<MediaCard> {
-  Future<Map<String, dynamic>> fetchMedia() async {
-    final response = await http.get(Uri.parse(
-        'https://brokeflix-api.tech/api/${widget.mediaType}/random/5'));
-
-    if (response.statusCode == 200) {
-      return jsonDecode(response.body);
-    } else {
-      throw Exception('Failed to load media');
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<Map<String, dynamic>>(
-      future: fetchMedia(),
-      builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return const Center(child: CircularProgressIndicator());
-        } else if (snapshot.hasError) {
-          return Text('Error: ${snapshot.error}');
-        } else {
           return InkWell(
             onTap: () {
-              Navigator.push(
+              Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => MediaDetailsPage(
-                      mediaId: snapshot.data!['id'].toString()),
+                  builder: (context) => MediaDetailsPage(widget.mediaType, widget.mediaTitle),
                 ),
               );
             },
@@ -56,15 +37,15 @@ class MediaCardState extends State<MediaCard> {
                 ),
                 child: Column(
                   children: [
-                    Image.network(snapshot.data!['imageUrl']),
-                    Text(snapshot.data!['title']),
+                    Image.network(widget.mediaImgUrl),
+                    Text(widget.mediaTitle),
                   ],
                 ),
               ),
             ),
           );
         }
-      },
-    );
-  }
-}
+      }
+    
+  
+

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/pages/homePage.dart';
 
 class ArrowBackWidget extends StatelessWidget {
   const ArrowBackWidget({Key? key}) : super(key: key);
@@ -7,7 +8,10 @@ class ArrowBackWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).pop();
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const HomePage()),
+        );
       },
       child: SizedBox(
         width: 24,

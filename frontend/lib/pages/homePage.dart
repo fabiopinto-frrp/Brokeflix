@@ -4,6 +4,8 @@ import '../services/checkLogin.dart';
 import '../widgets/card.dart';
 import '../widgets/bottomBar.dart';
 import '../widgets/topbar.dart';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -24,9 +26,9 @@ class HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: TopBar(),
+        // appBar: TopBar(),
         backgroundColor: const Color(0xFF1C1C1C),
-        body: const SingleChildScrollView(
+        body: SingleChildScrollView(
           child: Column(
             children: [
               MediaSection(title: 'Movies', mediaType: 'films'),
@@ -39,12 +41,34 @@ class HomePageState extends State<HomePage> {
   }
 }
 
-class MediaSection extends StatelessWidget {
+class MediaSection extends StatefulWidget {
   final String title;
   final String mediaType;
 
-  const MediaSection({Key? key, required this.title, required this.mediaType})
-      : super(key: key);
+  MediaSection({required this.title, required this.mediaType});
+
+  @override
+  MediaSectionState createState() => MediaSectionState();
+}
+
+class MediaSectionState extends State<MediaSection> {
+  late Future<List<dynamic>> futureMediaData;
+
+  Future<List<dynamic>> fetchMediaData(String mediaType) async {
+    var url = Uri.parse('https://brokeflix-api.tech/api/$mediaType/random/5');
+    var response = await http.get(url);
+    if (response.statusCode == 200) {
+      return jsonDecode(response.body);
+    } else {
+      throw Exception('Failed to load media data');
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    futureMediaData = fetchMediaData(widget.mediaType);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,22 +82,34 @@ class MediaSection extends StatelessWidget {
             right: 35,
           ),
           child: Text(
-            title,
+            widget.title,
             style: const TextStyle(
                 fontSize: 16, fontWeight: FontWeight.bold, color: Colors.white),
           ),
         ),
         SizedBox(
           height: 220,
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            itemCount: 5,
-            itemBuilder: (context, index) {
-              return Padding(
-                padding: const EdgeInsets.all(8.0),
-                child:
-                    MediaCard(mediaType: mediaType, mediaId: index.toString()),
-              );
+          child: FutureBuilder<List<dynamic>>(
+            future: futureMediaData,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: snapshot.data!.length,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: MediaCard(
+                          mediaType: widget.mediaType,
+                          mediaImgUrl: snapshot.data![index]["imageUrl"],
+                          mediaTitle: snapshot.data![index]["title"]),
+                    );
+                  },
+                );
+              } else if (snapshot.hasError) {
+                return Text("${snapshot.error}");
+              }
+              return CircularProgressIndicator();
             },
           ),
         ),
