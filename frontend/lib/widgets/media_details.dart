@@ -13,6 +13,7 @@ class MediaDetailsWidget extends StatefulWidget {
   final String mediaType;
   final String type;
   final String videoUrl;
+  final String mediaTitle;
   final List<Map<String, dynamic>> episode;
 
   MediaDetailsWidget({
@@ -27,6 +28,7 @@ class MediaDetailsWidget extends StatefulWidget {
     required this.type,
     required this.videoUrl,
     required this.episode,
+    required this.mediaTitle,
   }) : super(key: key);
 
   @override
@@ -99,13 +101,14 @@ class MediaDetailsWidgetState extends State<MediaDetailsWidget> {
                                 onTap: () {
                                   if (widget.mediaType == 'animes' ||
                                       widget.mediaType == 'series') {
-                                    Navigator.pushReplacement(
+                                    Navigator.push(
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) => EpisodePage(
                                             widget.type,
                                             widget.title,
-                                            widget.episode),
+                                            widget.episode,
+                                            widget.mediaTitle),
                                       ),
                                     );
                                   } else if (widget.mediaType == 'films' &&
@@ -114,8 +117,11 @@ class MediaDetailsWidgetState extends State<MediaDetailsWidget> {
                                     Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) =>
-                                            VideoPlayerPage(widget.videoUrl),
+                                        builder: (context) => VideoPlayerPage(
+                                            widget.videoUrl,
+                                            widget.mediaType,
+                                            widget.title,
+                                            widget.episode),
                                       ),
                                     );
                                   } else {

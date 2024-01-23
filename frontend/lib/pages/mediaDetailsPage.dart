@@ -54,6 +54,7 @@ class MediaDetailsPageState extends State<MediaDetailsPage> {
                 children: [
                   MediaDetailsWidget(
                     title: data['title'],
+                    mediaTitle: widget.mediaTitle,
                     mediaType: widget.mediaType,
                     type: data['type'],
                     description: data['description'],
