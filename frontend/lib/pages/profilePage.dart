@@ -21,30 +21,32 @@ class ProfilePageState extends State<ProfilePage> {
   String avatar = '';
 
   Future<Map<String, dynamic>> fetchUserData() async {
-    // Read the user token from secure storage
-    String? userToken = await storage.read(key: 'token');
-    String? username = await storage.read(key: 'username');
-
-    if (userToken == null || username == null) {
-      print('No user token or username found'); // print a message for debugging
-      return {}; // return an empty map
+    String? userTokenJson = await storage.read(key: 'token');
+    String? userName = await storage.read(key: 'username');
+    print('User token: $userTokenJson');
+    print('User name: $userName');
+    if (userTokenJson == null || userName == null) {
+      print('No user token or username found');
+      return {};
     }
+    Map<String, dynamic> userTokenMap = jsonDecode(userTokenJson);
+    String userToken = userTokenMap['token'];
 
-    // Make a GET request to the API endpoint
     final response = await http.get(
-      Uri.parse('https://brokeflix-api.tech/api/users/$username/profile'),
+      Uri.parse('https://brokeflix-api.tech/api/users/$userName/profile'),
       headers: {
         'Authorization': 'Bearer $userToken',
       },
     );
 
     if (response.statusCode == 200) {
-      // If the server returns a 200 OK response, parse the JSON.
       Map<String, dynamic> userData = jsonDecode(response.body);
+
       print('User data: $userData'); // print the user data
       return userData;
     } else {
-      // If the server returns an error response, throw an exception.
+      print('Response status: ${response.statusCode}');
+      print('Response body: ${response.body}');
       throw Exception('Failed to load user data');
     }
   }
@@ -65,7 +67,7 @@ class ProfilePageState extends State<ProfilePage> {
         } else if (snapshot.hasError) {
           return Text('Error: ${snapshot.error}');
         } else {
-          fullName = snapshot.data?['fullName'] ?? '';
+          fullName = snapshot.data?['fullname'] ?? '';
           avatar = snapshot.data?['avatar'] ?? '';
           return Scaffold(
             backgroundColor: const Color(0xFF1C1C1C),
