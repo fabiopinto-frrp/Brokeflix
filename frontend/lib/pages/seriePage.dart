@@ -41,9 +41,9 @@ class SeriePageState extends State<SeriePage> {
               MediaSection(
                   title: 'Action', genre: 'Action', mediaType: 'series'),
               MediaSection(
-                  title: 'Romance', genre: 'Romance', mediaType: 'series'),
+                  title: 'Sci-fi', genre: 'Sci-fi', mediaType: 'series'),
               MediaSection(
-                  title: 'Fantasy', genre: 'Fantasy', mediaType: 'series'),
+                  title: 'Adventure', genre: 'Adventure', mediaType: 'series'),
             ],
           ),
         ),

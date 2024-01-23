@@ -41,9 +41,8 @@ class FilmPageState extends State<FilmPage> {
               MediaSection(
                   title: 'Action', genre: 'Action', mediaType: 'films'),
               MediaSection(
-                  title: 'Romance', genre: 'Romance', mediaType: 'films'),
-              MediaSection(
-                  title: 'Fantasy', genre: 'Fantasy', mediaType: 'films'),
+                  title: 'Sci-fi', genre: 'Sci-fi', mediaType: 'films'),
+              MediaSection(title: 'Drama', genre: 'Drama', mediaType: 'films'),
             ],
           ),
         ),

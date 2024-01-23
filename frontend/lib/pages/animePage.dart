@@ -41,7 +41,7 @@ class AnimePageState extends State<AnimePage> {
               MediaSection(
                   title: 'Action', genre: 'Action', mediaType: 'animes'),
               MediaSection(
-                  title: 'Romance', genre: 'Romance', mediaType: 'animes'),
+                  title: 'Adventure', genre: 'Adventure', mediaType: 'animes'),
               MediaSection(
                   title: 'Fantasy', genre: 'Fantasy', mediaType: 'animes'),
             ],
