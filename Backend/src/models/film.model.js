@@ -27,7 +27,7 @@ const filmSchema = new Schema({
   status: { type: String, required: true },
   imageUrl: { type: String, required: true },
   backgroundImgUrl: { type: String, required: true },
-  videosUrl: { type: String, default: "", required: false },
+  videosUrl: { type: String, default: "Empty", required: false },
 });
 
 const FilmModel = db.model("films", filmSchema);
