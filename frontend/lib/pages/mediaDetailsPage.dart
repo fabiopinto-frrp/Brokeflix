@@ -72,10 +72,10 @@ class MediaDetailsPageState extends State<MediaDetailsPage> {
                                 .toList()
                             : [])
                         : [],
-                    videoUrl:
-                        widget.mediaType == 'films' && data['videoUrl'] != null
-                            ? data['videoUrl']
-                            : '',
+                    videoUrl: widget.mediaType == 'films' &&
+                            data['videoUrl'] != 'Empty'
+                        ? data['videoUrl']
+                        : 'Empty',
                   ),
                   SafeArea(
                     child: Padding(

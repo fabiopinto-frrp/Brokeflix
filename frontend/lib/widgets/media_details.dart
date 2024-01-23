@@ -112,8 +112,7 @@ class MediaDetailsWidgetState extends State<MediaDetailsWidget> {
                                       ),
                                     );
                                   } else if (widget.mediaType == 'films' &&
-                                          widget.videoUrl != null ||
-                                      widget.videoUrl != '') {
+                                      widget.videoUrl != 'Empty') {
                                     Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
