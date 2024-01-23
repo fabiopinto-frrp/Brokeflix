@@ -44,7 +44,7 @@ const userSchema = new Schema({
     required: true,
     minlength: 6,
   },
-  avatar: { type: String, required: false },
+  avatar: { type: String, default: "Empty", required: true },
   isAdmin: { type: Boolean, default: false },
   watchList: [
     {

@@ -57,7 +57,7 @@ exports.getProfile = async (req, res) => {
   try {
     const userProfile = await UserModel.findOne({
       username: req.params.username,
-    });
+    }).select("username fullname avatar");
 
     if (req.user.username !== userProfile.username) {
       return res.status(401).send("Not Authorized");
