@@ -7,7 +7,6 @@ import '../widgets/bottombar.dart';
 import 'loginPage.dart';
 import '../services/checkLogin.dart';
 import '../widgets/profile_overlay.dart';
-import '../services/getUserProfile.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
@@ -22,19 +21,18 @@ class ProfilePageState extends State<ProfilePage> {
   String avatar = '';
 
   Future<Map<String, dynamic>> fetchUserData() async {
-  // Read the user token from secure storage
-  String? userToken = await storage.read(key: 'userToken');
-  String? username = await storage.read(key: 'username');
+    // Read the user token from secure storage
+    String? userToken = await storage.read(key: 'userToken');
+    String? username = await storage.read(key: 'username');
 
-  if (userToken == null || username == null) {
-    print('No user token or username found'); // print a message for debugging
-    return {}; // return an empty map
-  }
+    if (userToken == null || username == null) {
+      print('No user token or username found'); // print a message for debugging
+      return {}; // return an empty map
+    }
 
     // Make a GET request to the API endpoint
     final response = await http.get(
-      Uri.parse(
-          'https://brokeflix-api.tech/api/users/$username/profile'), // include the username in the URL
+      Uri.parse('https://brokeflix-api.tech/api/users/$username/profile'),
       headers: {
         'Authorization': 'Bearer $userToken',
       },
@@ -102,7 +100,10 @@ class ProfilePageState extends State<ProfilePage> {
               height: 153,
               decoration: ShapeDecoration(
                 image: DecorationImage(
-                  image: NetworkImage(avatar),
+                  image: avatar.isNotEmpty
+                      ? NetworkImage(avatar)
+                      : AssetImage('assets/DefaultAvatar.png') as ImageProvider<
+                          Object>, // Explicit cast to ImageProvider<Object>
                   fit: BoxFit.fill,
                 ),
                 shape: RoundedRectangleBorder(
