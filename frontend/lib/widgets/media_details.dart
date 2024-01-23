@@ -114,7 +114,7 @@ class MediaDetailsWidgetState extends State<MediaDetailsWidget> {
                                   } else if (widget.mediaType == 'films' &&
                                       widget.videoUrl != null &&
                                       widget.videoUrl != 'Empty') {
-                                    Navigator.pushReplacement(
+                                    Navigator.push(
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) => VideoPlayerPage(

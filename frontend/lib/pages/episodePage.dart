@@ -38,10 +38,15 @@ class _EpisodePageState extends State<EpisodePage> {
                   itemCount: widget.episodes.length,
                   itemBuilder: (context, index) {
                     return Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                      decoration: BoxDecoration(
+                        color: Color.fromARGB(255, 58, 58, 58),
+                        borderRadius: BorderRadius.circular(22),
+                      ),
                       child: ListTile(
                         leading: Image.network(
                           widget.episodes[index]['imageUrl'],
-                          width: 64.0,
+                          width: 32.0,
                           height: 64.0,
                         ),
                         title: Text(
@@ -58,7 +63,7 @@ class _EpisodePageState extends State<EpisodePage> {
                               color: const Color.fromARGB(255, 255, 255, 255)),
                         ),
                         onTap: () {
-                          Navigator.pushReplacement(
+                          Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (context) => VideoPlayerPage(

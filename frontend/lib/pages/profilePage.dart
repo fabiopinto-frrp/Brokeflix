@@ -21,6 +21,36 @@ class ProfilePageState extends State<ProfilePage> {
   String fullName = '';
   String avatar = '';
 
+  Future<Map<String, dynamic>> fetchUserData() async {
+  // Read the user token from secure storage
+  String? userToken = await storage.read(key: 'userToken');
+  String? username = await storage.read(key: 'username');
+
+  if (userToken == null || username == null) {
+    print('No user token or username found'); // print a message for debugging
+    return {}; // return an empty map
+  }
+
+    // Make a GET request to the API endpoint
+    final response = await http.get(
+      Uri.parse(
+          'https://brokeflix-api.tech/api/users/$username/profile'), // include the username in the URL
+      headers: {
+        'Authorization': 'Bearer $userToken',
+      },
+    );
+
+    if (response.statusCode == 200) {
+      // If the server returns a 200 OK response, parse the JSON.
+      Map<String, dynamic> userData = jsonDecode(response.body);
+      print('User data: $userData'); // print the user data
+      return userData;
+    } else {
+      // If the server returns an error response, throw an exception.
+      throw Exception('Failed to load user data');
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -29,6 +59,8 @@ class ProfilePageState extends State<ProfilePage> {
       setState(() {
         fullName = userData['fullName'];
         avatar = userData['avatar'];
+        print('Full name: $fullName'); // print the full name
+        print('Avatar: $avatar');
       });
     });
   }

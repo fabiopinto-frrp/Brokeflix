@@ -32,7 +32,6 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
       autoPlay: true,
       looping: false,
       fullScreenByDefault: true,
-      // Try playing around with some of these other options:
       showControls: true,
       materialProgressColors: ChewieProgressColors(
         playedColor: Colors.red,
@@ -64,22 +63,13 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
             child: FloatingActionButton(
               onPressed: () {
                 if (widget.mediaType == 'animes') {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => EpisodePage(
-                            widget.mediaType,
-                            widget.mediaTitle,
-                            widget.episodes,
-                            widget.videoUrl)),
-                  );
+                  if (Navigator.canPop(context)) {
+                  Navigator.pop(context);
+                }
                 } else if (widget.mediaType == 'films') {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => MediaDetailsPage(
-                            widget.mediaType, widget.mediaTitle)),
-                  );
+                  if (Navigator.canPop(context)) {
+                  Navigator.pop(context);
+                }
                 }
               },
               backgroundColor: Color(0xFF1C1C1C),
