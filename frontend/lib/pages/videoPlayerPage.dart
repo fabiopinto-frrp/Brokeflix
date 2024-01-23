@@ -67,15 +67,18 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => EpisodePage(widget.mediaType,
-                            widget.mediaTitle, widget.episodes, widget.videoUrl)),
+                        builder: (context) => EpisodePage(
+                            widget.mediaType,
+                            widget.mediaTitle,
+                            widget.episodes,
+                            widget.videoUrl)),
                   );
                 } else if (widget.mediaType == 'films') {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                        builder: (context) =>
-                            MediaDetailsPage(widget.mediaType, widget.mediaTitle)),
+                        builder: (context) => MediaDetailsPage(
+                            widget.mediaType, widget.mediaTitle)),
                   );
                 }
               },

@@ -12,7 +12,7 @@ class MediaDetailsWidget extends StatefulWidget {
   final String imageUrl;
   final String mediaType;
   final String type;
-  final String videoUrl;
+  final String? videoUrl;
   final String mediaTitle;
   final List<Map<String, dynamic>> episode;
 
@@ -112,15 +112,17 @@ class MediaDetailsWidgetState extends State<MediaDetailsWidget> {
                                       ),
                                     );
                                   } else if (widget.mediaType == 'films' &&
+                                      widget.videoUrl != null &&
                                       widget.videoUrl != 'Empty') {
                                     Navigator.pushReplacement(
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) => VideoPlayerPage(
-                                            widget.videoUrl,
-                                            widget.mediaType,
-                                            widget.title,
-                                            widget.episode),
+                                          widget.videoUrl!,
+                                          widget.mediaType,
+                                          widget.title,
+                                          widget.episode,
+                                        ),
                                       ),
                                     );
                                   } else {

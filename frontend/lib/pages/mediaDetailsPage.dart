@@ -47,23 +47,27 @@ class MediaDetailsPageState extends State<MediaDetailsPage> {
         backgroundColor: const Color(0xFF1C1C1C),
         body: FutureBuilder<dynamic>(
           future: futureMediaDetails,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
+          builder: (BuildContext context, AsyncSnapshot snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return CircularProgressIndicator();
+            } else if (snapshot.hasError) {
+              return Text('Error: ${snapshot.error}');
+            } else if (snapshot.hasData) {
               var data = snapshot.data[0];
               return Stack(
                 children: [
                   MediaDetailsWidget(
-                    title: data['title'],
+                    title: data['title'] ?? 'No title',
                     mediaTitle: widget.mediaTitle,
                     mediaType: widget.mediaType,
-                    type: data['type'],
-                    description: data['description'],
-                    numberOfEpisodes: data['numberOfEpisodes'],
-                    status: data['status'],
+                    type: data['type'] ?? 'No type',
+                    description: data['description'] ?? 'No description',
+                    numberOfEpisodes: data['numberOfEpisodes'] ?? 'No episodes',
+                    status: data['status'] ?? 'No status',
                     genres: (data['genres'] as List)
                         .map((item) => item.toString())
                         .toList(),
-                    imageUrl: data['imageUrl'],
+                    imageUrl: data['imageUrl'] ?? 'No image URL',
                     episode: widget.mediaType == 'animes' ||
                             widget.mediaType == 'series'
                         ? (data['episode'] != null
@@ -73,8 +77,9 @@ class MediaDetailsPageState extends State<MediaDetailsPage> {
                             : [])
                         : [],
                     videoUrl: widget.mediaType == 'films' &&
-                            data['videoUrl'] != 'Empty'
-                        ? data['videoUrl']
+                            data['videosUrl'] != null &&
+                            data['videosUrl'] != 'Empty'
+                        ? data['videosUrl']
                         : 'Empty',
                   ),
                   SafeArea(
@@ -85,10 +90,9 @@ class MediaDetailsPageState extends State<MediaDetailsPage> {
                   ),
                 ],
               );
-            } else if (snapshot.hasError) {
-              return Text("${snapshot.error}");
+            } else {
+              return CircularProgressIndicator();
             }
-            return CircularProgressIndicator();
           },
         ),
         bottomNavigationBar: const BottomBar(),
