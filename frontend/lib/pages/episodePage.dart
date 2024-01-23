@@ -70,7 +70,8 @@ class _EpisodePageState extends State<EpisodePage> {
                                   widget.episodes[index]['epUrl'],
                                   widget.mediaType,
                                   widget.title,
-                                  widget.episodes),
+                                  widget.episodes,
+                                  widget.mediaTitle),
                             ),
                           );
                         },

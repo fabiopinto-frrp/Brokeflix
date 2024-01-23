@@ -122,6 +122,7 @@ class MediaDetailsWidgetState extends State<MediaDetailsWidget> {
                                           widget.mediaType,
                                           widget.title,
                                           widget.episode,
+                                          widget.mediaTitle,
                                         ),
                                       ),
                                     );

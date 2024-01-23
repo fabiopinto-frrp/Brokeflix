@@ -8,9 +8,11 @@ class VideoPlayerPage extends StatefulWidget {
   final String videoUrl;
   final String mediaType;
   final String mediaTitle;
+  final String title;
   final List<Map<String, dynamic>> episodes;
 
-  VideoPlayerPage(this.videoUrl, this.mediaType, this.mediaTitle, this.episodes,
+  VideoPlayerPage(
+      this.videoUrl, this.mediaType, this.mediaTitle, this.episodes, this.title,
       {Key? key})
       : super(key: key);
 
@@ -62,15 +64,7 @@ class _VideoPlayerPageState extends State<VideoPlayerPage> {
             top: 50,
             child: FloatingActionButton(
               onPressed: () {
-                if (widget.mediaType == 'animes') {
-                  if (Navigator.canPop(context)) {
-                  Navigator.pop(context);
-                }
-                } else if (widget.mediaType == 'films') {
-                  if (Navigator.canPop(context)) {
-                  Navigator.pop(context);
-                }
-                }
+                Navigator.pop(context);
               },
               backgroundColor: Color(0xFF1C1C1C),
               child: Icon(Icons.arrow_back, color: Color(0xFFFA3D3B)),
