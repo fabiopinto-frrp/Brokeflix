@@ -125,7 +125,7 @@ exports.putAnime = async (req, res) => {
 
 exports.addEpisode = async (req, res) => {
   let title = req.params.title;
-  const episode = req.body.episode;
+  const episode = req.body;
   const duplicate = await AnimeModel.findOne({ episode: episode.title });
   const anime = await AnimeModel.findOne({ title: title });
 
