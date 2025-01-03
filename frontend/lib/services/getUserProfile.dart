@@ -11,7 +11,7 @@ Future<Map<String, dynamic>> fetchUserData() async {
   var avatar = '';
 
   if (token != null && username != null) {
-    String apiUrl = 'https://brokeflix-api.tech/api/users/$username/profile';
+    String apiUrl = 'https://brokeflix-api.onrender.com/api/users/$username/profile';
 
     try {
       final response = await http.get(
